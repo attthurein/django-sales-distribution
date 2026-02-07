@@ -179,9 +179,10 @@ The system uses a **Batch-based Inventory System**:
    python manage.py migrate
    ```
 
-6. **Create Default Roles & Superuser**
+6. **Create Default Roles, Master Data & Superuser**
    ```bash
    python manage.py setup_groups
+   python manage.py setup_master_data
    python manage.py createsuperuser
    ```
 
@@ -216,6 +217,10 @@ The system includes custom CLI commands for maintenance:
 - **Setup Groups**: Resets/Updates default user roles and permissions.
   ```bash
   python manage.py setup_groups
+  ```
+- **Setup Master Data**: Seeds initial master data (Regions, Townships, Company Info, Payment Methods).
+  ```bash
+  python manage.py setup_master_data
   ```
 - **Daily Backup**: Creates a JSON dump of the database (configured in `common/management/commands`).
   ```bash
