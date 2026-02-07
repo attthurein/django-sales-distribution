@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load widget_tweaks i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'returns:return_list' %}">{% trans "Returns" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'returns:return_create' %}">{% trans "Create Return" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Select Items" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans "Create Return - Select Items" %}</h1>
+<p>{% trans "Order" %}: <a href="{% url 'orders:order_detail' order.pk %}">{{ order.order_number }}</a></p>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.return_type.id_for_label }}">{% trans "Return Type" %} *</label>
+        {{ form.return_type }}
+        {{ form.return_type.errors }}
+    </div>
+
+    <h4>{% trans "Items to Return" %}</h4>
+    {{ formset.management_form }}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans "Product" %}</th>
+                <th>{% trans "Ordered Qty" %}</th>
+                <th>{% trans "Return Qty" %}</th>
+                <th>{% trans "Reason" %}</th>
+                <th>{% trans "Restock" %}</th>
+                <th>{% trans "Condition Notes" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for form, item in formset_with_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}{% if item.available_to_return == 0 %} <span class="text-muted">({% trans "Fully returned" %})</span>{% endif %}</td>
+                <td>
+                    {{ form.order_item_id }}
+                    {% if item.available_to_return > 0 %}
+                    {{ form.quantity }}
+                    {% else %}
+                    <input type="hidden" name="{{ form.quantity.html_name }}" value="0">
+                    <span class="text-muted">0</span>
+                    {% endif %}
+                    {{ form.quantity.errors }}
+                </td>
+                <td>{{ form.reason }}{{ form.reason.errors }}</td>
+                <td>
+                    <div class="form-check form-switch">
+                        {{ form.return_to_stock }}
+                    </div>
+                </td>
+                <td>{{ form.condition_notes }}{{ form.condition_notes.errors }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.notes.id_for_label }}">{% trans "Notes" %}</label>
+        {{ form.notes }}
+        {{ form.notes.errors }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">{% trans "Create Return" %}</button>
+    <a href="{% url 'returns:return_create' %}" class="btn btn-secondary">{% trans "Back" %}</a>
+    <a href="{% url 'returns:return_list' %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}

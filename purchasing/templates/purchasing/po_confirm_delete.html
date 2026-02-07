@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'purchasing:purchase_order_list' %}">{% trans "Purchase Orders" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'purchasing:purchase_order_detail' po.pk %}">{% trans "PO" %} #{{ po.id }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Delete" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans "Delete Purchase Order" %}</h1>
+<p>{% blocktrans with id=po.id supplier=po.supplier.name_en %}Are you sure you want to delete PO #{{ id }} ({{ supplier }})?{% endblocktrans %}</p>
+<p class="text-muted">{% trans "Received purchase orders cannot be deleted because stock was already added." %}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+    <a href="{% url 'purchasing:purchase_order_detail' po.pk %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load i18n widget_tweaks %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'accounting:expense_list' %}">{% trans "Expenses" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2>{{ title }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.date.id_for_label }}">{% trans "Date" %} *</label>
+                            {{ form.date|add_class:"form-control" }}
+                            {% if form.date.errors %}<div class="text-danger small">{{ form.date.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.category.id_for_label }}">{% trans "Category" %} *</label>
+                            {{ form.category|add_class:"form-select" }}
+                            {% if form.category.errors %}<div class="text-danger small">{{ form.category.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.amount.id_for_label }}">{% trans "Amount" %} *</label>
+                            {{ form.amount|add_class:"form-control" }}
+                            {% if form.amount.errors %}<div class="text-danger small">{{ form.amount.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ form.paid_to.id_for_label }}">{% trans "Paid To" %}</label>
+                            {{ form.paid_to|add_class:"form-control" }}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="{{ form.description.id_for_label }}">{% trans "Description" %} *</label>
+                    {{ form.description|add_class:"form-control" }}
+                    {% if form.description.errors %}<div class="text-danger small">{{ form.description.errors }}</div>{% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">{% trans "Record Expense" %}</button>
+            <a href="{% url 'accounting:expense_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

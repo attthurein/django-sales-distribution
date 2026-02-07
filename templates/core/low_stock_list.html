@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load humanize i18n %}
+
+{% block content %}
+<h1 class="mb-4">{% trans "Low Stock Alerts" %}</h1>
+<p><a href="{% url 'core:product_list' %}">{% trans "Products" %}</a></p>
+
+<table class="table table-striped">
+    <thead><tr><th>{% trans "Product" %}</th><th>{% trans "Stock" %}</th><th>{% trans "Threshold" %}</th><th>{% trans "Actions" %}</th></tr></thead>
+    <tbody>
+    {% for p in products %}
+    <tr>
+        <td><a href="{% url 'core:product_detail' p.pk %}">{{ p.name }}</a></td>
+        <td>{{ p.stock_quantity }}</td>
+        <td>{{ p.low_stock_threshold }}</td>
+        <td>
+            <a href="{% url 'core:product_detail' p.pk %}">{% trans "View" %}</a>
+            | <a href="{% url 'core:stock_adjust' p.pk %}">{% trans "Adjust" %}</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4" class="text-center py-5 text-muted">{% trans "No low stock products" %}</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

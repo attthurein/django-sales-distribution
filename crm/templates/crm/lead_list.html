@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Leads" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{% trans "Leads" %}</h1>
+{% if perms.crm.add_lead %}
+<p><a href="{% url 'crm:lead_create' %}" class="btn btn-primary">{% trans "Add Lead" %}</a></p>
+{% endif %}
+
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">{% trans "Status" %}</label>
+                <select name="status" class="form-select">
+                    <option value="">{% trans "All" %}</option>
+                    <option value="NEW" {% if status_filter == 'NEW' %}selected{% endif %}>{% trans "New" %}</option>
+                    <option value="CONTACTED" {% if status_filter == 'CONTACTED' %}selected{% endif %}>{% trans "Contacted" %}</option>
+                    <option value="SAMPLE_GIVEN" {% if status_filter == 'SAMPLE_GIVEN' %}selected{% endif %}>{% trans "Sample Given" %}</option>
+                    <option value="CONVERTED" {% if status_filter == 'CONVERTED' %}selected{% endif %}>{% trans "Converted" %}</option>
+                    <option value="LOST" {% if status_filter == 'LOST' %}selected{% endif %}>{% trans "Lost" %}</option>
+                </select>
+            </div>
+            <div class="col-md-2 align-self-end">
+                <button type="submit" class="btn btn-primary">{% trans "Filter" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead><tr><th>{% trans "Name" %}</th><th>{% trans "Phone" %}</th><th>{% trans "Township" %}</th><th>{% trans "Status" %}</th><th>{% trans "Source" %}</th><th>{% trans "Created" %}</th><th>{% trans "Actions" %}</th></tr></thead>
+    <tbody>
+    {% for lead in leads %}
+    <tr>
+        <td><a href="{% url 'crm:lead_detail' lead.pk %}">{{ lead.name }}</a></td>
+        <td>{{ lead.phone }}</td>
+        <td>{% if lead.township %}{{ lead.township.name_en }}{% if lead.township.region %} ({{ lead.township.region.name_en }}){% endif %}{% else %}-{% endif %}</td>
+        <td><span class="badge bg-secondary">{{ lead.get_status_display }}</span></td>
+        <td>{{ lead.source|default:"-" }}</td>
+        <td>{{ lead.created_at|date }}</td>
+        <td>
+            <a href="{% url 'crm:lead_detail' lead.pk %}" class="btn btn-sm btn-outline-primary">{% trans "View" %}</a>
+            {% if perms.crm.change_lead %}
+            <a href="{% url 'crm:lead_edit' lead.pk %}" class="btn btn-sm btn-outline-secondary">{% trans "Edit" %}</a>
+            {% endif %}
+            {% if perms.crm.delete_lead %}
+            <a href="{% url 'crm:lead_delete' lead.pk %}" class="btn btn-sm btn-outline-danger">{% trans "Delete" %}</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="7" class="text-center py-5 text-muted">{% trans "No leads yet." %}</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

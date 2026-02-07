@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load common_extras %}
+{% load humanize i18n %}
+
+{% block title %}{% trans "Customers" %}{% endblock %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Customers" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{% trans "Customers" %}</h1>
+<p><a href="{% url 'customers:customer_create' %}" class="btn btn-primary mb-3">{% trans "Add Customer" %}</a></p>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label" for="search">{% trans "Search" %}</label>
+                <input type="search" name="q" id="search" class="form-control" placeholder="{% trans 'Search by name or phone...' %}" value="{{ search_query|default:'' }}">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Type" %}</label>
+                <select name="customer_type" class="form-select">
+                    <option value="">{% trans "All" %}</option>
+                    {% for ct in customer_types %}
+                    <option value="{{ ct.id }}" {% if customer_type == ct.id|stringformat:"s" %}selected{% endif %}>{{ ct|master_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">{% trans "Filter" %}</button>
+            </div>
+            {% if search_query or customer_type %}
+            <div class="col-md-2">
+                <a href="{% url 'customers:customer_list' %}" class="btn btn-outline-secondary w-100">{% trans "Clear" %}</a>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead><tr><th>{% trans "Name" %}</th><th>{% trans "Phone" %}</th><th>{% trans "Type" %}</th><th>{% trans "Credit Limit" %}</th><th>{% trans "Actions" %}</th></tr></thead>
+    <tbody>
+    {% for c in customers %}
+    <tr>
+        <td><a href="{% url 'customers:customer_detail' c.pk %}">{{ c.name }}</a></td>
+        <td>{{ c.phone }}</td>
+        <td>{{ c.customer_type|master_name|default:"-" }}</td>
+        <td>{{ c.credit_limit|floatformat:0|intcomma }}</td>
+        <td>
+            <div class="btn-group btn-group-sm">
+                <a href="{% url 'customers:customer_update' c.pk %}" class="btn btn-outline-primary">{% trans "Edit" %}</a>
+            </div>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5" class="text-center py-5">
+        <i class="bi bi-{% if search_query %}search{% else %}people{% endif %} display-4 text-muted"></i>
+        <p class="mt-2 text-muted">{% if search_query or customer_type %}{% trans "No customers match your search." %}{% else %}{% trans "No customers yet." %}{% endif %}</p>
+        {% if search_query or customer_type %}<a href="{% url 'customers:customer_list' %}" class="btn btn-outline-primary">{% trans "Clear" %}</a>{% else %}<a href="{% url 'customers:customer_create' %}" class="btn btn-primary">{% trans "Add your first customer" %}</a>{% endif %}
+    </td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% if customers.paginator.num_pages > 1 %}
+<nav aria-label="Customer pagination" class="mt-3">
+    <ul class="pagination justify-content-center">
+        {% if customers.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ customers.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if customer_type %}&customer_type={{ customer_type }}{% endif %}">{% trans "Previous" %}</a></li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">{% blocktrans with page=customers.number total=customers.paginator.num_pages %}Page {{ page }} of {{ total }}{% endblocktrans %}</span></li>
+        {% if customers.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ customers.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if customer_type %}&customer_type={{ customer_type }}{% endif %}">{% trans "Next" %}</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load common_extras %}
+{% load humanize i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Returns" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{% trans "Returns" %}</h1>
+<p><a href="{% url 'returns:return_create' %}" class="btn btn-primary mb-3">{% trans "Create Return" %}</a></p>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 align-items-end filter-form-equal">
+            <div class="col-6 col-md">
+                <label class="form-label">{% trans "Search" %}</label>
+                <input type="text" name="search" class="form-control" value="{{ search_query }}" placeholder="{% trans 'Return #, Order, Customer...' %}">
+            </div>
+            <div class="col-6 col-md">
+                <label class="form-label">{% trans "Status" %}</label>
+                <select name="status" class="form-select">
+                    <option value="">{% trans "All" %}</option>
+                    <option value="PENDING" {% if status_filter == 'PENDING' %}selected{% endif %}>{% trans "Pending" %}</option>
+                    <option value="APPROVED" {% if status_filter == 'APPROVED' %}selected{% endif %}>{% trans "Approved" %}</option>
+                    <option value="REJECTED" {% if status_filter == 'REJECTED' %}selected{% endif %}>{% trans "Rejected" %}</option>
+                    <option value="COMPLETED" {% if status_filter == 'COMPLETED' %}selected{% endif %}>{% trans "Completed" %}</option>
+                </select>
+            </div>
+            <div class="col-6 col-md">
+                <label class="form-label">{% trans "From" %}</label>
+                <input type="date" name="date_from" class="form-control" value="{{ date_from }}">
+            </div>
+            <div class="col-6 col-md">
+                <label class="form-label">{% trans "To" %}</label>
+                <input type="date" name="date_to" class="form-control" value="{{ date_to }}">
+            </div>
+            <div class="col-6 col-md">
+                <button type="submit" class="btn btn-primary w-100">{% trans "Filter" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead><tr><th>{% trans "Return #" %}</th><th>{% trans "Order" %}</th><th>{% trans "Date" %}</th><th>{% trans "Status" %}</th><th>{% trans "Amount" %}</th><th>{% trans "Actions" %}</th></tr></thead>
+    <tbody>
+    {% for r in returns %}
+    <tr>
+        <td><a href="{% url 'returns:return_detail' r.pk %}">{{ r.return_number }}</a></td>
+        <td>{{ r.order.order_number }}</td>
+        <td>{{ r.created_at|date }}</td>
+        <td>{{ r.status|master_name }}</td>
+        <td>{{ r.total_amount|floatformat:0|intcomma }}</td>
+        <td>
+            <div class="btn-group btn-group-sm">
+                <a href="{% url 'returns:return_detail' r.pk %}" class="btn btn-outline-primary">{% trans "View" %}</a>
+                {% if r.status.code == 'PENDING' or r.status.code == 'REJECTED' %}
+                <a href="{% url 'returns:return_delete' r.pk %}" class="btn btn-outline-danger">{% trans "Delete" %}</a>
+                {% endif %}
+            </div>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6" class="text-center py-5">
+        <i class="bi bi-arrow-return-left display-4 text-muted"></i>
+        <p class="mt-2 text-muted">{% trans "No returns yet." %}</p>
+        <a href="{% url 'returns:return_create' %}" class="btn btn-primary">{% trans "Create your first return" %}</a>
+    </td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% if returns.paginator.num_pages > 1 %}
+<nav aria-label="Return pagination" class="mt-3">
+    <ul class="pagination justify-content-center">
+        {% if returns.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ returns.previous_page_number }}{% if search_query %}&search={{ search_query|urlencode }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if date_from %}&date_from={{ date_from }}{% endif %}{% if date_to %}&date_to={{ date_to }}{% endif %}">{% trans "Previous" %}</a></li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">{% blocktrans with page=returns.number total=returns.paginator.num_pages %}Page {{ page }} of {{ total }}{% endblocktrans %}</span></li>
+        {% if returns.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ returns.next_page_number }}{% if search_query %}&search={{ search_query|urlencode }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if date_from %}&date_from={{ date_from }}{% endif %}{% if date_to %}&date_to={{ date_to }}{% endif %}">{% trans "Next" %}</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

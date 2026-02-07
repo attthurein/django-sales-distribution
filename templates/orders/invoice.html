@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% load humanize i18n common_extras static %}
+
+{% block extra_css %}
+<script src="{% static 'js/html2pdf.bundle.min.js' %}"></script>
+<style>
+    @font-face {
+        font-family: 'Pyidaungsu';
+        src: url("{% static 'fonts/Pyidaungsu-Regular.ttf' %}") format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Pyidaungsu';
+        src: url("{% static 'fonts/Pyidaungsu-Bold.ttf' %}") format('truetype');
+        font-weight: bold;
+        font-style: normal;
+    }
+
+    @media print {
+        @page {
+            margin: 0;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: white !important;
+            font-size: 10pt;
+        }
+
+        nav, .navbar, .no-print, header, footer, .btn, .breadcrumb {
+            display: none !important;
+        }
+
+        .container {
+            max-width: 100% !important;
+            width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .voucher-container {
+            border: none !important;
+            box-shadow: none !important;
+            padding: 10mm 10mm !important;
+            margin: 0 auto !important;
+            max-width: 100%;
+        }
+    }
+
+    .voucher-container {
+        background: white;
+        padding: 40px;
+        border: 1px solid #ddd;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        max-width: 800px;
+        margin: 20px auto;
+        font-family: 'Pyidaungsu', 'Noto Sans Myanmar', sans-serif;
+    }
+
+    .voucher-header {
+        position: relative;
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #333;
+        padding-bottom: 20px;
+    }
+
+    .company-name {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #2c3e50;
+    }
+
+    .voucher-title {
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin: 15px 0;
+    }
+
+    .voucher-meta {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+
+    .meta-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+
+    .invoice-table th, .invoice-table td {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .invoice-table th {
+        text-align: left;
+        font-weight: bold;
+        border-bottom: 2px solid #333;
+    }
+
+    .invoice-table td.text-end {
+        text-align: right;
+    }
+    
+    .invoice-table th.text-end {
+        text-align: right;
+    }
+
+    .total-row {
+        font-weight: bold;
+        border-top: 2px solid #333 !important;
+    }
+
+    .signature-section {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 60px;
+        padding-top: 20px;
+    }
+
+    .signature-box {
+        text-align: center;
+        width: 200px;
+    }
+
+    .signature-line {
+        border-top: 1px solid #333;
+        margin-bottom: 10px;
+    }
+
+    .footer-note {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 12px;
+        color: #999;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="no-print mb-3 container text-center">
+    <button class="btn btn-primary js-print" onclick="window.print()">
+        <i class="bi bi-printer"></i> {% trans "Print" %}
+    </button>
+    <button onclick="downloadPDF()" class="btn btn-outline-danger">
+        <i class="bi bi-file-pdf"></i> {% trans "Download PDF" %}
+    </button>
+    <a href="{% url 'orders:order_detail' order.id %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> {% trans "Back to Order" %}
+    </a>
+</div>
+
+<div class="voucher-container" id="invoice-content">
+    <!-- Header -->
+    <div class="voucher-header">
+        {% if company and company.logo %}
+        <div style="position: absolute; left: 0; top: 0;">
+            <img src="{{ company.logo.url }}" alt="Logo" style="height: 120px; width: auto;">
+        </div>
+        {% endif %}
+        <div class="company-name">
+            {% if company and company.name %}{{ company.name }}{% else %}Sales Distribution{% endif %}
+        </div>
+        <div class="small text-muted">
+            {% if company.address %}{{ company.address }}<br>{% endif %}
+            {% if company.phone %}{{ company.phone }}{% endif %}
+        </div>
+        <div class="voucher-title">{% trans "INVOICE" %}</div>
+    </div>
+
+    <!-- Meta Info -->
+    <div class="voucher-meta">
+        <div class="meta-group text-start">
+            <div><span class="label text-muted">{% trans "Invoice No" %}:</span> <span class="fw-bold">{{ order.order_number }}</span></div>
+            <div><span class="label text-muted">{% trans "Date" %}:</span> {{ order.order_date|date:"d F Y" }}</div>
+        </div>
+        <div class="meta-group text-end">
+             <div><span class="label text-muted">{% trans "Status" %}:</span> {{ order.get_status_display }}</div>
+             {% if order.delivery_date %}
+             <div><span class="label text-muted">{% trans "Delivery" %}:</span> {{ order.delivery_date|date:"d F Y" }}</div>
+             {% endif %}
+        </div>
+    </div>
+    
+    <!-- Bill To -->
+    <div class="mb-4">
+        <div class="fw-bold border-bottom pb-1 mb-2">{% trans "Bill To" %}</div>
+        <div>{{ order.customer.name }}</div>
+        {% if order.customer.phone %}<div>{{ order.customer.phone }}</div>{% endif %}
+        {% if order.customer.street_address %}<div class="text-muted small">{{ order.customer.street_address }}</div>{% endif %}
+    </div>
+
+    <!-- Items Table -->
+    <table class="invoice-table">
+        <thead>
+            <tr>
+                <th>{% trans "Product" %}</th>
+                <th class="text-end">{% trans "Qty" %}</th>
+                <th class="text-end">{% trans "Price" %}</th>
+                <th class="text-end">{% trans "Total" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.orderitem_set.all %}
+            <tr>
+                <td>
+                    {{ item.product.name }}
+                    {% if item.product.code %}
+                    <br><small class="text-muted">{{ item.product.code }}</small>
+                    {% endif %}
+                </td>
+                <td class="text-end">{{ item.quantity }}</td>
+                <td class="text-end">{{ item.unit_price|intcomma }}</td>
+                <td class="text-end">{{ item.total_price|intcomma }}</td>
+            </tr>
+            {% endfor %}
+            
+            <!-- Totals -->
+            <tr>
+                <td colspan="3" class="text-end border-0 pt-3">{% trans "Subtotal" %}</td>
+                <td class="text-end border-0 pt-3">{{ order.subtotal|intcomma }}</td>
+            </tr>
+            {% if order.discount_amount > 0 %}
+            <tr>
+                <td colspan="3" class="text-end border-0 text-danger">{% trans "Discount" %}</td>
+                <td class="text-end border-0 text-danger">-{{ order.discount_amount|intcomma }}</td>
+            </tr>
+            {% endif %}
+            {% if order.delivery_fee > 0 %}
+            <tr>
+                <td colspan="3" class="text-end border-0">{% trans "Delivery Fee" %}</td>
+                <td class="text-end border-0">{{ order.delivery_fee|intcomma }}</td>
+            </tr>
+            {% endif %}
+            <tr class="total-row">
+                <td colspan="3" class="text-end">{% trans "TOTAL" %}</td>
+                <td class="text-end">{{ order.total_amount|intcomma }} <small>{% currency_suffix %}</small></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Signatures -->
+    <div class="signature-section">
+        <div class="signature-box">
+            <div class="small text-muted mb-1">{{ order.created_by.get_full_name|default:order.created_by.username }}</div>
+            <div class="signature-line"></div>
+            <div>{% trans "Received By" %}</div>
+        </div>
+        <div class="signature-box">
+            <div class="small text-muted mb-1" style="height: 21px;"></div>
+            <div class="signature-line"></div>
+            <div>{% trans "Authorized By" %}</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-note">
+        <p>{% if company.footer_text %}{{ company.footer_text|linebreaksbr }}{% else %}{% trans "Thank you for your business!" %}{% endif %}</p>
+    </div>
+</div>
+
+<script>
+    function downloadPDF() {
+        const element = document.getElementById('invoice-content');
+        const opt = {
+            margin:       5,
+            filename:     'Invoice_{{ order.order_number }}.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'mm', format: 'a5', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
+    }
+</script>
+{% endblock %}

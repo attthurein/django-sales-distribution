@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load widget_tweaks i18n static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'customers:customer_list' %}">{% trans "Customers" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    {% if field.name == 'township' %}
+    <div class="mb-3">
+        <label class="form-label" for="id_region">{% trans "Region" %}</label>
+        <select name="region_id" id="id_region" class="form-select">
+            <option value="">{% trans "Select region" %}...</option>
+            {% for region in regions %}
+            <option value="{{ region.id }}" {% if customer and customer.township and customer.township.region_id == region.id %}selected{% endif %}>{{ region.name_en }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="id_township">{% trans "Township" %}</label>
+        <select name="township" id="id_township" class="form-select">
+            <option value="">{% trans "Select township" %}...</option>
+            {% for region in regions %}
+            {% for t in region.townships.all %}
+            <option value="{{ t.id }}" data-region-id="{{ region.id }}" {% if customer and customer.township_id == t.id %}selected{% endif %}>{{ t.name_en }}</option>
+            {% endfor %}
+            {% endfor %}
+        </select>
+        {% if field.errors %}<div class="text-danger">{{ field.errors }}</div>{% endif %}
+    </div>
+    {% else %}
+    <div class="mb-3">
+        {% if field.name == 'is_active' %}
+            <div class="form-check">
+                {{ field|add_class:"form-check-input" }}
+                <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            </div>
+            {% if field.errors %}<div class="text-danger">{{ field.errors }}</div>{% endif %}
+        {% else %}
+            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field|add_class:"form-control" }}
+            {% if field.errors %}<div class="text-danger">{{ field.errors }}</div>{% endif %}
+        {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+    <a href="{% url 'customers:customer_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/region_township.js' %}"></script>
+{% endblock %}

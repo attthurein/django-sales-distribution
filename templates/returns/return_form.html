@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'returns:return_list' %}">{% trans "Returns" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Create Return" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans "Create Return - Select Order" %}</h1>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.order_id.id_for_label }}">{% trans "Select Order" %}</label>
+        {{ form.order_id }}
+        {{ form.order_id.errors }}
+        <small class="text-muted">{% trans "Only orders delivered within the return window are shown." %}</small>
+    </div>
+    <button type="submit" class="btn btn-primary">{% trans "Next: Select Items" %}</button>
+    <a href="{% url 'returns:return_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+</form>
+{% if not orders %}
+<p class="mt-3 text-muted">{% trans "No eligible orders for return." %}</p>
+{% endif %}
+{% endblock %}

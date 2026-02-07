@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'crm:lead_list' %}">{% trans "Leads" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'crm:lead_detail' lead.pk %}">{{ lead.name }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Convert to Customer" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans "Convert Lead to Customer" %} - {{ lead.name }}</h1>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.customer_type.id_for_label }}">{% trans "Customer Type" %} *</label>
+        {{ form.customer_type }}
+        {{ form.customer_type.errors }}
+    </div>
+    <p class="text-muted">Customer will be created with: Name={{ lead.name }}, Phone={{ lead.phone }}{% if lead.shop_name %}, {% trans "Shop" %}={{ lead.shop_name }}{% endif %}{% if lead.contact_person %}, {% trans "Contact person" %}={{ lead.contact_person }}{% endif %}{% if lead.township %}, Township={{ lead.township.name_en }}{% if lead.township.region %} ({{ lead.township.region.name_en }}){% endif %}{% endif %}</p>
+    <button type="submit" class="btn btn-success">{% trans "Convert" %}</button>
+    <a href="{% url 'crm:lead_detail' lead.pk %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}

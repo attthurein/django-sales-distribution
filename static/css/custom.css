@@ -1,0 +1,199 @@
+/* ============================================
+   Global Layout
+   ============================================ */
+body.app-body {
+    padding-top: 5rem;
+}
+
+/* ============================================
+   Company Setting - Systematic UI Layout
+   ============================================ */
+.company-setting-page .page-header {
+    margin-bottom: 1.75rem;
+}
+.company-setting-page .page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gray-800, #1f2937);
+}
+.company-setting-page .section-card {
+    border: 1px solid var(--gray-200, #e5e7eb);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.2s ease;
+}
+.company-setting-page .section-card:hover {
+    box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1));
+}
+.company-setting-page .section-header {
+    background: var(--gray-50, #f9fafb);
+    border-bottom: 1px solid var(--gray-200, #e5e7eb);
+    padding: 0.875rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--gray-800, #1f2937);
+}
+.company-setting-page .section-header i {
+    margin-right: 0.5rem;
+    opacity: 0.85;
+}
+.company-setting-page .section-body {
+    padding: 1.25rem 1.5rem;
+}
+.company-setting-page .form-group-row {
+    display: grid;
+    gap: 1rem;
+}
+.company-setting-page .form-group-row.cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+.company-setting-page .form-group-row.cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 768px) {
+    .company-setting-page .form-group-row.cols-2,
+    .company-setting-page .form-group-row.cols-3 {
+        grid-template-columns: 1fr;
+    }
+}
+.company-setting-page .form-field {
+    margin-bottom: 0;
+}
+.company-setting-page .form-field.full-width {
+    grid-column: 1 / -1;
+}
+.company-setting-page .form-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding: 1.25rem 1.5rem;
+    background: var(--gray-50, #f9fafb);
+    border-top: 1px solid var(--gray-200, #e5e7eb);
+}
+.company-setting-page .logo-upload-zone {
+    border: 2px dashed var(--gray-300, #d1d5db);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+    background: var(--gray-50, #f9fafb);
+}
+.company-setting-page .logo-preview-wrap {
+    max-height: 120px;
+    margin-bottom: 0.75rem;
+}
+.company-setting-page .logo-preview-wrap img {
+    max-height: 120px;
+    object-fit: contain;
+}
+.company-setting-page .section-desc {
+    font-size: 0.8125rem;
+    color: var(--gray-600, #4b5563);
+    margin-bottom: 1rem;
+}
+
+/* ============================================
+   Voucher Styles (moved from payment_voucher.html)
+   ============================================ */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+    }
+
+    .voucher-container {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 10mm 10mm !important;
+        max-width: 100%;
+    }
+}
+
+.voucher-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: white;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Voucher Dark Mode Support */
+[data-theme="dark"] .voucher-container {
+    background-color: #1f2937;
+    color: #f9fafb;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Login Page Styles */
+body.login-page {
+    padding-top: 1rem !important;
+}
+
+.navbar-brand-logo {
+    max-height: 40px;
+    width: auto;
+}
+
+.form-field-currency {
+    max-width: 280px;
+}
+
+/* Admin Dashboard Link */
+.admin-dashboard-link {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 10px;
+    background: #417690;
+    color: white !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* ============================================
+   Dashboard Card Gradients
+   ============================================ */
+.metric-card {
+    border: none;
+    border-radius: 1rem;
+    transition: transform 0.2s;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(45deg, #4e73df 0%, #224abe 100%);
+    color: #fff;
+}
+
+.bg-gradient-success {
+    background: linear-gradient(45deg, #1cc88a 0%, #13855c 100%);
+    color: #fff;
+}
+
+.bg-gradient-info {
+    background: linear-gradient(45deg, #36b9cc 0%, #258391 100%);
+    color: #fff;
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(45deg, #f6c23e 0%, #dda20a 100%);
+    color: #fff;
+}
+
+.bg-gradient-danger {
+    background: linear-gradient(45deg, #e74a3b 0%, #be2617 100%);
+    color: #fff;
+}
+
+.bg-gradient-secondary {
+    background: linear-gradient(45deg, #858796 0%, #60616f 100%);
+    color: #fff;
+}

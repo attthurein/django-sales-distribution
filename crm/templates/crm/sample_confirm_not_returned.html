@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        {% if sample.lead_id %}
+        <li class="breadcrumb-item"><a href="{% url 'crm:lead_list' %}">{% trans "Leads" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'crm:lead_detail' sample.lead_id %}">{{ sample.lead.name }}</a></li>
+        {% else %}
+        <li class="breadcrumb-item"><a href="{% url 'customers:customer_list' %}">{% trans "Customers" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'customers:customer_detail' sample.customer_id %}">{{ sample.customer.name }}</a></li>
+        {% endif %}
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Mark Not Returned" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans "Mark Sample as Not Returned" %}</h1>
+<p>{% trans "Mark" %} {{ sample.product.name }} x{{ sample.quantity }} {% trans "as not returned? Customer kept the sample. Stock will NOT be restored." %}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-secondary">{% trans "Confirm" %}</button>
+    {% if sample.lead_id %}<a href="{% url 'crm:lead_detail' sample.lead_id %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>{% else %}<a href="{% url 'customers:customer_detail' sample.customer_id %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>{% endif %}
+</form>
+{% endblock %}

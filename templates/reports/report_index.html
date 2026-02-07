@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Reports" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{% trans "Reports" %}</h1>
+<div class="row">
+    <div class="col-md-6 col-lg-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Sales Report" %}</h5>
+                <p class="card-text">{% trans "Sales by period (daily/weekly/monthly)" %}</p>
+                <a href="{% url 'reports:sales_report' %}" class="btn btn-primary">{% trans "View" %}</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Return Analysis" %}</h5>
+                <p class="card-text">{% trans "Return analysis by product and reason" %}</p>
+                <a href="{% url 'reports:return_report' %}" class="btn btn-primary">{% trans "View" %}</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Payment Report" %}</h5>
+                <p class="card-text">{% trans "Payments by date and method" %}</p>
+                <a href="{% url 'reports:payment_report' %}" class="btn btn-primary">{% trans "View" %}</a>
+                <a href="{% url 'reports:export_payments' %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-file-earmark-excel"></i> {% trans "Export" %}</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Outstanding Payments" %}</h5>
+                <p class="card-text">{% trans "Orders/customers with balance due" %}</p>
+                <a href="{% url 'reports:outstanding_payments' %}" class="btn btn-primary">{% trans "View" %}</a>
+                <a href="{% url 'reports:export_outstanding' %}?format=xlsx" class="btn btn-outline-secondary btn-sm"><i class="bi bi-file-earmark-excel"></i> {% trans "Export" %}</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Payment by Customer" %}</h5>
+                <p class="card-text">{% trans "Total payments per customer" %}</p>
+                <a href="{% url 'reports:payment_by_customer' %}" class="btn btn-primary">{% trans "View" %}</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Purchase vs Sales" %}</h5>
+                <p class="card-text">{% trans "Compare purchases and sales" %}</p>
+                <a href="{% url 'reports:purchase_vs_sales' %}" class="btn btn-primary">{% trans "View" %}</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Profit Analysis" %}</h5>
+                <p class="card-text">{% trans "Net profit calculation" %}</p>
+                <a href="{% url 'reports:profit_analysis' %}" class="btn btn-primary">{% trans "View" %}</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Audit Log" %}</h5>
+                <p class="card-text">{% trans "Activity log with filters and export" %}</p>
+                <a href="{% url 'reports:audit_log_report' %}" class="btn btn-primary">{% trans "View" %}</a>
+                <a href="{% url 'reports:export_audit_log' %}?format=xlsx" class="btn btn-outline-secondary btn-sm"><i class="bi bi-file-earmark-excel"></i> {% trans "Export" %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="mt-4">{% trans "Data Export" %}</h3>
+<p>{% trans "Export data to CSV or Excel format." %}</p>
+<table class="table">
+    <thead><tr><th>{% trans "Data" %}</th><th>{% trans "CSV" %}</th><th>{% trans "Excel" %}</th></tr></thead>
+    <tbody>
+        <tr>
+            <td>{% trans "Orders" %}</td>
+            <td><a href="{% url 'reports:export_orders' %}?format=csv">{% trans "Download CSV" %}</a></td>
+            <td><a href="{% url 'reports:export_orders' %}?format=xlsx">{% trans "Download Excel" %}</a></td>
+        </tr>
+        <tr>
+            <td>{% trans "Returns" %}</td>
+            <td><a href="{% url 'reports:export_returns' %}?format=csv">{% trans "Download CSV" %}</a></td>
+            <td><a href="{% url 'reports:export_returns' %}?format=xlsx">{% trans "Download Excel" %}</a></td>
+        </tr>
+        <tr>
+            <td>{% trans "Inventory" %}</td>
+            <td><a href="{% url 'reports:export_inventory' %}?format=csv">{% trans "Download CSV" %}</a></td>
+            <td><a href="{% url 'reports:export_inventory' %}?format=xlsx">{% trans "Download Excel" %}</a></td>
+        </tr>
+        <tr>
+            <td>{% trans "Audit Log" %}</td>
+            <td><a href="{% url 'reports:export_audit_log' %}?format=csv">{% trans "Download CSV" %}</a></td>
+            <td><a href="{% url 'reports:export_audit_log' %}?format=xlsx">{% trans "Download Excel" %}</a></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'purchasing:purchase_order_list' %}">{% trans "Purchase Orders" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'purchasing:purchase_order_detail' po.id %}">{% trans "PO" %} #{{ po.id }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2>{{ title }}</h2>
+
+    <div class="card mb-3">
+        <div class="card-header">{% trans "PO Information" %}</div>
+        <div class="card-body">
+            <p><strong>{% trans "Supplier" %}:</strong> {{ po.supplier.name_en }}</p>
+            <p><strong>{% trans "Order Date" %}:</strong> {{ po.order_date }}</p>
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <div class="card mb-3">
+            <div class="card-header">{% trans "Receive Items" %}</div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Product" %}</th>
+                            <th>{% trans "Ordered" %}</th>
+                            <th>{% trans "Already Received" %}</th>
+                            <th>{% trans "Receive Now" %}</th>
+                            <th>{% trans "Expiry Date" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for form, item in formset_with_items %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.received_quantity }}</td>
+                            <td>
+                                {{ form.item_id }}
+                                {{ form.received_quantity }}
+                                {% if form.received_quantity.errors %}{{ form.received_quantity.errors }}{% endif %}
+                            </td>
+                            <td>
+                                {{ form.expiry_date }}
+                                {% if form.expiry_date.errors %}{{ form.expiry_date.errors }}{% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success">{% trans "Update Stock" %}</button>
+            <a href="{% url 'purchasing:purchase_order_detail' po.id %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

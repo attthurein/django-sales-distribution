@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'crm:lead_list' %}">{% trans "Leads" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'crm:lead_detail' lead.pk %}">{{ lead.name }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Add Contact Log" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans "Add Contact Log" %} - {{ lead.name }}</h1>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.contact_type.id_for_label }}">{% trans "Contact Type" %}</label>
+        {{ form.contact_type }}
+        {{ form.contact_type.errors }}
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.notes.id_for_label }}">{% trans "Notes" %} *</label>
+        {{ form.notes }}
+        {{ form.notes.errors }}
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.next_follow_up.id_for_label }}">{% trans "Next Follow-up Date" %}</label>
+        {{ form.next_follow_up }}
+        {{ form.next_follow_up.errors }}
+    </div>
+    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+    <a href="{% url 'crm:lead_detail' lead.pk %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}

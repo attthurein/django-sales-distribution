@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load i18n widget_tweaks static %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'crm:lead_list' %}">{% trans "Leads" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.name.id_for_label }}">{% trans "Name" %} *</label>
+        {% render_field form.name class="form-control" %}
+        {% if form.name.errors %}<div class="invalid-feedback d-block">{{ form.name.errors }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.shop_name.id_for_label }}">{% trans "Shop/Store name" %}</label>
+        {% trans "For Shop/Distributor" as placeholder_text %}
+        {% render_field form.shop_name class="form-control" placeholder=placeholder_text %}
+        {% if form.shop_name.errors %}<div class="invalid-feedback d-block">{{ form.shop_name.errors }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.contact_person.id_for_label }}">{% trans "Contact person" %}</label>
+        {% render_field form.contact_person class="form-control" placeholder=placeholder_text %}
+        {% if form.contact_person.errors %}<div class="invalid-feedback d-block">{{ form.contact_person.errors }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.phone.id_for_label }}">{% trans "Phone" %} *</label>
+        {% render_field form.phone class="form-control" %}
+        {% if form.phone.errors %}<div class="invalid-feedback d-block">{{ form.phone.errors }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="id_region">{% trans "Region" %}</label>
+        <select name="region_id" id="id_region" class="form-select">
+            <option value="">{% trans "Select region" %}...</option>
+            {% for region in regions %}
+            <option value="{{ region.id }}" {% if lead and lead.township and lead.township.region_id == region.id %}selected{% endif %}>
+                {{ region.name_en }}
+            </option>
+            {% empty %}
+            <option value="" disabled>{% trans "No regions. Add in Admin → Master Data." %}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.township.id_for_label }}">{% trans "Township" %}</label>
+        {% render_field form.township class="form-select" %}
+        {% if form.township.errors %}<div class="invalid-feedback d-block">{{ form.township.errors }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.address.id_for_label }}">{% trans "Address" %}</label>
+        {% render_field form.address class="form-control" rows=2 %}
+        {% if form.address.errors %}<div class="invalid-feedback d-block">{{ form.address.errors }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.source.id_for_label }}">{% trans "Source" %}</label>
+        {% render_field form.source class="form-control" %}
+        {% if form.source.errors %}<div class="invalid-feedback d-block">{{ form.source.errors }}</div>{% endif %}
+    </div>
+    {% if lead %}
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.status.id_for_label }}">{% trans "Status" %}</label>
+        {% render_field form.status class="form-select" %}
+        {% if form.status.errors %}<div class="invalid-feedback d-block">{{ form.status.errors }}</div>{% endif %}
+    </div>
+    {% else %}
+    {{ form.status }}
+    {% endif %}
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.notes.id_for_label }}">{% trans "Notes" %}</label>
+        {% render_field form.notes class="form-control" rows=3 %}
+        {% if form.notes.errors %}<div class="invalid-feedback d-block">{{ form.notes.errors }}</div>{% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+    <a href="{% url 'crm:lead_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/region_township.js' %}"></script>
+{% endblock %}

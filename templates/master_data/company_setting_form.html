@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load widget_tweaks i18n static %}
+
+{% block title %}{% trans "Company setting" %}{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Company setting" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="company-setting-page">
+    <div class="page-header">
+        <h1 class="page-title"><i class="bi bi-building"></i> {% trans "Company setting" %}</h1>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger mb-3">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <!-- Section 1: Basic Info & Address -->
+        <div class="section-card">
+            <div class="section-header">
+                <i class="bi bi-info-circle"></i> {% trans "Basic Info" %} &amp; {% trans "Address" %}
+            </div>
+            <div class="section-body">
+                <div class="form-group-row">
+                    <div class="form-field">
+                        <label class="form-label" for="{{ form.name.id_for_label }}">{% trans "Company name" %} <span class="text-danger">*</span></label>
+                        {{ form.name|add_class:"form-control" }}
+                        {% if form.name.errors %}<div class="text-danger small mt-1">{{ form.name.errors }}</div>{% endif %}
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label" for="{{ form.logo.id_for_label }}">{% trans "Logo" %}</label>
+                        <div class="logo-upload-zone">
+                            <div id="logo-preview-container" class="logo-preview-wrap" data-existing-url="{% if setting and setting.logo %}{{ setting.logo.url }}{% endif %}">
+                                <img id="logo-preview" src="{% if setting and setting.logo %}{{ setting.logo.url }}{% endif %}" alt="Logo" class="img-thumbnail {% if not setting or not setting.logo %}d-none{% endif %}">
+                            </div>
+                            {{ form.logo|add_class:"form-control" }}
+                            <div class="form-text mt-2">{% trans "Optional. Upload company logo for invoices. Preview shown before save." %}</div>
+                        </div>
+                        {% if form.logo.errors %}<div class="text-danger small mt-1">{{ form.logo.errors }}</div>{% endif %}
+                    </div>
+                    <div class="form-group-row cols-2">
+                        <div class="form-field">
+                            <label class="form-label" for="id_region">{% trans "Region" %}</label>
+                            <select name="region_id" id="id_region" class="form-select">
+                                <option value="">---</option>
+                                {% for region in regions %}
+                                <option value="{{ region.id }}" {% if setting and setting.region_id == region.id %}selected{% endif %}>{{ region.name_en }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label class="form-label" for="id_township">{% trans "Township" %}</label>
+                            <select name="township" id="id_township" class="form-select">
+                                <option value="">---</option>
+                                {% for region in regions %}
+                                {% for t in region.townships.all %}
+                                <option value="{{ t.id }}" data-region-id="{{ region.id }}" {% if setting and setting.township_id == t.id %}selected{% endif %}>{{ t.name_en }}</option>
+                                {% endfor %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-field full-width">
+                        <label class="form-label" for="{{ form.address.id_for_label }}">{% trans "Address" %}</label>
+                        {{ form.address|add_class:"form-control" }}
+                        {% if form.address.errors %}<div class="text-danger small mt-1">{{ form.address.errors }}</div>{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Contact & Tax -->
+        <div class="section-card">
+            <div class="section-header">
+                <i class="bi bi-telephone"></i> {% trans "Contact & Tax" %}
+            </div>
+            <div class="section-body">
+                <div class="form-group-row cols-2">
+                    <div class="form-field">
+                        <label class="form-label" for="{{ form.phone.id_for_label }}">{% trans "Phone" %}</label>
+                        {{ form.phone|add_class:"form-control" }}
+                        {% if form.phone.errors %}<div class="text-danger small mt-1">{{ form.phone.errors }}</div>{% endif %}
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label" for="{{ form.email.id_for_label }}">{% trans "Email" %}</label>
+                        {{ form.email|add_class:"form-control" }}
+                        {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors }}</div>{% endif %}
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label" for="{{ form.tax_id.id_for_label }}">{% trans "Tax ID" %}</label>
+                        {{ form.tax_id|add_class:"form-control" }}
+                        <div class="form-text">{% trans "Tax registration number for invoices." %}</div>
+                        {% if form.tax_id.errors %}<div class="text-danger small mt-1">{{ form.tax_id.errors }}</div>{% endif %}
+                    </div>
+                    <div class="form-field full-width">
+                        <label class="form-label" for="{{ form.footer_text.id_for_label }}">{% trans "Footer text" %}</label>
+                        {{ form.footer_text|add_class:"form-control" }}
+                        <div class="form-text">{% trans "Text shown at bottom of invoice." %}</div>
+                        {% if form.footer_text.errors %}<div class="text-danger small mt-1">{{ form.footer_text.errors }}</div>{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Base Currency -->
+        <div class="section-card">
+            <div class="section-header">
+                <i class="bi bi-currency-exchange"></i> {% trans "Base currency" %}
+            </div>
+            <div class="section-body">
+                <p class="section-desc">{% trans "Base currency for the whole system (invoices, reports, dashboard)." %}</p>
+                <div class="form-group-row">
+                    <div class="form-field form-field-currency">
+                        <label class="form-label">{% trans "Base currency" %}</label>
+                        {% if base_currency_locked %}
+                        <select class="form-select" disabled>
+                            <option value="{{ setting.base_currency_id|default:'' }}">
+                                {% if setting and setting.base_currency %}{{ setting.base_currency.name_en }} ({{ setting.base_currency.symbol }}){% else %}---{% endif %}
+                            </option>
+                        </select>
+                        <input type="hidden" name="base_currency" value="{{ setting.base_currency_id|default:'' }}">
+                        <div class="form-text text-warning">
+                            <i class="bi bi-lock-fill"></i> {% trans "Cannot change: transactional data exists (orders, products, etc.)." %}
+                        </div>
+                        {% else %}
+                        {{ form.base_currency|add_class:"form-select" }}
+                        <div class="form-text">{% trans "Affects invoices, reports, dashboard." %}</div>
+                        {% if form.base_currency.errors %}<div class="text-danger small mt-1">{{ form.base_currency.errors }}</div>{% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> {% trans "Save" %}
+                </button>
+                <a href="{% url 'dashboard:index' %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/company_setting.js' %}"></script>
+<script src="{% static 'js/region_township.js' %}"></script>
+{% endblock %}

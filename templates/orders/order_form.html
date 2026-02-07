@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% load widget_tweaks i18n static %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'orders:order_list' %}">{% trans "Orders" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'orders:order_detail' order.pk %}">{{ order.order_number }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<p class="text-muted">{% trans "Order" %}: {{ order.order_number }} | {% trans "Customer" %}: {{ order.customer.name }}</p>
+
+<form method="post" id="orderForm">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+            {{ error }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <input type="hidden" id="customer_id" value="{{ order.customer.id }}">
+    
+    <div class="card mb-3">
+        <div class="card-body">
+            {% if is_locked %}
+            <div class="alert alert-info">{% trans "Order is delivered/paid. Only notes and delivery date can be edited." %}</div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.status.id_for_label }}">{% trans "Status" %}</label>
+                        {{ form.status }}
+                        {{ form.status.errors }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ form.delivery_date.id_for_label }}">{% trans "Delivery Date" %}</label>
+                        {{ form.delivery_date }}
+                        {{ form.delivery_date.errors }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Items Section -->
+            <div class="mb-3">
+                <label class="form-label">{% trans "Items" %}</label>
+                {% if not is_locked %}
+                <span id="priceLoading" class="d-none ms-2"><span class="spinner-border spinner-border-sm" role="status"></span> {% trans "Loading prices..." %}</span>
+                {% endif %}
+            </div>
+
+            <div id="items">
+                {% if is_locked %}
+                    <!-- Read-only view for locked orders -->
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Product" %}</th>
+                                <th>{% trans "Quantity" %}</th>
+                                <th>{% trans "Total Price" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.orderitem_set.all %}
+                            <tr>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.total_price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <!-- Editable view -->
+                    <div class="row mb-1 d-none d-md-flex">
+                        <div class="col-md-7">
+                            <label class="form-label small">{% trans "Product" %}</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small">{% trans "Quantity" %}</label>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+
+                    {% for item in existing_items %}
+                    <div class="row mb-2 align-items-start item-row">
+                        <div class="col-md-7">
+                            <label class="form-label small d-md-none">{% trans "Product" %}</label>
+                            <select name="product_id" class="form-select product-select" data-item="{{ forloop.counter0 }}">
+                                <option value="">-- {% trans "Select Product" %} --</option>
+                                {% for p in products %}
+                                <option value="{{ p.id }}" 
+                                    data-stock="{{ p.stock_quantity }}" 
+                                    data-base="{{ p.base_price }}"
+                                    {% if p.id == item.product.id %}selected{% endif %}>
+                                    {{ p.name }} ({% trans "Stock" %}: {{ p.stock_quantity }}{% if p.unit %} {{ p.unit.name_en }}{% endif %})
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <small class="text-muted stock-hint d-block mt-1">
+                                {% if item.product %}
+                                {% trans "Available" %}: {{ item.product.stock_quantity }}
+                                {% endif %}
+                            </small>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small d-md-none">{% trans "Quantity" %}</label>
+                            <input type="number" name="quantity" class="form-control qty-input" min="1" placeholder="Qty" value="{{ item.quantity }}">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small d-md-none invisible">{% trans "Remove" %}</label>
+                            <button type="button" class="btn btn-outline-danger btn-sm remove-item" title="{% trans 'Remove' %}" aria-label="{% trans 'Remove' %}"><i class="bi bi-trash"></i></button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <!-- Hidden template for new rows (JS uses this options list) -->
+                    <div id="productOptionsTemplate" class="d-none">
+                        <option value="">-- {% trans "Select Product" %} --</option>
+                        {% for p in products %}
+                        <option value="{{ p.id }}" data-stock="{{ p.stock_quantity }}" data-base="{{ p.base_price }}">{{ p.name }} ({% trans "Stock" %}: {{ p.stock_quantity }}{% if p.unit %} {{ p.unit.name_en }}{% endif %})</option>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if not is_locked %}
+            <button type="button" class="btn btn-outline-secondary mb-3" id="addItem"><i class="bi bi-plus"></i> {% trans "Add Item" %}</button>
+            {% endif %}
+
+            <div class="mb-3">
+                <label class="form-label" for="{{ form.notes.id_for_label }}">{% trans "Notes" %}</label>
+                {{ form.notes }}
+                {{ form.notes.errors }}
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" id="submitBtn">{% trans "Save" %}</button>
+    <a href="{% url 'orders:order_detail' order.pk %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+</form>
+
+{% endblock %}
+
+{% block extra_js %}
+{% if not is_locked %}
+<script>
+    window.orderFormConfig = {
+        itemCount: parseInt("{{ existing_items|length|default:0 }}"),
+        productsUrl: '{% url "orders:product_prices_by_customer" %}',
+        isLocked: false
+    };
+</script>
+<script src="{% static 'js/order_form.js' %}"></script>
+{% endif %}
+{% endblock %}

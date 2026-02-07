@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load humanize i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'reports:report_index' %}">{% trans "Reports" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Return Analysis" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{% trans "Return Analysis" %}</h1>
+<p><a href="{% url 'reports:report_index' %}">{% trans "Back to Reports" %}</a></p>
+<table class="table table-striped">
+    <thead><tr><th>{% trans "Product" %}</th><th>{% trans "Reason" %}</th><th>{% trans "Count" %}</th><th>{% trans "Total Qty" %}</th></tr></thead>
+    <tbody>
+    {% for r in returns %}
+    <tr>
+        <td>{{ r.product__name }}</td>
+        <td>{{ r.reason__name_en }}</td>
+        <td>{{ r.count }}</td>
+        <td>{{ r.total_qty }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4" class="text-center py-5 text-muted">{% trans "No returns" %}</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

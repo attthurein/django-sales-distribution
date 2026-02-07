@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'returns:return_list' %}">{% trans "Returns" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'returns:return_detail' return_request.pk %}">{{ return_request.return_number }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Delete" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans "Delete Return" %}</h1>
+<p>{% blocktrans with number=return_request.return_number %}Are you sure you want to delete return {{ number }}?{% endblocktrans %}</p>
+<p class="text-muted">{% trans "Only Pending or Rejected returns can be deleted. Approved/Completed returns affect stock and cannot be deleted." %}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+    <a href="{% url 'returns:return_detail' return_request.pk %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}

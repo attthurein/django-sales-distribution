@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="mb-3">
+        {% if field.name == 'is_active' %}
+            <div class="form-check">
+                {{ field|add_class:"form-check-input" }}
+                <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            </div>
+        {% else %}
+            <label class="form-label">{{ field.label }}</label>
+            {{ field|add_class:"form-control" }}
+        {% endif %}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{% url 'customers:salesperson_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

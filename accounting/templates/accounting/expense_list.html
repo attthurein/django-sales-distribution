@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load humanize i18n common_extras %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ title }}</h2>
+        <div>
+            <a href="{% url 'accounting:expense_summary' %}" class="btn btn-info">{% trans "Summary" %}</a>
+            <a href="{% url 'accounting:expense_create' %}" class="btn btn-primary">{% trans "Record Expense" %}</a>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3 align-items-end">
+                <div class="col-md-2">
+                    <label class="form-label">{% trans "Start Date" %}</label>
+                    <input type="date" name="start_date" class="form-control" value="{{ start_date }}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">{% trans "End Date" %}</label>
+                    <input type="date" name="end_date" class="form-control" value="{{ end_date }}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">{% trans "Category" %}</label>
+                    <select name="category" class="form-select">
+                        <option value="">{% trans "All Categories" %}</option>
+                        {% for cat in categories %}
+                        <option value="{{ cat.id }}" {% if category_filter == cat.id|stringformat:"s" %}selected{% endif %}>{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">{% trans "Filter" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            {% trans "Expenses" %} <span class="badge bg-primary">{% trans "Total" %}: {{ total|intcomma }} {% currency_suffix %}</span>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>{% trans "Date" %}</th>
+                        <th>{% trans "Category" %}</th>
+                        <th>{% trans "Description" %}</th>
+                        <th>{% trans "Paid To" %}</th>
+                        <th>{% trans "Amount" %}</th>
+                        <th>{% trans "Recorded By" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.date }}</td>
+                        <td><span class="badge bg-secondary">{{ expense.category.name }}</span></td>
+                        <td>{{ expense.description|truncatewords:10 }}</td>
+                        <td>{{ expense.paid_to|default:"-" }}</td>
+                        <td class="text-end">{{ expense.amount|intcomma }}</td>
+                        <td>{% if expense.recorded_by %}{{ expense.recorded_by.get_username }}{% else %}-{% endif %}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">{% trans "No expenses found" %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

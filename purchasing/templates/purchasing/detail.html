@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load humanize i18n common_extras %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'purchasing:purchase_order_list' %}">{% trans "Purchase Orders" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "PO" %} #{{ po.id }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ title }}</h2>
+        <div>
+            {% if po.status != 'RECEIVED' and po.status != 'CANCELLED' %}
+            {% if perms.purchasing.change_purchaseorder %}
+            <a href="{% url 'purchasing:purchase_order_receive' po.id %}" class="btn btn-success">{% trans "Receive Items" %}</a>
+            {% endif %}
+            {% if perms.purchasing.delete_purchaseorder %}
+            <a href="{% url 'purchasing:purchase_order_delete' po.id %}" class="btn btn-outline-danger">{% trans "Delete" %}</a>
+            {% endif %}
+            {% endif %}
+            <a href="{% url 'purchasing:purchase_order_list' %}" class="btn btn-secondary">{% trans "Back to List" %}</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">{% trans "Purchase Order Information" %}</div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <th>{% trans "PO Number" %}:</th>
+                            <td>#{{ po.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Supplier" %}:</th>
+                            <td>{{ po.supplier.name_en }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Order Date" %}:</th>
+                            <td>{{ po.order_date }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Expected Date" %}:</th>
+                            <td>{{ po.expected_date|default:"-" }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Status" %}:</th>
+                            <td>
+                                <span
+                                    class="badge bg-{% if po.status == 'RECEIVED' %}success{% elif po.status == 'ORDERED' %}info{% else %}secondary{% endif %}">
+                                    {{ po.get_status_display }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Created By" %}:</th>
+                            <td>{% if po.created_by %}{{ po.created_by.get_username }}{% else %}-{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Notes" %}:</th>
+                            <td>{{ po.notes|default:"-" }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">{% trans "Summary" %}</div>
+                <div class="card-body">
+                    <h4>{% trans "Total Amount" %}: {{ po.total_amount|intcomma }} {% currency_suffix %}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">{% trans "Items" %}</div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Product" %}</th>
+                        <th>{% trans "Ordered Qty" %}</th>
+                        <th>{% trans "Received Qty" %}</th>
+                        <th>{% trans "Unit Cost" %}</th>
+                        <th>{% trans "Total Cost" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>
+                            {{ item.received_quantity }}
+                            {% if item.received_quantity < item.quantity %} <span class="badge bg-warning">
+                                {% trans "Pending" %}</span>
+                                {% else %}
+                                <span class="badge bg-success">{% trans "Complete" %}</span>
+                                {% endif %}
+                        </td>
+                        <td>{{ item.unit_cost|intcomma }}</td>
+                        <td>{{ item.total_cost|intcomma }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4" class="text-end">{% trans "Grand Total" %}:</th>
+                        <th>{{ po.total_amount|intcomma }} {% currency_suffix %}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

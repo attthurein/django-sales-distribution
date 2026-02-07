@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load humanize i18n common_extras %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'core:product_list' %}">{% trans "Products" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+    <a href="{% url 'core:product_edit' product.pk %}" class="btn btn-primary">{% trans "Edit" %}</a>
+    <a href="{% url 'core:stock_adjust' product.pk %}" class="btn btn-warning">{% trans "Adjust Stock" %}</a>
+    <a href="{% url 'core:product_list' %}" class="btn btn-secondary">{% trans "Back to list" %}</a>
+</div>
+<h1>{{ product.name }}</h1>
+<p>{% trans "SKU" %}: {{ product.sku|default:"-" }} | {% trans "Category" %}: {% if product.category %}{{ product.category.name_en }}{% else %}-{% endif %} | {% trans "Unit" %}: {% if product.unit %}{{ product.unit.name_en }}{% else %}-{% endif %}</p>
+<p>{% trans "Stock" %}: {{ product.stock_quantity }} | {% trans "Low threshold" %}: {{ product.low_stock_threshold }}{% if product.is_low_stock %} <span class="badge bg-warning">{% trans "Low Stock" %}</span>{% endif %}</p>
+<p>{% trans "Base Price" %}: {{ product.base_price|floatformat:0|intcomma }} {% currency_suffix %}</p>
+{% if product.price_tiers.exists %}
+<h4>{% trans "Price Tiers" %}</h4>
+<ul>
+    {% for tier in product.price_tiers.all %}
+    <li>{{ tier.customer_type.name_en }}: {{ tier.price|floatformat:0|intcomma }} {% currency_suffix %}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h3>{% trans "Stock Movements" %}</h3>
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead><tr><th>{% trans "Date" %}</th><th>{% trans "Type" %}</th><th>{% trans "Batch/Expiry" %}</th><th>{% trans "Qty" %}</th><th>{% trans "Reference" %}</th></tr></thead>
+    <tbody>
+    {% for m in movements %}
+    <tr>
+        <td>{{ m.created_at|date }}</td>
+        <td>{{ m.get_movement_type_display }}</td>
+        <td>
+            {% if m.batch %}
+            <span class="d-block small">{{ m.batch.batch_number }}</span>
+            <span class="d-block small text-muted">Exp: {{ m.batch.expiry_date|default:"-" }}</span>
+            {% else %}
+            -
+            {% endif %}
+        </td>
+        <td>{{ m.quantity }}</td>
+        <td>{{ m.reference_type }} #{{ m.reference_id }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5" class="text-center py-5 text-muted">{% trans "No movements" %}</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

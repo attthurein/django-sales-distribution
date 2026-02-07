@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load common_extras %}
+{% load humanize i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'orders:order_list' %}">{% trans "Orders" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ order.order_number }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans "Order" %} {{ order.order_number }}</h1>
+<p>{% trans "Customer" %}: {{ order.customer.name }} | {% trans "Type" %}: {{ order.get_order_type_display }} | {% trans "Status" %}: {{ order.status|master_name|default:"-" }}</p>
+<p>{% trans "Total" %}: {{ order.total_amount|floatformat:0|intcomma }} {% currency_suffix %} | {% trans "Paid" %}: {{ total_paid|floatformat:0|intcomma }} {% currency_suffix %}</p>
+
+<p>
+    <a href="{% url 'orders:invoice_view' order.pk %}" class="btn btn-sm btn-outline-dark" target="_blank">
+        <i class="bi bi-receipt"></i> {% trans "Invoice" %}
+    </a>
+    {% if perms.orders.change_salesorder %}
+    <a href="{% url 'orders:order_edit' order.pk %}" class="btn btn-sm btn-outline-secondary">{% trans "Edit" %}</a>
+    {% endif %}
+    {% if not order.status or order.status.code == 'PENDING' or order.status.code == 'CONFIRMED' %}
+    {% if perms.orders.change_salesorder %}
+    <form method="post" action="{% url 'orders:order_confirm' order.pk %}" class="d-inline">
+        {% csrf_token %}
+        <button class="btn btn-sm btn-primary" {% if order.status.code == 'CONFIRMED' %}disabled{% endif %}>{% trans "Confirm" %}</button>
+    </form>
+    {% endif %}
+    {% endif %}
+    {% if order.status and order.status.code == 'CONFIRMED' %}
+    {% if perms.orders.change_salesorder %}
+    <form method="post" action="{% url 'orders:order_deliver' order.pk %}" class="d-inline">
+        {% csrf_token %}<button class="btn btn-sm btn-success">{% trans "Deliver" %}</button>
+    </form>
+    {% endif %}
+    {% endif %}
+    {% if not order.status or order.status.code != 'PAID' and order.status.code != 'CANCELLED' %}
+    {% if perms.orders.add_payment %}
+    <a href="{% url 'orders:order_payment' order.pk %}" class="btn btn-sm btn-info">{% trans "Add Payment" %}</a>
+    {% endif %}
+    {% endif %}
+    {% if not order.status or order.status.code != 'DELIVERED' and order.status.code != 'PAID' and order.status.code != 'CANCELLED' %}
+    {% if perms.orders.change_salesorder %}
+    <form method="post" action="{% url 'orders:order_cancel' order.pk %}" class="d-inline" data-confirm="{% trans "Cancel?" %}">
+        {% csrf_token %}<button class="btn btn-sm btn-danger">{% trans "Cancel" %}</button>
+    </form>
+    {% endif %}
+    {% endif %}
+</p>
+
+<h3>{% trans "Items" %}</h3>
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead><tr><th>{% trans "Product" %}</th><th>{% trans "Qty" %}</th><th>{% trans "Price" %}</th><th>{% trans "Subtotal" %}</th></tr></thead>
+    <tbody>
+    {% for item in order.orderitem_set.all %}
+    <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.unit_price|floatformat:0|intcomma }}</td>
+        <td>{{ item.total_price|floatformat:0|intcomma }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<h3>{% trans "Payments" %}</h3>
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead><tr><th>{% trans "Date" %}</th><th>{% trans "Amount" %}</th><th>{% trans "Method" %}</th><th>{% trans "Actions" %}</th></tr></thead>
+    <tbody>
+    {% for p in order.payments.all %}
+    <tr>
+        <td>{{ p.payment_date|date }}</td>
+        <td>{{ p.amount|floatformat:0|intcomma }}</td>
+        <td>{{ p.payment_method|master_name|default:"-" }}</td>
+        <td>
+            <a href="{% url 'orders:payment_voucher' p.pk %}" class="btn btn-sm btn-outline-secondary" target="_blank">{% trans "Voucher" %}</a>
+            <a href="{% url 'orders:payment_voucher' p.pk %}" class="btn btn-sm btn-outline-danger" target="_blank"><i class="bi bi-file-pdf"></i> {% trans "Download PDF" %}</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">{% trans "No payments" %}</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<p><a href="{% url 'orders:order_list' %}">{% trans "Back to list" %}</a></p>
+{% endblock %}

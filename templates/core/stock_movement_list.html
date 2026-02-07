@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load humanize i18n %}
+
+{% block content %}
+<h1 class="mb-4">{% trans "Stock Movements" %}</h1>
+<p><a href="{% url 'core:product_list' %}">{% trans "Products" %}</a></p>
+
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead><tr><th>{% trans "Date" %}</th><th>{% trans "Product" %}</th><th>{% trans "Type" %}</th><th>{% trans "Batch/Expiry" %}</th><th>{% trans "Qty" %}</th><th>{% trans "Reference" %}</th></tr></thead>
+    <tbody>
+    {% for m in movements %}
+    <tr>
+        <td>{{ m.created_at|date }}</td>
+        <td><a href="{% url 'core:product_detail' m.product.pk %}">{{ m.product.name }}</a></td>
+        <td>{{ m.get_movement_type_display }}</td>
+        <td>
+            {% if m.batch %}
+            <span class="d-block small">{{ m.batch.batch_number }}</span>
+            <span class="d-block small text-muted">Exp: {{ m.batch.expiry_date|default:"-" }}</span>
+            {% else %}
+            -
+            {% endif %}
+        </td>
+        <td>{{ m.quantity }}</td>
+        <td>{{ m.reference_type }} #{{ m.reference_id }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6" class="text-center py-5 text-muted">{% trans "No movements" %}</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

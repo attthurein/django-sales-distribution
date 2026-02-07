@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'reports:report_index' %}">{% trans "Reports" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Audit Log Report" %}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{% trans "Audit Log Report" %}</h1>
+<p><a href="{% url 'reports:report_index' %}" class="btn btn-outline-secondary mb-3"><i class="bi bi-arrow-left"></i> {% trans "Back to Reports" %}</a></p>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Start Date" %}</label>
+                <input type="date" name="start_date" class="form-control" value="{{ start_date }}">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">{% trans "End Date" %}</label>
+                <input type="date" name="end_date" class="form-control" value="{{ end_date }}">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Action" %}</label>
+                <select name="action" class="form-select">
+                    <option value="">{% trans "All" %}</option>
+                    {% for a in actions %}
+                    <option value="{{ a }}" {% if action_filter == a %}selected{% endif %}>{{ a }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Module" %}</label>
+                <select name="model" class="form-select">
+                    <option value="">{% trans "All" %}</option>
+                    {% for value, label in model_choices %}
+                    <option value="{{ value }}" {% if model_filter == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Group By" %}</label>
+                <select name="group_by" class="form-select">
+                    <option value="">{% trans "None" %}</option>
+                    <option value="date" {% if group_by == 'date' %}selected{% endif %}>{% trans "Date" %}</option>
+                    <option value="action" {% if group_by == 'action' %}selected{% endif %}>{% trans "Action" %}</option>
+                    <option value="model" {% if group_by == 'model' %}selected{% endif %}>{% trans "Module" %}</option>
+                </select>
+            </div>
+            <div class="col-md-2 align-self-end">
+                <button type="submit" class="btn btn-primary">{% trans "Filter" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="mb-3">
+    <a href="{% url 'reports:export_audit_log' %}?start_date={{ start_date }}&end_date={{ end_date }}{% if action_filter %}&action={{ action_filter }}{% endif %}{% if model_filter %}&model={{ model_filter }}{% endif %}&format=csv" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-file-earmark-text"></i> {% trans "Export CSV" %}
+    </a>
+    <a href="{% url 'reports:export_audit_log' %}?start_date={{ start_date }}&end_date={{ end_date }}{% if action_filter %}&action={{ action_filter }}{% endif %}{% if model_filter %}&model={{ model_filter }}{% endif %}&format=xlsx" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-file-earmark-excel"></i> {% trans "Export Excel" %}
+    </a>
+</div>
+
+{% if grouped %}
+<div class="card mb-4">
+    <div class="card-header"><strong>{% trans "Summary" %} ({% trans "Grouped" %})</strong></div>
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    {% if group_by == 'date' %}
+                    <th>{% trans "Date" %}</th>
+                    {% elif group_by == 'action' %}
+                    <th>{% trans "Action" %}</th>
+                    {% else %}
+                    <th>{% trans "Module" %}</th>
+                    {% endif %}
+                    <th>{% trans "Count" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in grouped %}
+                <tr>
+                    <td>
+                        {% if group_by == 'date' %}
+                        {{ row.day|date:"Y-m-d" }}
+                        {% elif group_by == 'action' %}
+                        {{ row.action }}
+                        {% else %}
+                        {{ row.module_display_name|default:row.model_name }}
+                        {% endif %}
+                    </td>
+                    <td>{{ row.count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+<div class="card">
+    <div class="card-header"><strong>{% trans "Log Details" %}</strong></div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-striped table-stack mb-0">
+                <thead>
+                    <tr>
+                        <th>{% trans "Date" %}</th>
+                        <th>{% trans "User" %}</th>
+                        <th>{% trans "Action" %}</th>
+                        <th>{% trans "Module" %} / {% trans "What Changed" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                    <tr>
+                        <td data-label="{% trans 'Date' %}">{{ log.created_at|date:"Y-m-d H:i" }}</td>
+                        <td data-label="{% trans 'User' %}">{% if log.user %}{{ log.user.get_username }}{% else %}-{% endif %}</td>
+                        <td data-label="{% trans 'Action' %}"><span class="badge {% if log.action == 'create' %}bg-success{% elif log.action == 'update' %}bg-info{% else %}bg-danger{% endif %}">{{ log.action }}</span></td>
+                        <td data-label="{% trans 'Module' %} / {% trans 'What Changed' %}">
+                            <strong>{{ log.module_display_name }}</strong>
+                            {% if log.summary_display %}
+                            <br><small class="text-muted">{{ log.summary_display }}</small>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-5">{% trans "No audit logs found." %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

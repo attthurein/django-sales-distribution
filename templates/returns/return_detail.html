@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load common_extras %}
+{% load humanize i18n %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'returns:return_list' %}">{% trans "Returns" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ return_request.return_number }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans "Return" %} {{ return_request.return_number }}</h1>
+<p>{% trans "Order" %}: <a href="{% url 'orders:order_detail' return_request.order.pk %}">{{ return_request.order.order_number }}</a></p>
+<p>{% trans "Status" %}: {{ return_request.status.name_en }} | {% trans "Type" %}: {{ return_request.return_type.name_en }}</p>
+<p>{% trans "Total" %}: {{ return_request.total_amount|floatformat:0|intcomma }} {% currency_suffix %}</p>
+
+{% if return_request.status.code == 'PENDING' or return_request.status.code == 'REJECTED' %}
+<p>
+    <a href="{% url 'returns:return_delete' return_request.pk %}" class="btn btn-outline-danger">{% trans "Delete" %}</a>
+</p>
+{% endif %}
+{% if return_request.status.code == 'PENDING' %}
+<form method="post" action="{% url 'returns:approve_return' return_request.pk %}" class="d-inline">
+    {% csrf_token %}
+    <input type="text" name="notes" placeholder="{% trans 'Notes' %}" class="form-control d-inline-block w-auto">
+    {% trans "Are you sure you want to approve this return? Stock will be updated based on item selection." as approve_msg %}
+    <button class="btn btn-success" onclick="return confirm('{{ approve_msg|escapejs }}')">{% trans "Approve" %}</button>
+</form>
+<form method="post" action="{% url 'returns:reject_return' return_request.pk %}" class="d-inline">
+    {% csrf_token %}
+    <input type="text" name="notes" placeholder="{% trans 'Notes' %}" class="form-control d-inline-block w-auto">
+    {% trans "Are you sure you want to reject this return?" as reject_msg %}
+    <button class="btn btn-danger" onclick="return confirm('{{ reject_msg|escapejs }}')">{% trans "Reject" %}</button>
+</form>
+{% endif %}
+
+{% if return_request.status.code == 'COMPLETED' or return_request.status.code == 'APPROVED' %}
+<p>
+    {% if not return_request.replacement_order %}
+    <form action="{% url 'returns:create_replacement_order' return_request.pk %}" method="post" class="d-inline">
+        {% csrf_token %}
+        {% trans "Create a replacement order with 0 price?" as replace_msg %}
+        <button type="submit" class="btn btn-primary" onclick="return confirm('{{ replace_msg|escapejs }}')">
+            <i class="bi bi-arrow-repeat"></i> {% trans "Create Replacement Order" %}
+        </button>
+    </form>
+    {% else %}
+    <a href="{% url 'orders:order_detail' return_request.replacement_order.pk %}" class="btn btn-info">
+        <i class="bi bi-box-seam"></i> {% trans "View Replacement Order" %}
+    </a>
+    {% endif %}
+</p>
+{% endif %}
+
+<h3>{% trans "Items" %}</h3>
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead><tr><th>{% trans "Product" %}</th><th>{% trans "Qty" %}</th><th>{% trans "Reason" %}</th><th>{% trans "Restock" %}</th></tr></thead>
+    <tbody>
+    {% for item in return_request.items.all %}
+    <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.reason|master_name }}</td>
+        <td>
+            {% if item.return_to_stock %}
+            <span class="badge bg-success">Yes</span>
+            {% else %}
+            <span class="badge bg-danger">No (Waste)</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<h3>{% trans "Processing Log" %}</h3>
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead><tr><th>{% trans "Action" %}</th><th>{% trans "By" %}</th><th>{% trans "Date" %}</th><th>{% trans "Notes" %}</th></tr></thead>
+    <tbody>
+    {% for log in return_request.processing_log.all %}
+    <tr>
+        <td>{{ log.action }}</td>
+        <td>{% if log.processed_by %}{{ log.processed_by }}{% else %}—{% endif %}</td>
+        <td>{{ log.processed_at|date }}</td>
+        <td>{{ log.notes }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">{% trans "No log" %}</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<p><a href="{% url 'returns:return_list' %}">{% trans "Back to list" %}</a></p>
+{% endblock %}

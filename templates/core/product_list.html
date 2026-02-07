@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load humanize i18n %}
+
+{% block content %}
+<h1 class="mb-4">{% trans "Products" %}</h1>
+<p>
+    <a href="{% url 'core:product_create' %}" class="btn btn-primary">{% trans "Add Product" %}</a>
+    <a href="{% url 'core:low_stock_list' %}" class="btn btn-warning">{% trans "Low Stock Alerts" %}</a>
+    <a href="{% url 'core:stock_movement_list' %}" class="btn btn-outline-secondary">{% trans "Stock Movements" %}</a>
+</p>
+
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead><tr><th>{% trans "Name" %}</th><th>{% trans "SKU" %}</th><th>{% trans "Category" %}</th><th>{% trans "Expiry" %}</th><th>{% trans "Stock" %}</th><th>{% trans "Price" %}</th><th>{% trans "Actions" %}</th></tr></thead>
+    <tbody>
+    {% for p in products %}
+    <tr>
+        <td><a href="{% url 'core:product_detail' p.pk %}">{{ p.name }}</a></td>
+        <td>{{ p.sku }}</td>
+        <td>{{ p.category.name_en|default:"-" }}</td>
+        <td>
+            {% if p.active_batches %}
+                <ul class="list-unstyled mb-0 small">
+                {% for b in p.active_batches %}
+                    <li class="text-nowrap">
+                        {{ b.expiry_date|date:"M d, Y" }}: <strong>{{ b.quantity }}</strong>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                {{ p.expiry_date|default:"-" }}
+            {% endif %}
+        </td>
+        <td>{{ p.stock_quantity }}{% if p.is_low_stock %} <span class="badge bg-warning">{% trans "Low" %}</span>{% endif %}</td>
+        <td>{{ p.base_price|floatformat:0|intcomma }}</td>
+        <td>
+            <div class="btn-group btn-group-sm">
+                <a href="{% url 'core:product_detail' p.pk %}" class="btn btn-outline-primary">{% trans "View" %}</a>
+                <a href="{% url 'core:product_edit' p.pk %}" class="btn btn-outline-secondary">{% trans "Edit" %}</a>
+            </div>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6" class="text-center py-5">
+        <i class="bi bi-box-seam display-4 text-muted"></i>
+        <p class="mt-2 text-muted">{% trans "No products yet." %}</p>
+        <a href="{% url 'core:product_create' %}" class="btn btn-primary">{% trans "Add your first product" %}</a>
+    </td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% if products.paginator.num_pages > 1 %}
+<nav aria-label="Product pagination" class="mt-3">
+    <ul class="pagination justify-content-center">
+        {% if products.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">{% trans "Previous" %}</a></li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">{% blocktrans with page=products.number total=products.paginator.num_pages %}Page {{ page }} of {{ total }}{% endblocktrans %}</span></li>
+        {% if products.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">{% trans "Next" %}</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
