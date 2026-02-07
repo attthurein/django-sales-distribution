@@ -36,6 +36,10 @@ urlpatterns = [
     path('accounting/', include('accounting.urls')),
     path('crm/', include('crm.urls')),
     path('settings/', include('master_data.urls')),
+    
+    # API
+    path('api/', include('core.api_urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ]
 
 if settings.DEBUG:

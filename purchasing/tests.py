@@ -64,7 +64,7 @@ class PurchasingServiceTests(TestCase):
         item = po.items.first()
 
         # 2. Receive 5 items (Partial)
-        received_data = [(item.id, 5)]
+        received_data = [{'item_id': item.id, 'quantity': 5}]
         po = receive_purchase_items(po, received_data, self.user)
         
         # Check Item
@@ -79,7 +79,7 @@ class PurchasingServiceTests(TestCase):
         self.assertEqual(po.status, PURCHASE_ORDERED) # Not fully received yet
 
         # 3. Receive remaining 5 items (Full)
-        received_data = [(item.id, 5)]
+        received_data = [{'item_id': item.id, 'quantity': 5}]
         po = receive_purchase_items(po, received_data, self.user)
         
         # Check Item
@@ -99,7 +99,7 @@ class PurchasingServiceTests(TestCase):
         po = create_purchase_order(self.supplier.id, None, "Test", items, self.user)
         item = po.items.first()
 
-        received_data = [(item.id, 11)]
+        received_data = [{'item_id': item.id, 'quantity': 11}]
         
         with self.assertRaises(ValueError):
             receive_purchase_items(po, received_data, self.user)
