@@ -2,6 +2,7 @@
 Core forms - Product with price tiers.
 """
 from django import forms
+from django.utils.translation import gettext_lazy as _, get_language
 from .models import Product, ProductPriceTier
 from master_data.models import CustomerType
 
@@ -19,13 +20,16 @@ class ProductForm(forms.ModelForm):
         ]
         widgets = {
             'description': forms.Textarea(attrs={'rows': 3}),
-            'sku': forms.TextInput(attrs={'placeholder': 'Optional'}),
+            'sku': forms.TextInput(attrs={'placeholder': _('Optional')}),
             'expiry_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['category'].empty_label = _('-- Select Category --')
+        self.fields['unit'].empty_label = _('-- Select Unit --')
         # Add price tier fields for each customer type
+        lang = get_language()
         for ct in CustomerType.objects.filter(
                 is_active=True
         ).order_by('sort_order'):
@@ -37,13 +41,15 @@ class ProductForm(forms.ModelForm):
                 ).first()
                 if tier:
                     initial = tier.price
+            
+            ct_name = ct.get_display_name(lang)
             self.fields[field_name] = forms.DecimalField(
                 max_digits=12, decimal_places=2,
                 required=False,
                 initial=initial,
-                label=f'Price ({ct.name_en})',
+                label=f'{_("Price")} ({ct_name})',
                 widget=forms.NumberInput(
-                    attrs={'step': '0.01', 'placeholder': 'Uses base if empty'}
+                    attrs={'step': '0.01', 'placeholder': _('Uses base if empty')}
                 )
             )
 

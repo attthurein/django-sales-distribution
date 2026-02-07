@@ -3,6 +3,7 @@ Order forms.
 """
 from decimal import Decimal
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from .models import SalesOrder, Payment
 from customers.models import Customer
 
@@ -35,7 +36,7 @@ class OrderCreateForm(forms.Form):
         required=False,
         widget=forms.Textarea(attrs={
             'class': 'form-control', 'rows': 2, 'id': 'notes',
-            'placeholder': 'Optional notes',
+            'placeholder': _('Optional notes'),
         }),
     )
 

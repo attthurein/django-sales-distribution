@@ -2,6 +2,7 @@
 Customer forms.
 """
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from .models import Customer, Salesperson
 from master_data.models import CustomerType, Township
 from common.utils import get_regions_with_townships
@@ -11,7 +12,7 @@ class CustomerForm(forms.ModelForm):
     township = forms.ChoiceField(
         required=False,
         widget=forms.Select(attrs={'class': 'form-select', 'id': 'id_township'}),
-        label='Township',
+        label=_('Township'),
     )
 
     class Meta:
@@ -27,7 +28,7 @@ class CustomerForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         regions = get_regions_with_townships()
-        township_choices = [('', 'Select township...')]
+        township_choices = [('', _('Select township...'))]
         for region in regions:
             for t in region.townships.all():
                 township_choices.append((str(t.id), t.name_en))

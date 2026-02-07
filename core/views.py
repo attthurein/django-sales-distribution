@@ -27,7 +27,7 @@ def product_create(request):
             return redirect('core:product_detail', pk=product.pk)
     else:
         form = ProductForm()
-    return render(request, 'core/product_form.html', {'form': form, 'title': 'Add Product'})
+    return render(request, 'core/product_form.html', {'form': form, 'title': _('Add Product')})
 
 
 @login_required
@@ -42,7 +42,7 @@ def product_edit(request, pk):
             return redirect('core:product_detail', pk=product.pk)
     else:
         form = ProductForm(instance=product)
-    return render(request, 'core/product_form.html', {'form': form, 'title': 'Edit Product', 'product': product})
+    return render(request, 'core/product_form.html', {'form': form, 'title': _('Edit Product'), 'product': product})
 
 
 @login_required

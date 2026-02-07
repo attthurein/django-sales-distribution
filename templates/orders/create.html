@@ -66,7 +66,7 @@
                     </div>
                     <div class="col-md-3">
                         <label class="form-label small d-md-none">{% trans "Quantity" %}</label>
-                        <input type="number" name="quantity" class="form-control qty-input" min="1" placeholder="Qty" value="">
+                        <input type="number" name="quantity" class="form-control qty-input" min="1" placeholder="{% trans 'Qty' %}" value="">
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-item d-none" title="{% trans 'Remove' %}" aria-label="{% trans 'Remove' %}"><i class="bi bi-trash"></i></button>
@@ -109,7 +109,8 @@
     window.orderFormConfig = {
         itemCount: 1,
         productsUrl: '{% url "orders:product_prices_by_customer" %}',
-        isLocked: false
+        isLocked: false,
+        qtyPlaceholder: "{% trans 'Qty' %}"
     };
 </script>
 <script src="{% static 'js/order_form.js' %}"></script>

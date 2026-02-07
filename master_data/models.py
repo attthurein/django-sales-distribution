@@ -2,7 +2,7 @@
 Master Data models - configurable lookup tables.
 """
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, get_language
 
 from common.models import SoftDeleteMixin
 
@@ -24,6 +24,11 @@ class BaseMasterModel(SoftDeleteMixin):
         if lang == 'my' and self.name_my:
             return self.name_my
         return self.name_en
+
+    @property
+    def name(self):
+        """Dynamic name based on current language."""
+        return self.get_display_name(get_language())
 
     def __str__(self):
         return self.name_en

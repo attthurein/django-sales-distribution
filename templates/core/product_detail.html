@@ -17,14 +17,14 @@
     <a href="{% url 'core:product_list' %}" class="btn btn-secondary">{% trans "Back to list" %}</a>
 </div>
 <h1>{{ product.name }}</h1>
-<p>{% trans "SKU" %}: {{ product.sku|default:"-" }} | {% trans "Category" %}: {% if product.category %}{{ product.category.name_en }}{% else %}-{% endif %} | {% trans "Unit" %}: {% if product.unit %}{{ product.unit.name_en }}{% else %}-{% endif %}</p>
+<p>{% trans "SKU" %}: {{ product.sku|default:"-" }} | {% trans "Category" %}: {% if product.category %}{{ product.category.name }}{% else %}-{% endif %} | {% trans "Unit" %}: {% if product.unit %}{{ product.unit.name }}{% else %}-{% endif %}</p>
 <p>{% trans "Stock" %}: {{ product.stock_quantity }} | {% trans "Low threshold" %}: {{ product.low_stock_threshold }}{% if product.is_low_stock %} <span class="badge bg-warning">{% trans "Low Stock" %}</span>{% endif %}</p>
 <p>{% trans "Base Price" %}: {{ product.base_price|floatformat:0|intcomma }} {% currency_suffix %}</p>
 {% if product.price_tiers.exists %}
 <h4>{% trans "Price Tiers" %}</h4>
 <ul>
     {% for tier in product.price_tiers.all %}
-    <li>{{ tier.customer_type.name_en }}: {{ tier.price|floatformat:0|intcomma }} {% currency_suffix %}</li>
+    <li>{{ tier.customer_type.name }}: {{ tier.price|floatformat:0|intcomma }} {% currency_suffix %}</li>
     {% endfor %}
 </ul>
 {% endif %}

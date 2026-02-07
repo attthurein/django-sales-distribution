@@ -112,7 +112,7 @@
                         </div>
                         <div class="col-md-3">
                             <label class="form-label small d-md-none">{% trans "Quantity" %}</label>
-                            <input type="number" name="quantity" class="form-control qty-input" min="1" placeholder="Qty" value="{{ item.quantity }}">
+                            <input type="number" name="quantity" class="form-control qty-input" min="1" placeholder="{% trans 'Qty' %}" value="{{ item.quantity }}">
                         </div>
                         <div class="col-md-2">
                             <label class="form-label small d-md-none invisible">{% trans "Remove" %}</label>
@@ -154,7 +154,8 @@
     window.orderFormConfig = {
         itemCount: parseInt("{{ existing_items|length|default:0 }}"),
         productsUrl: '{% url "orders:product_prices_by_customer" %}',
-        isLocked: false
+        isLocked: false,
+        qtyPlaceholder: "{% trans 'Qty' %}"
     };
 </script>
 <script src="{% static 'js/order_form.js' %}"></script>

@@ -12,32 +12,33 @@ from common.constants import LIMIT_EXPIRY_DAYS
 
 class Product(SoftDeleteMixin):
     """Product with category, unit, pricing, stock."""
-    name = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
-    sku = models.CharField(max_length=100, unique=True, blank=True)
+    name = models.CharField(max_length=200, verbose_name=_("Name"))
+    description = models.TextField(blank=True, verbose_name=_("Description"))
+    sku = models.CharField(max_length=100, unique=True, blank=True, verbose_name=_("SKU"))
     category = models.ForeignKey(
         ProductCategory, on_delete=models.PROTECT, null=True, blank=True,
-        related_name='products'
+        related_name='products', verbose_name=_("Category")
     )
     unit = models.ForeignKey(
         UnitOfMeasure, on_delete=models.PROTECT, null=True, blank=True,
-        related_name='products'
+        related_name='products', verbose_name=_("Unit")
     )
-    base_price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    base_price = models.DecimalField(max_digits=12, decimal_places=2, default=0, verbose_name=_("Base Price"))
     cost_price = models.DecimalField(
         max_digits=12, decimal_places=2, null=True, blank=True,
-        help_text='For margin calculation'
+        help_text='For margin calculation', verbose_name=_("Cost Price")
     )
-    stock_quantity = models.PositiveIntegerField(default=0)
-    low_stock_threshold = models.PositiveIntegerField(default=10)
-    expiry_date = models.DateField(null=True, blank=True)
+    stock_quantity = models.PositiveIntegerField(default=0, verbose_name=_("Stock Quantity"))
+    low_stock_threshold = models.PositiveIntegerField(default=10, verbose_name=_("Low Stock Threshold"))
+    expiry_date = models.DateField(null=True, blank=True, verbose_name=_("Expiry Date"))
     expiry_alert_days = models.PositiveIntegerField(
         default=LIMIT_EXPIRY_DAYS,
-        help_text=_('Days before expiry to trigger alert')
+        help_text=_('Days before expiry to trigger alert'),
+        verbose_name=_("Expiry Alert Days")
     )
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True, verbose_name=_("Is active"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated at"))
 
     class Meta:
         verbose_name = _("Product")

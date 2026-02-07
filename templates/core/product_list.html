@@ -17,7 +17,7 @@
     <tr>
         <td><a href="{% url 'core:product_detail' p.pk %}">{{ p.name }}</a></td>
         <td>{{ p.sku }}</td>
-        <td>{{ p.category.name_en|default:"-" }}</td>
+        <td>{{ p.category.name|default:"-" }}</td>
         <td>
             {% if p.active_batches %}
                 <ul class="list-unstyled mb-0 small">

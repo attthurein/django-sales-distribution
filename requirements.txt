@@ -17,3 +17,6 @@ django-colorfield>=0.11.0
 waitress>=3.0.0
 djangorestframework>=3.14.0
 markdown>=3.4.0
+drf-spectacular>=0.26.0
+django-filter>=23.0
+django-cors-headers>=4.3.0

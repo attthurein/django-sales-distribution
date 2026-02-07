@@ -8,7 +8,8 @@
     const config = window.orderFormConfig || {
         itemCount: 0,
         productsUrl: '', // URL to fetch prices
-        isLocked: false
+        isLocked: false,
+        qtyPlaceholder: 'Qty'
     };
 
     if (config.isLocked) return;
@@ -68,7 +69,7 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label small d-md-none">Quantity</label>
-                <input type="number" name="quantity" class="form-control qty-input" min="1" placeholder="Qty" value="">
+                <input type="number" name="quantity" class="form-control qty-input" min="1" placeholder="${config.qtyPlaceholder}" value="">
             </div>
             <div class="col-md-2">
                 <label class="form-label small d-md-none invisible">Remove</label>

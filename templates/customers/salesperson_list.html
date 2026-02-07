@@ -1,21 +1,22 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
-<h1>Salespeople</h1>
-<p><a href="{% url 'customers:salesperson_create' %}" class="btn btn-primary">Add Salesperson</a>
-   <a href="{% url 'customers:customer_list' %}" class="btn btn-outline-secondary">Customers</a></p>
+<h1>{% trans "Salespeople" %}</h1>
+<p><a href="{% url 'customers:salesperson_create' %}" class="btn btn-primary">{% trans "Add Salesperson" %}</a>
+   <a href="{% url 'customers:customer_list' %}" class="btn btn-outline-secondary">{% trans "Customers" %}</a></p>
 
 <table class="table table-striped">
-    <thead><tr><th>Name</th><th>Phone</th><th>Actions</th></tr></thead>
+    <thead><tr><th>{% trans "Name" %}</th><th>{% trans "Phone" %}</th><th>{% trans "Actions" %}</th></tr></thead>
     <tbody>
     {% for s in salespeople %}
     <tr>
         <td>{{ s.name }}</td>
         <td>{{ s.phone }}</td>
-        <td><a href="{% url 'customers:salesperson_edit' s.pk %}">Edit</a></td>
+        <td><a href="{% url 'customers:salesperson_edit' s.pk %}">{% trans "Edit" %}</a></td>
     </tr>
     {% empty %}
-    <tr><td colspan="3">No salespeople</td></tr>
+    <tr><td colspan="3">{% trans "No salespeople" %}</td></tr>
     {% endfor %}
     </tbody>
 </table>

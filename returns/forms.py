@@ -3,6 +3,7 @@ Return forms - ModelForm for return creation.
 """
 from django import forms
 from django.forms import formset_factory
+from django.utils.translation import gettext_lazy as _
 from master_data.models import ReturnType, ReturnReason
 
 
@@ -52,8 +53,8 @@ class ReturnOrderSelectForm(forms.Form):
 
     order_id = forms.ModelChoiceField(
         queryset=None,
-        empty_label='-- Select Order --',
-        label='Order',
+        empty_label=_('-- Select Order --'),
+        label=_('Order'),
         widget=forms.Select(attrs={'class': 'form-select'}),
     )
 

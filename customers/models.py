@@ -11,7 +11,7 @@ from common.models import SoftDeleteMixin
 
 class Customer(SoftDeleteMixin):
     """Customer with credit limit and payment terms."""
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, verbose_name=_("Name"))
     shop_name = models.CharField(
         max_length=200, blank=True,
         verbose_name=_("Shop/Store name"),
@@ -22,28 +22,31 @@ class Customer(SoftDeleteMixin):
         verbose_name=_("Contact person"),
         help_text=_("For Shop/Distributor - leave blank for Individual")
     )
-    phone = models.CharField(max_length=20, db_index=True)
+    phone = models.CharField(max_length=20, db_index=True, verbose_name=_("Phone"))
     customer_type = models.ForeignKey(
-        CustomerType, on_delete=models.PROTECT, related_name='customers'
+        CustomerType, on_delete=models.PROTECT, related_name='customers',
+        verbose_name=_("Customer Type")
     )
     township = models.ForeignKey(
         'master_data.Township', on_delete=models.PROTECT, related_name='customers',
-        null=True, blank=True
+        null=True, blank=True, verbose_name=_("Township")
     )
     salesperson = models.ForeignKey(
         'Salesperson', on_delete=models.SET_NULL, null=True, blank=True,
         related_name='customers', verbose_name=_("Salesperson")
     )
-    street_address = models.TextField(blank=True, verbose_name="Address")
+    street_address = models.TextField(blank=True, verbose_name=_("Address"))
     credit_limit = models.DecimalField(
         max_digits=12, decimal_places=2, default=0,
-        help_text='Maximum credit allowed'
+        verbose_name=_("Credit Limit"),
+        help_text=_('Maximum credit allowed')
     )
     payment_terms_days = models.PositiveIntegerField(
         default=0,
-        help_text='Days until payment due after delivery'
+        verbose_name=_("Payment Terms (Days)"),
+        help_text=_('Days until payment due after delivery')
     )
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True, verbose_name=_("Is active"))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -65,13 +68,13 @@ class Customer(SoftDeleteMixin):
 
 class Salesperson(SoftDeleteMixin):
     """Sales rep for order assignment."""
-    name = models.CharField(max_length=200)
-    phone = models.CharField(max_length=20, blank=True)
+    name = models.CharField(max_length=200, verbose_name=_("Name"))
+    phone = models.CharField(max_length=20, blank=True, verbose_name=_("Phone"))
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
-        related_name='salesperson_profile'
-)
-    is_active = models.BooleanField(default=True)
+        related_name='salesperson_profile', verbose_name=_("User")
+    )
+    is_active = models.BooleanField(default=True, verbose_name=_("Is active"))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
