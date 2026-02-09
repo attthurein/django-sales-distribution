@@ -245,6 +245,10 @@ class CompanySetting(models.Model):
         Township, on_delete=models.SET_NULL, null=True, blank=True,
         related_name='company_settings'
     )
+    default_country = models.ForeignKey(
+        Country, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='company_settings', verbose_name=_("Default Country")
+    )
     base_currency = models.ForeignKey(
         Currency, on_delete=models.PROTECT, null=True, blank=True,
         related_name='company_settings'

@@ -93,6 +93,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize
     if (countrySelect && regionSelect) {
+        // Pre-select default country if available and no country selected
+        if (!countrySelect.value && window.DEFAULT_COUNTRY_ID) {
+            // Check if the default country is a valid option
+            const defaultOption = Array.from(countrySelect.options).find(opt => opt.value === window.DEFAULT_COUNTRY_ID);
+            if (defaultOption) {
+                countrySelect.value = window.DEFAULT_COUNTRY_ID;
+            }
+        }
+
         // Initial filter on load
         filterRegions();
         

@@ -193,6 +193,9 @@
         {% block content %}{% endblock %}
     </main>
 
+    <script>
+        window.DEFAULT_COUNTRY_ID = "{{ company_setting.default_country.id|default:'' }}";
+    </script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
     <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>

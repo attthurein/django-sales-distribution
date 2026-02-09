@@ -10,7 +10,7 @@ from django.core.paginator import Paginator
 
 from .models import Customer, Salesperson
 from .forms import CustomerForm, SalespersonForm
-from master_data.models import CustomerType
+from master_data.models import CustomerType, Township, Region
 from orders.models import SalesOrder
 from crm.models import SampleDelivery
 from common.utils import get_regions_with_townships, get_countries_with_regions
@@ -22,30 +22,73 @@ def customer_list(request):
     """List all customers with search functionality"""
     search_query = request.GET.get('q', '')
     customer_type = request.GET.get('customer_type', '')
+    region_filter = request.GET.get('region', '')
+    township_filter = request.GET.get('township', '')
+    sort_by = request.GET.get('sort', 'name')
+    direction = request.GET.get('direction', 'asc')
 
     customers = Customer.objects.filter(
         deleted_at__isnull=True, is_active=True
-    ).select_related('customer_type', 'township')
+    ).select_related('customer_type', 'township', 'township__region')
 
     if search_query:
         customers = customers.filter(
             Q(name__icontains=search_query) |
-            Q(phone__icontains=search_query)
+            Q(phone__icontains=search_query) |
+            Q(shop_name__icontains=search_query)
         )
     if customer_type:
         customers = customers.filter(customer_type_id=customer_type)
+    
+    if region_filter:
+        customers = customers.filter(township__region_id=region_filter)
+    
+    if township_filter:
+        customers = customers.filter(township_id=township_filter)
 
-    customers = customers.order_by('name')
+    # Sorting
+    allowed_sorts = {
+        'name': 'name',
+        'shop_name': 'shop_name',
+        'phone': 'phone',
+        'customer_type': 'customer_type__name',
+        'township': 'township__name_en',
+        'credit_limit': 'credit_limit',
+        'created_at': 'created_at',
+    }
+    
+    if sort_by not in allowed_sorts:
+        sort_by = 'name'
+        
+    order_field = allowed_sorts[sort_by]
+    if direction == 'desc':
+        order_field = f'-{order_field}'
+        
+    customers = customers.order_by(order_field)
+
     paginator = Paginator(customers, PAGE_SIZE_CUSTOMERS)
     page = request.GET.get('page', 1)
     customers = paginator.get_page(page)
+
+    # Filters context
+    regions = Region.objects.filter(is_active=True).order_by('name_en')
+    townships = Township.objects.filter(is_active=True)
+    if region_filter:
+        townships = townships.filter(region_id=region_filter)
+    townships = townships.order_by('name_en')
 
     context = {
         'title': _('Customers'),
         'customers': customers,
         'search_query': search_query,
-        'customer_type': customer_type,
+        'customer_type': int(customer_type) if customer_type else '',
         'customer_types': CustomerType.objects.all(),
+        'region_filter': int(region_filter) if region_filter else '',
+        'township_filter': int(township_filter) if township_filter else '',
+        'regions': regions,
+        'townships': townships,
+        'current_sort': sort_by,
+        'current_direction': direction,
     }
     return render(request, 'customers/customer_list.html', context)
 

@@ -30,7 +30,7 @@ class CompanySettingForm(forms.ModelForm):
         model = CompanySetting
         fields = [
             'name', 'logo', 'address', 'phone', 'email', 'tax_id',
-            'footer_text', 'region', 'township', 'base_currency',
+            'footer_text', 'region', 'township', 'base_currency', 'default_country',
         ]
         widgets = {
             'name': forms.TextInput(
@@ -44,6 +44,7 @@ class CompanySettingForm(forms.ModelForm):
                 attrs={'class': 'form-control', 'rows': 2}
             ),
             'base_currency': forms.Select(attrs={'class': 'form-select'}),
+            'default_country': forms.Select(attrs={'class': 'form-select'}),
         }
 
     def __init__(self, *args, **kwargs):

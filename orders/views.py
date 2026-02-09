@@ -20,7 +20,7 @@ from .services import (
 )
 from customers.models import Customer
 from core.models import Product, ProductPriceTier
-from master_data.models import OrderStatus, CustomerType
+from master_data.models import OrderStatus, CustomerType, Township, Region
 from master_data.constants import ORDER_CONFIRMED, ORDER_DELIVERED, ORDER_PAID
 
 from common.constants import PAGE_SIZE_ORDERS, LIMIT_CUSTOMER_SEARCH
@@ -144,8 +144,14 @@ def order_list(request):
     order_type_filter = request.GET.get('order_type', '')
     date_from = request.GET.get('date_from', '')
     date_to = request.GET.get('date_to', '')
+    region_filter = request.GET.get('region', '')
+    township_filter = request.GET.get('township', '')
+    sort_by = request.GET.get('sort', 'date')
+    direction = request.GET.get('direction', 'desc')
 
-    orders = SalesOrder.objects.filter(deleted_at__isnull=True)
+    orders = SalesOrder.objects.filter(deleted_at__isnull=True).select_related(
+        'customer', 'status', 'created_by', 'customer__township', 'customer__township__region'
+    )
 
     if order_type_filter:
         orders = orders.filter(order_type=order_type_filter)
@@ -162,11 +168,40 @@ def order_list(request):
         orders = orders.filter(order_date__gte=date_from)
     if date_to:
         orders = orders.filter(order_date__lte=date_to)
+    
+    if region_filter:
+        orders = orders.filter(customer__township__region_id=region_filter)
+    if township_filter:
+        orders = orders.filter(customer__township_id=township_filter)
 
-    orders = orders.select_related('customer', 'status', 'created_by').order_by('-created_at')
+    # Sorting
+    allowed_sorts = {
+        'order_number': 'order_number',
+        'customer': 'customer__name',
+        'date': 'order_date',
+        'total': 'total_amount',
+        'status': 'status__code',
+        'township': 'customer__township__name_en',
+    }
+    if sort_by not in allowed_sorts:
+        sort_by = 'date'
+    
+    order_field = allowed_sorts[sort_by]
+    if direction == 'desc':
+        order_field = f'-{order_field}'
+        
+    orders = orders.order_by(order_field)
+
     paginator = Paginator(orders, PAGE_SIZE_ORDERS)
     page = request.GET.get('page', 1)
     orders = paginator.get_page(page)
+
+    # Filters context
+    regions = Region.objects.filter(is_active=True).order_by('name_en')
+    townships = Township.objects.filter(is_active=True)
+    if region_filter:
+        townships = townships.filter(region_id=region_filter)
+    townships = townships.order_by('name_en')
 
     context = {
         'title': _('Orders'),
@@ -174,10 +209,17 @@ def order_list(request):
         'search_query': search_query,
         'status_filter': status_filter,
         'order_type_filter': order_type_filter,
+        'order_types': SalesOrder.ORDER_TYPE_CHOICES,
         'date_from': date_from,
         'date_to': date_to,
         'customer_filter': customer_filter,
         'customers': Customer.objects.filter(deleted_at__isnull=True, is_active=True).order_by('name'),
+        'region_filter': int(region_filter) if region_filter else '',
+        'township_filter': int(township_filter) if township_filter else '',
+        'regions': regions,
+        'townships': townships,
+        'current_sort': sort_by,
+        'current_direction': direction,
     }
     return render(request, 'orders/order_list.html', context)
 

@@ -51,8 +51,8 @@
 
             <!-- System Configuration Card -->
             <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-header bg-white border-bottom py-3">
-                    <h6 class="m-0 fw-bold text-primary"><i class="bi bi-sliders me-2"></i>{% trans "System Configuration" %}</h6>
+                <div class="card-header bg-primary text-white py-3 rounded-top-3">
+                    <h6 class="m-0 fw-bold text-white"><i class="bi bi-sliders me-2"></i>{% trans "System Configuration" %}</h6>
                 </div>
                 <div class="card-body p-4">
                     <label class="form-label fw-bold">{% trans "Base Currency" %}</label>
@@ -75,6 +75,13 @@
                         {{ form.base_currency|add_class:"form-select" }}
                         {% if form.base_currency.errors %}<div class="text-danger small mt-1">{{ form.base_currency.errors }}</div>{% endif %}
                     {% endif %}
+                    
+                    <div class="mt-4">
+                        <label class="form-label fw-bold">{% trans "Default Country" %}</label>
+                        <p class="small text-muted mb-2">{% trans "Pre-selects this country in all forms to simplify data entry." %}</p>
+                        {{ form.default_country|add_class:"form-select" }}
+                        {% if form.default_country.errors %}<div class="text-danger small mt-1">{{ form.default_country.errors }}</div>{% endif %}
+                    </div>
                 </div>
             </div>
         </div>

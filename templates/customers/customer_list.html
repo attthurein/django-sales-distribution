@@ -18,27 +18,47 @@
 
 <div class="card mb-4">
     <div class="card-body">
-        <form method="get" class="row g-3 align-items-end">
-            <div class="col-md-3">
+        <form method="get" class="row g-3">
+            <div class="col-md-2">
                 <label class="form-label" for="search">{% trans "Search" %}</label>
-                <input type="search" name="q" id="search" class="form-control" placeholder="{% trans 'Search by name or phone...' %}" value="{{ search_query|default:'' }}">
+                <input type="search" name="q" id="search" class="form-control" placeholder="{% trans 'Search...' %}" value="{{ search_query|default:'' }}">
             </div>
             <div class="col-md-2">
                 <label class="form-label">{% trans "Type" %}</label>
                 <select name="customer_type" class="form-select">
                     <option value="">{% trans "All" %}</option>
                     {% for ct in customer_types %}
-                    <option value="{{ ct.id }}" {% if customer_type == ct.id|stringformat:"s" %}selected{% endif %}>{{ ct|master_name }}</option>
+                    <option value="{{ ct.id }}" {% if customer_type == ct.id %}selected{% endif %}>{{ ct|master_name }}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">{% trans "Filter" %}</button>
+                <label class="form-label">{% trans "Region" %}</label>
+                <select name="region" class="form-select" onchange="this.form.submit()">
+                    <option value="">{% trans "All Regions" %}</option>
+                    {% for r in regions %}
+                    <option value="{{ r.id }}" {% if region_filter == r.id %}selected{% endif %}>{{ r.name_en }}</option>
+                    {% endfor %}
+                </select>
             </div>
-            {% if search_query or customer_type %}
-            <div class="col-md-2">
-                <a href="{% url 'customers:customer_list' %}" class="btn btn-outline-secondary w-100">{% trans "Clear" %}</a>
+            <div class="col-md-3">
+                <label class="form-label">{% trans "Township" %}</label>
+                <select name="township" class="form-select">
+                    <option value="">{% trans "All Townships" %}</option>
+                    {% for t in townships %}
+                    <option value="{{ t.id }}" {% if township_filter == t.id %}selected{% endif %}>{{ t.name_en }}</option>
+                    {% endfor %}
+                </select>
             </div>
+            <div class="col-md-2 align-self-end">
+                <button type="submit" class="btn btn-primary">{% trans "Filter" %}</button>
+                <a href="{% url 'customers:customer_list' %}" class="btn btn-outline-secondary">{% trans "Reset" %}</a>
+            </div>
+            
+            {# Preserve sort params #}
+            {% if current_sort %}
+            <input type="hidden" name="sort" value="{{ current_sort }}">
+            <input type="hidden" name="direction" value="{{ current_direction }}">
             {% endif %}
         </form>
     </div>
@@ -46,12 +66,60 @@
 
 <div class="table-responsive">
 <table class="table table-striped">
-    <thead><tr><th>{% trans "Name" %}</th><th>{% trans "Phone" %}</th><th>{% trans "Type" %}</th><th>{% trans "Credit Limit" %}</th><th>{% trans "Actions" %}</th></tr></thead>
+    <thead>
+        <tr>
+            <th>
+                <a href="?sort=name&direction={% if current_sort == 'name' and current_direction == 'asc' %}desc{% else %}asc{% endif %}&q={{ search_query }}&customer_type={{ customer_type }}&region={{ region_filter }}&township={{ township_filter }}" class="text-decoration-none text-dark">
+                    {% trans "Name" %}
+                    {% if current_sort == 'name' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}<span class="text-muted small">↕</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=phone&direction={% if current_sort == 'phone' and current_direction == 'asc' %}desc{% else %}asc{% endif %}&q={{ search_query }}&customer_type={{ customer_type }}&region={{ region_filter }}&township={{ township_filter }}" class="text-decoration-none text-dark">
+                    {% trans "Phone" %}
+                    {% if current_sort == 'phone' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}<span class="text-muted small">↕</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=township&direction={% if current_sort == 'township' and current_direction == 'asc' %}desc{% else %}asc{% endif %}&q={{ search_query }}&customer_type={{ customer_type }}&region={{ region_filter }}&township={{ township_filter }}" class="text-decoration-none text-dark">
+                    {% trans "Township" %}
+                    {% if current_sort == 'township' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}<span class="text-muted small">↕</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=customer_type&direction={% if current_sort == 'customer_type' and current_direction == 'asc' %}desc{% else %}asc{% endif %}&q={{ search_query }}&customer_type={{ customer_type }}&region={{ region_filter }}&township={{ township_filter }}" class="text-decoration-none text-dark">
+                    {% trans "Type" %}
+                    {% if current_sort == 'customer_type' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}<span class="text-muted small">↕</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=credit_limit&direction={% if current_sort == 'credit_limit' and current_direction == 'asc' %}desc{% else %}asc{% endif %}&q={{ search_query }}&customer_type={{ customer_type }}&region={{ region_filter }}&township={{ township_filter }}" class="text-decoration-none text-dark">
+                    {% trans "Credit Limit" %}
+                    {% if current_sort == 'credit_limit' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}<span class="text-muted small">↕</span>{% endif %}
+                </a>
+            </th>
+            <th>{% trans "Actions" %}</th>
+        </tr>
+    </thead>
     <tbody>
     {% for c in customers %}
     <tr>
-        <td><a href="{% url 'customers:customer_detail' c.pk %}">{{ c.name }}</a></td>
+        <td>
+            <a href="{% url 'customers:customer_detail' c.pk %}">{{ c.name }}</a>
+            {% if c.shop_name %}<br><small class="text-muted">{{ c.shop_name }}</small>{% endif %}
+        </td>
         <td>{{ c.phone }}</td>
+        <td>{{ c.township|default:"-" }}</td>
         <td>{{ c.customer_type|master_name|default:"-" }}</td>
         <td>{{ c.credit_limit|floatformat:0|intcomma }}</td>
         <td>
@@ -74,11 +142,11 @@
 <nav aria-label="Customer pagination" class="mt-3">
     <ul class="pagination justify-content-center">
         {% if customers.has_previous %}
-        <li class="page-item"><a class="page-link" href="?page={{ customers.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if customer_type %}&customer_type={{ customer_type }}{% endif %}">{% trans "Previous" %}</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ customers.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if customer_type %}&customer_type={{ customer_type }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_direction %}&direction={{ current_direction }}{% endif %}">{% trans "Previous" %}</a></li>
         {% endif %}
         <li class="page-item disabled"><span class="page-link">{% blocktrans with page=customers.number total=customers.paginator.num_pages %}Page {{ page }} of {{ total }}{% endblocktrans %}</span></li>
         {% if customers.has_next %}
-        <li class="page-item"><a class="page-link" href="?page={{ customers.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if customer_type %}&customer_type={{ customer_type }}{% endif %}">{% trans "Next" %}</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ customers.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if customer_type %}&customer_type={{ customer_type }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_direction %}&direction={{ current_direction }}{% endif %}">{% trans "Next" %}</a></li>
         {% endif %}
     </ul>
 </nav>

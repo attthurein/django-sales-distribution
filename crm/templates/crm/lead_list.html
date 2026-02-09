@@ -18,7 +18,7 @@
 <div class="card mb-3">
     <div class="card-body">
         <form method="get" class="row g-3">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label class="form-label">{% trans "Status" %}</label>
                 <select name="status" class="form-select">
                     <option value="">{% trans "All" %}</option>
@@ -29,24 +29,140 @@
                     <option value="LOST" {% if status_filter == 'LOST' %}selected{% endif %}>{% trans "Lost" %}</option>
                 </select>
             </div>
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Region" %}</label>
+                <select name="region" class="form-select" onchange="this.form.submit()">
+                    <option value="">{% trans "All Regions" %}</option>
+                    {% for r in regions %}
+                    <option value="{{ r.id }}" {% if region_filter == r.id %}selected{% endif %}>{{ r.name_en }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">{% trans "Township" %}</label>
+                <select name="township" class="form-select">
+                    <option value="">{% trans "All Townships" %}</option>
+                    {% for t in townships %}
+                    <option value="{{ t.id }}" {% if township_filter == t.id %}selected{% endif %}>{{ t.name_en }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">{% trans "Created Date" %}</label>
+                <input type="date" name="date" class="form-control" value="{{ date_filter }}">
+            </div>
             <div class="col-md-2 align-self-end">
                 <button type="submit" class="btn btn-primary">{% trans "Filter" %}</button>
+                <a href="{% url 'crm:lead_list' %}" class="btn btn-outline-secondary">{% trans "Reset" %}</a>
             </div>
+            
+            {# Preserve sort params #}
+            {% if current_sort %}
+            <input type="hidden" name="sort" value="{{ current_sort }}">
+            <input type="hidden" name="direction" value="{{ current_direction }}">
+            {% endif %}
         </form>
     </div>
 </div>
 
 <div class="table-responsive">
 <table class="table table-striped">
-    <thead><tr><th>{% trans "Name" %}</th><th>{% trans "Phone" %}</th><th>{% trans "Township" %}</th><th>{% trans "Status" %}</th><th>{% trans "Source" %}</th><th>{% trans "Created" %}</th><th>{% trans "Actions" %}</th></tr></thead>
+    <thead>
+        <tr>
+            <th>
+                <a href="?sort=name&direction={% if current_sort == 'name' and current_direction == 'asc' %}desc{% else %}asc{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if date_filter %}&date={{ date_filter }}{% endif %}" class="text-decoration-none text-dark">
+                    {% trans "Name" %}
+                    {% if current_sort == 'name' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}
+                        <span class="text-muted small">↕</span>
+                    {% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=phone&direction={% if current_sort == 'phone' and current_direction == 'asc' %}desc{% else %}asc{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if date_filter %}&date={{ date_filter }}{% endif %}" class="text-decoration-none text-dark">
+                    {% trans "Phone" %}
+                    {% if current_sort == 'phone' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}
+                        <span class="text-muted small">↕</span>
+                    {% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=township&direction={% if current_sort == 'township' and current_direction == 'asc' %}desc{% else %}asc{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if date_filter %}&date={{ date_filter }}{% endif %}" class="text-decoration-none text-dark">
+                    {% trans "Township" %}
+                    {% if current_sort == 'township' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}
+                        <span class="text-muted small">↕</span>
+                    {% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=status&direction={% if current_sort == 'status' and current_direction == 'asc' %}desc{% else %}asc{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if date_filter %}&date={{ date_filter }}{% endif %}" class="text-decoration-none text-dark">
+                    {% trans "Status" %}
+                    {% if current_sort == 'status' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}
+                        <span class="text-muted small">↕</span>
+                    {% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=notes&direction={% if current_sort == 'notes' and current_direction == 'asc' %}desc{% else %}asc{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if date_filter %}&date={{ date_filter }}{% endif %}" class="text-decoration-none text-dark">
+                    {% trans "Remarks" %}
+                    {% if current_sort == 'notes' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}
+                        <span class="text-muted small">↕</span>
+                    {% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=next_follow_up_date&direction={% if current_sort == 'next_follow_up_date' and current_direction == 'asc' %}desc{% else %}asc{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if date_filter %}&date={{ date_filter }}{% endif %}" class="text-decoration-none text-dark">
+                    {% trans "Follow Up" %}
+                    {% if current_sort == 'next_follow_up_date' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}
+                        <span class="text-muted small">↕</span>
+                    {% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=created_at&direction={% if current_sort == 'created_at' and current_direction == 'asc' %}desc{% else %}asc{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if date_filter %}&date={{ date_filter }}{% endif %}" class="text-decoration-none text-dark">
+                    {% trans "Created" %}
+                    {% if current_sort == 'created_at' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}
+                        <span class="text-muted small">↕</span>
+                    {% endif %}
+                </a>
+            </th>
+            <th>{% trans "Actions" %}</th>
+        </tr>
+    </thead>
     <tbody>
     {% for lead in leads %}
     <tr>
         <td><a href="{% url 'crm:lead_detail' lead.pk %}">{{ lead.name }}</a></td>
         <td>{{ lead.phone }}</td>
-        <td>{% if lead.township %}{{ lead.township.name_en }}{% if lead.township.region %} ({{ lead.township.region.name_en }}){% endif %}{% else %}-{% endif %}</td>
+        <td>{% if lead.township %}{{ lead.township.name_en }}{% else %}-{% endif %}</td>
         <td><span class="badge bg-secondary">{{ lead.get_status_display }}</span></td>
-        <td>{{ lead.source|default:"-" }}</td>
+        <td>{{ lead.notes|truncatechars:50|default:"-" }}</td>
+        <td>
+            {% if lead.next_follow_up_date %}
+                {% if lead.next_follow_up_date < today %}
+                    <span class="badge bg-danger" title="Overdue">{{ lead.next_follow_up_date|date:"Y-m-d" }}</span>
+                {% elif lead.next_follow_up_date == today %}
+                    <span class="badge bg-warning text-dark" title="Today">{{ lead.next_follow_up_date|date:"Y-m-d" }}</span>
+                {% else %}
+                    <span class="badge bg-success" title="Future">{{ lead.next_follow_up_date|date:"Y-m-d" }}</span>
+                {% endif %}
+            {% else %}
+                <span class="text-muted">-</span>
+            {% endif %}
+        </td>
         <td>{{ lead.created_at|date }}</td>
         <td>
             <a href="{% url 'crm:lead_detail' lead.pk %}" class="btn btn-sm btn-outline-primary">{% trans "View" %}</a>
@@ -59,7 +175,7 @@
         </td>
     </tr>
     {% empty %}
-    <tr><td colspan="7" class="text-center py-5 text-muted">{% trans "No leads yet." %}</td></tr>
+    <tr><td colspan="8" class="text-center py-5 text-muted">{% trans "No leads yet." %}</td></tr>
     {% endfor %}
     </tbody>
 </table>

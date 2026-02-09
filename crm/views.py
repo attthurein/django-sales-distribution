@@ -6,12 +6,13 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.db import transaction
+from django.db.models import Max
 
 from .models import Lead, ContactLog, SampleDelivery
 from .forms import LeadForm, ContactLogForm, SampleDeliveryForm, LeadConvertForm
 from customers.models import Customer
 from core.models import Product
-from master_data.models import ContactType, CustomerType
+from master_data.models import ContactType, CustomerType, Township, Region
 from master_data.constants import (
     LEAD_STATUS_NEW,
     LEAD_STATUS_CONTACTED,
@@ -27,21 +28,77 @@ from .services import give_sample_to_lead, give_sample_to_customer, convert_lead
 
 @login_required
 def lead_list(request):
-    """List leads with status filter."""
+    """List leads with status filter and sorting."""
     status_filter = request.GET.get('status', '')
+    region_filter = request.GET.get('region', '')
+    township_filter = request.GET.get('township', '')
+    date_filter = request.GET.get('date', '')
+    sort_by = request.GET.get('sort', 'next_follow_up_date')
+    direction = request.GET.get('direction', 'asc')
+
+    # Allowed sort fields
+    allowed_sorts = {
+        'name': 'name',
+        'phone': 'phone',
+        'township': 'township__name_en',
+        'status': 'status',
+        'notes': 'notes',
+        'next_follow_up_date': 'next_follow_up_date',
+        'created_at': 'created_at',
+    }
+
+    # Validate sort field
+    if sort_by not in allowed_sorts:
+        sort_by = 'next_follow_up_date'
+    
+    # Apply direction
+    order_field = allowed_sorts[sort_by]
+    if direction == 'desc':
+        order_field = f'-{order_field}'
+    
+    # Secondary sort to ensure stable ordering
+    secondary_sort = '-created_at' if sort_by != 'created_at' else '-id'
+
     leads_list = Lead.objects.filter(
         deleted_at__isnull=True
-    ).select_related('township', 'township__region').order_by('-created_at')
+    ).select_related('township', 'township__region').annotate(
+        next_follow_up_date=Max('contact_logs__next_follow_up')
+    ).order_by(order_field, secondary_sort)
+
     if status_filter:
         leads_list = leads_list.filter(status=status_filter)
+    
+    if region_filter:
+        leads_list = leads_list.filter(township__region_id=region_filter)
+    
+    if township_filter:
+        leads_list = leads_list.filter(township_id=township_filter)
+    
+    if date_filter:
+        leads_list = leads_list.filter(created_at__date=date_filter)
 
     paginator = Paginator(leads_list, 20)
     page_number = request.GET.get('page')
     leads = paginator.get_page(page_number)
+    
+    # Get active regions and townships
+    regions = Region.objects.filter(is_active=True).order_by('name_en')
+    townships = Township.objects.filter(is_active=True)
+    if region_filter:
+        townships = townships.filter(region_id=region_filter)
+    townships = townships.order_by('name_en')
 
     return render(request, 'crm/lead_list.html', {
         'leads': leads,
         'status_filter': status_filter,
+        'region_filter': int(region_filter) if region_filter else '',
+        'township_filter': int(township_filter) if township_filter else '',
+        'date_filter': date_filter,
+        'regions': regions,
+        'townships': townships,
+        'current_sort': sort_by,
+        'current_direction': direction,
+        'today': timezone.now().date(),
     })
 
 

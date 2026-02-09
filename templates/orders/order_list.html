@@ -17,8 +17,8 @@
 
 <div class="card mb-4">
     <div class="card-body">
-        <form method="get" class="row g-3 align-items-end filter-form-equal">
-            <div class="col-6 col-md">
+        <form method="get" class="row g-3">
+            <div class="col-md-2">
                 <label class="form-label">{% trans "Status" %}</label>
                 <select name="status" class="form-select">
                     <option value="">{% trans "All" %}</option>
@@ -29,15 +29,34 @@
                     <option value="CANCELLED" {% if status_filter == 'CANCELLED' %}selected{% endif %}>{% trans "Cancelled" %}</option>
                 </select>
             </div>
-            <div class="col-6 col-md">
-                <label class="form-label">{% trans "Type" %}</label>
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Order Type" %}</label>
                 <select name="order_type" class="form-select">
-                    <option value="">{% trans "All" %}</option>
-                    <option value="NORMAL" {% if order_type_filter == 'NORMAL' %}selected{% endif %}>{% trans "Normal" %}</option>
-                    <option value="PRE_ORDER" {% if order_type_filter == 'PRE_ORDER' %}selected{% endif %}>{% trans "Pre-order" %}</option>
+                    <option value="">{% trans "All Types" %}</option>
+                    {% for code, name in order_types %}
+                    <option value="{{ code }}" {% if order_type_filter == code %}selected{% endif %}>{{ name }}</option>
+                    {% endfor %}
                 </select>
             </div>
-            <div class="col-6 col-md">
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Region" %}</label>
+                <select name="region" class="form-select" onchange="this.form.submit()">
+                    <option value="">{% trans "All Regions" %}</option>
+                    {% for r in regions %}
+                    <option value="{{ r.id }}" {% if region_filter == r.id %}selected{% endif %}>{{ r.name_en }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Township" %}</label>
+                <select name="township" class="form-select">
+                    <option value="">{% trans "All Townships" %}</option>
+                    {% for t in townships %}
+                    <option value="{{ t.id }}" {% if township_filter == t.id %}selected{% endif %}>{{ t.name_en }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
                 <label class="form-label">{% trans "Customer" %}</label>
                 <select name="customer" class="form-select">
                     <option value="">{% trans "All" %}</option>
@@ -46,31 +65,95 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-6 col-md">
+            <div class="col-md-2">
                 <label class="form-label">{% trans "From" %}</label>
                 <input type="date" name="date_from" class="form-control" value="{{ date_from }}">
             </div>
-            <div class="col-6 col-md">
+            <div class="col-md-2">
                 <label class="form-label">{% trans "To" %}</label>
                 <input type="date" name="date_to" class="form-control" value="{{ date_to }}">
             </div>
-            <div class="col-6 col-md">
-                <button type="submit" class="btn btn-primary w-100">{% trans "Filter" %}</button>
+            <div class="col-md-2 align-self-end">
+                <button type="submit" class="btn btn-primary">{% trans "Filter" %}</button>
+                <a href="{% url 'orders:order_list' %}" class="btn btn-outline-secondary">{% trans "Reset" %}</a>
             </div>
+            
+            {# Preserve sort params #}
+            {% if current_sort %}
+            <input type="hidden" name="sort" value="{{ current_sort }}">
+            <input type="hidden" name="direction" value="{{ current_direction }}">
+            {% endif %}
         </form>
     </div>
 </div>
 
 <div class="table-responsive">
 <table class="table table-striped">
-    <thead><tr><th>{% trans "Order" %}</th><th>{% trans "Customer" %}</th><th>{% trans "Type" %}</th><th>{% trans "Date" %}</th><th>{% trans "Status" %}</th><th>{% trans "Amount" %}</th><th>{% trans "Actions" %}</th></tr></thead>
+    <thead>
+        <tr>
+            <th>
+                <a href="?sort=order_number&direction={% if current_sort == 'order_number' and current_direction == 'asc' %}desc{% else %}asc{% endif %}&status={{ status_filter }}&region={{ region_filter }}&township={{ township_filter }}&customer={{ customer_filter }}&date_from={{ date_from }}&date_to={{ date_to }}" class="text-decoration-none text-dark">
+                    {% trans "Order" %}
+                    {% if current_sort == 'order_number' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}<span class="text-muted small">↕</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=customer&direction={% if current_sort == 'customer' and current_direction == 'asc' %}desc{% else %}asc{% endif %}&status={{ status_filter }}&region={{ region_filter }}&township={{ township_filter }}&customer={{ customer_filter }}&date_from={{ date_from }}&date_to={{ date_to }}" class="text-decoration-none text-dark">
+                    {% trans "Customer" %}
+                    {% if current_sort == 'customer' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}<span class="text-muted small">↕</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=township&direction={% if current_sort == 'township' and current_direction == 'asc' %}desc{% else %}asc{% endif %}&status={{ status_filter }}&region={{ region_filter }}&township={{ township_filter }}&customer={{ customer_filter }}&date_from={{ date_from }}&date_to={{ date_to }}" class="text-decoration-none text-dark">
+                    {% trans "Township" %}
+                    {% if current_sort == 'township' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}<span class="text-muted small">↕</span>{% endif %}
+                </a>
+            </th>
+            <th>{% trans "Type" %}</th>
+            <th>
+                <a href="?sort=date&direction={% if current_sort == 'date' and current_direction == 'asc' %}desc{% else %}asc{% endif %}&status={{ status_filter }}&region={{ region_filter }}&township={{ township_filter }}&customer={{ customer_filter }}&date_from={{ date_from }}&date_to={{ date_to }}" class="text-decoration-none text-dark">
+                    {% trans "Date" %}
+                    {% if current_sort == 'date' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}<span class="text-muted small">↕</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=status&direction={% if current_sort == 'status' and current_direction == 'asc' %}desc{% else %}asc{% endif %}&status={{ status_filter }}&region={{ region_filter }}&township={{ township_filter }}&customer={{ customer_filter }}&date_from={{ date_from }}&date_to={{ date_to }}" class="text-decoration-none text-dark">
+                    {% trans "Status" %}
+                    {% if current_sort == 'status' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}<span class="text-muted small">↕</span>{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort=total&direction={% if current_sort == 'total' and current_direction == 'asc' %}desc{% else %}asc{% endif %}&status={{ status_filter }}&region={{ region_filter }}&township={{ township_filter }}&customer={{ customer_filter }}&date_from={{ date_from }}&date_to={{ date_to }}" class="text-decoration-none text-dark">
+                    {% trans "Amount" %}
+                    {% if current_sort == 'total' %}
+                        {% if current_direction == 'asc' %}▲{% else %}▼{% endif %}
+                    {% else %}<span class="text-muted small">↕</span>{% endif %}
+                </a>
+            </th>
+            <th>{% trans "Actions" %}</th>
+        </tr>
+    </thead>
     <tbody>
     {% for o in orders %}
     <tr>
         <td><a href="{% url 'orders:order_detail' o.pk %}">{{ o.order_number }}</a></td>
-        <td>{{ o.customer.name }}</td>
+        <td>
+            {{ o.customer.name }}
+            {% if o.customer.shop_name %}<br><small class="text-muted">{{ o.customer.shop_name }}</small>{% endif %}
+        </td>
+        <td>{{ o.customer.township.name_en|default:"-" }}</td>
         <td><span class="badge {% if o.order_type == 'PRE_ORDER' %}bg-info{% else %}bg-secondary{% endif %}">{{ o.get_order_type_display }}</span></td>
-        <td>{{ o.created_at|date }}</td>
+        <td>{{ o.order_date|date:"Y-m-d" }}</td>
         <td>{{ o.status|master_name|default:"-" }}</td>
         <td>{{ o.total_amount|floatformat:0|intcomma }}</td>
         <td>
@@ -96,11 +179,11 @@
 <nav aria-label="Order pagination" class="mt-3">
     <ul class="pagination justify-content-center">
         {% if orders.has_previous %}
-        <li class="page-item"><a class="page-link" href="?page={{ orders.previous_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if order_type_filter %}&order_type={{ order_type_filter }}{% endif %}{% if customer_filter %}&customer={{ customer_filter }}{% endif %}{% if date_from %}&date_from={{ date_from }}{% endif %}{% if date_to %}&date_to={{ date_to }}{% endif %}">{% trans "Previous" %}</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ orders.previous_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if order_type_filter %}&order_type={{ order_type_filter }}{% endif %}{% if customer_filter %}&customer={{ customer_filter }}{% endif %}{% if date_from %}&date_from={{ date_from }}{% endif %}{% if date_to %}&date_to={{ date_to }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_direction %}&direction={{ current_direction }}{% endif %}">{% trans "Previous" %}</a></li>
         {% endif %}
         <li class="page-item disabled"><span class="page-link">{% blocktrans with page=orders.number total=orders.paginator.num_pages %}Page {{ page }} of {{ total }}{% endblocktrans %}</span></li>
         {% if orders.has_next %}
-        <li class="page-item"><a class="page-link" href="?page={{ orders.next_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if order_type_filter %}&order_type={{ order_type_filter }}{% endif %}{% if customer_filter %}&customer={{ customer_filter }}{% endif %}{% if date_from %}&date_from={{ date_from }}{% endif %}{% if date_to %}&date_to={{ date_to }}{% endif %}">{% trans "Next" %}</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ orders.next_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if order_type_filter %}&order_type={{ order_type_filter }}{% endif %}{% if customer_filter %}&customer={{ customer_filter }}{% endif %}{% if date_from %}&date_from={{ date_from }}{% endif %}{% if date_to %}&date_to={{ date_to }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_direction %}&direction={{ current_direction }}{% endif %}">{% trans "Next" %}</a></li>
         {% endif %}
     </ul>
 </nav>
