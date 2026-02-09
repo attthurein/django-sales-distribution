@@ -12,7 +12,7 @@
 
 {% block content %}
 <h1>{{ lead.name }}</h1>
-<p>{% trans "Phone" %}: {{ lead.phone }} | {% trans "Status" %}: {{ lead.get_status_display }} | {% trans "Source" %}: {{ lead.source|default:"-" }}{% if lead.township %} | {% trans "Township" %}: {{ lead.township.name_en }}{% if lead.township.region %} ({{ lead.township.region.name_en }}){% endif %}{% endif %}</p>
+<p>{% trans "Phone" %}: {{ lead.phone }} | {% trans "Status" %}: {{ lead.get_status_display }} | {% trans "Source" %}: {{ lead.source|default:"-" }}{% if lead.township %} | {% trans "Township" %}: {{ lead.township.name }}{% if lead.township.region %} ({{ lead.township.region.name }}){% endif %}{% endif %}</p>
 {% if lead.shop_name %}<p>{% trans "Shop/Store name" %}: {{ lead.shop_name }}</p>{% endif %}
 {% if lead.contact_person %}<p>{% trans "Contact person" %}: {{ lead.contact_person }}</p>{% endif %}
 {% if lead.address %}<p>{% trans "Address" %}: {{ lead.address }}</p>{% endif %}
@@ -42,7 +42,7 @@
         <ul class="list-group">
         {% for log in lead.contact_logs.all %}
         <li class="list-group-item">
-            <strong>{{ log.contact_type.name_en }}</strong> - {{ log.created_at|date }}
+            <strong>{{ log.contact_type.name }}</strong> - {{ log.created_at|date }}
             <p class="mb-0">{{ log.notes }}</p>
             {% if log.next_follow_up %}<small>{% trans "Follow-up" %}: {{ log.next_follow_up }}</small>{% endif %}
         </li>

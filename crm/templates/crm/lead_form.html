@@ -39,21 +39,43 @@
         {% if form.phone.errors %}<div class="invalid-feedback d-block">{{ form.phone.errors }}</div>{% endif %}
     </div>
     <div class="mb-3">
+        <label class="form-label" for="id_country">{% trans "Country" %}</label>
+        <select name="country_id" id="id_country" class="form-select">
+            <option value="">{% trans "Select country" %}...</option>
+            {% for country in countries %}
+            <option value="{{ country.id }}" {% if lead and lead.township and lead.township.region.country_id == country.id %}selected{% endif %}>
+                {{ country.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
         <label class="form-label" for="id_region">{% trans "Region" %}</label>
         <select name="region_id" id="id_region" class="form-select">
             <option value="">{% trans "Select region" %}...</option>
-            {% for region in regions %}
-            <option value="{{ region.id }}" {% if lead and lead.township and lead.township.region_id == region.id %}selected{% endif %}>
-                {{ region.name_en }}
-            </option>
-            {% empty %}
-            <option value="" disabled>{% trans "No regions. Add in Admin → Master Data." %}</option>
+            {% for country in countries %}
+                {% for region in country.regions.all %}
+                <option value="{{ region.id }}" data-country-id="{{ country.id }}" {% if lead and lead.township and lead.township.region_id == region.id %}selected{% endif %}>
+                    {{ region.name }}
+                </option>
+                {% endfor %}
             {% endfor %}
         </select>
     </div>
     <div class="mb-3">
         <label class="form-label" for="{{ form.township.id_for_label }}">{% trans "Township" %}</label>
-        {% render_field form.township class="form-select" %}
+        <select name="township" id="{{ form.township.id_for_label }}" class="form-select">
+            <option value="">{% trans "Select township" %}...</option>
+            {% for country in countries %}
+                {% for region in country.regions.all %}
+                    {% for township in region.townships.all %}
+                    <option value="{{ township.id }}" data-region-id="{{ region.id }}" {% if lead and lead.township_id == township.id %}selected{% endif %}>
+                        {{ township.name }}
+                    </option>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        </select>
         {% if form.township.errors %}<div class="invalid-feedback d-block">{{ form.township.errors }}</div>{% endif %}
     </div>
     <div class="mb-3">

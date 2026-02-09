@@ -15,7 +15,7 @@
 
 {% block content %}
 <h1>{{ customer.name }}</h1>
-<p>{% trans "Phone" %}: {{ customer.phone }} | {% trans "Type" %}: {{ customer.customer_type.name_en }}</p>
+<p>{% trans "Phone" %}: {{ customer.phone }} | {% trans "Type" %}: {{ customer.customer_type.name }}</p>
 {% if customer.shop_name %}<p>{% trans "Shop/Store name" %}: {{ customer.shop_name }}</p>{% endif %}
 {% if customer.contact_person %}<p>{% trans "Contact person" %}: {{ customer.contact_person }}</p>{% endif %}
 <p>{% trans "Credit Limit" %}: {{ customer.credit_limit|floatformat:0|intcomma }} {% currency_suffix %} | {% trans "Payment Terms" %}: {{ customer.payment_terms_days }} {% trans "days" %}</p>

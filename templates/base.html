@@ -74,6 +74,23 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            <i class="bi bi-wallet2"></i> {% trans "Accounting" %}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'accounting:expense_list' %}">
+                                    <i class="bi bi-cash-stack"></i> {% trans "Expenses" %}
+                                </a></li>
+                            <li><a class="dropdown-item" href="{% url 'accounting:expense_category_list' %}">
+                                    <i class="bi bi-tags"></i> {% trans "Expense Categories" %}
+                                </a></li>
+                            <li><a class="dropdown-item" href="{% url 'accounting:expense_summary' %}">
+                                    <i class="bi bi-pie-chart"></i> {% trans "Expense Summary" %}
+                                </a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                             <i class="bi bi-graph-up"></i> {% trans "Reports" %}
                         </a>
                         <ul class="dropdown-menu">
@@ -100,12 +117,6 @@
                                 </a></li>
                             <li><a class="dropdown-item" href="{% url 'reports:audit_log_report' %}">
                                     <i class="bi bi-journal-text"></i> {% trans "Audit Log" %}
-                                </a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="{% url 'accounting:expense_list' %}">
-                                    <i class="bi bi-wallet2"></i> {% trans "Expenses" %}
                                 </a></li>
                         </ul>
                     </li>

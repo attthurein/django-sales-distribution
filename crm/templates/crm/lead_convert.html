@@ -20,7 +20,7 @@
         {{ form.customer_type }}
         {{ form.customer_type.errors }}
     </div>
-    <p class="text-muted">Customer will be created with: Name={{ lead.name }}, Phone={{ lead.phone }}{% if lead.shop_name %}, {% trans "Shop" %}={{ lead.shop_name }}{% endif %}{% if lead.contact_person %}, {% trans "Contact person" %}={{ lead.contact_person }}{% endif %}{% if lead.township %}, Township={{ lead.township.name_en }}{% if lead.township.region %} ({{ lead.township.region.name_en }}){% endif %}{% endif %}</p>
+    <p class="text-muted">Customer will be created with: Name={{ lead.name }}, Phone={{ lead.phone }}{% if lead.shop_name %}, {% trans "Shop" %}={{ lead.shop_name }}{% endif %}{% if lead.contact_person %}, {% trans "Contact person" %}={{ lead.contact_person }}{% endif %}{% if lead.township %}, Township={{ lead.township.name }}{% if lead.township.region %} ({{ lead.township.region.name }}){% endif %}{% endif %}</p>
     <button type="submit" class="btn btn-success">{% trans "Convert" %}</button>
     <a href="{% url 'crm:lead_detail' lead.pk %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
 </form>

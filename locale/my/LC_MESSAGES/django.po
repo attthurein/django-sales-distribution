@@ -1,1861 +1,3491 @@
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-09 14:12+0630\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
-msgid "-- Select Order --"
-msgstr "-- အမှာစာရွေးချယ်ပါ --"
-
-msgid "-- Select Category --"
-msgstr "-- အမျိုးအစားရွေးချယ်ပါ --"
-
-msgid "-- Select Unit --"
-msgstr "-- ယူနစ်ရွေးချယ်ပါ --"
-
-msgid "Optional"
-msgstr "စိတ်ကြိုက်"
-
-msgid "Uses base if empty"
-msgstr "မရှိလျှင် မူရင်းဈေးနှုန်းကို သုံးမည်"
-
-msgid "Please select an item in the list."
-msgstr "စာရင်းမှ အမှာစာတစ်ခု ရွေးချယ်ပါ။"
-
+#: .\accounting\apps.py:8 .\templates\base.html:77
 msgid "Accounting"
 msgstr "ငွေစာရင်းစီမံခန့်ခွဲမှု"
 
-msgid "Action"
-msgstr "လုပ်ဆောင်ချက်"
-
-msgid "Actions"
-msgstr "လုပ်ဆောင်ချက်များ"
-
-msgid "Active"
-msgstr "အသက်ဝင်"
-
-msgid "Activity log with filters and export"
-msgstr "စစ်ထုတ်ချက်များနှင့် ထုတ်ယူမှုပါ လုပ်ဆောင်မှုမှတ်တမ်း"
-
-msgid "Add Contact Log"
-msgstr "ဆက်သွယ်မှုမှတ်တမ်း ထည့်မည်"
-
-msgid "Add Customer"
-msgstr "ဖောက်သည်ထည့်မည်"
-
-msgid "Add Item"
-msgstr "ပစ္စည်းထည့်မည်"
-
-msgid "Add Lead"
-msgstr "ဖောက်သည်လမ်းကြောင်း ထည့်မည်"
-
-msgid "Add New Customer"
-msgstr "ဖောက်သည်အသစ်ထည့်မည်"
-
-msgid "Add Payment"
-msgstr "ငွေချေမှုထည့်မည်"
-
-msgid "Add Product"
-msgstr "ပစ္စည်းထည့်မည်"
-
-msgid "Add Salesperson"
-msgstr "ရောင်းချသူ ထည့်မည်"
-
-msgid "Add at least one product."
-msgstr "ပစ္စည်းအနည်းဆုံး တစ်ခု ထည့်ပါ။"
-
-msgid "Add at least one valid product."
-msgstr "မှန်ကန်သော ပစ္စည်းအနည်းဆုံး တစ်ခု ထည့်ပါ။"
-
-msgid "Add your first customer"
-msgstr "ပထမဆုံးဖောက်သည်ထည့်ပါ"
-
-msgid "Add your first product"
-msgstr "ပထမဆုံးပစ္စည်းထည့်ပါ"
-
-msgid "Address"
-msgstr "လိပ်စာ"
-
-msgid "Adjust Stock"
-msgstr "လက်ကျန်ပြင်ဆင်မည်"
-
-msgid "Admin"
-msgstr "စီမံခန့်ခွဲမှု"
-
-msgid "Admin Login"
-msgstr "စီမံခန့်ခွဲမှု ဝင်ရောက်မှု"
-
-msgid "Affects invoices, reports, dashboard."
-msgstr "ကုန်ကျစရိတ်တောင်းခံလွှာများ၊ အစီရင်ခံစာများ၊ ဒက်ရှ်ဘုတ်တို့ကို သက်ရောက်မှုရှိသည်။"
-
-msgid "All"
-msgstr "အားလုံး"
-
-msgid "All Categories"
-msgstr "အမျိုးအစားအားလုံး"
-
-msgid "All Customers"
-msgstr "ဖောက်သည်အားလုံး"
-
-msgid "All Methods"
-msgstr "နည်းလမ်းအားလုံး"
-
-msgid "All Months"
-msgstr "လအားလုံး"
-
-msgid "Already Received"
-msgstr "လက်ခံပြီးပါပြီ"
-
-msgid "Amount"
-msgstr "ပမာဏ"
-
-msgid "Amount Received"
-msgstr "ရရှိငွေပမာဏ"
-
-msgid "Approve"
-msgstr "ခွင့်ပြုမည်"
-
-msgid "Approved"
-msgstr "ခွင့်ပြုပြီး"
-
-msgid "Are you sure you want to approve this return? Stock will be updated based on item selection."
-msgstr "ဤပြန်အပ်မှုကို အတည်ပြုမည်မှာ သေချာပါသလား? ရွေးချယ်ထားသော ပစ္စည်းများအပေါ် မူတည်၍ လက်ကျန်စာရင်းကို ပြင်ဆင်သွားပါမည်။"
-
-msgid "Are you sure you want to delete %(name)s?"
-msgstr "%(name)s ကို ဖျက်မည်မှာ သေချာပါသလား?"
-
-msgid "Are you sure you want to delete PO #%(id)s (%(supplier)s)?"
-msgstr "ဝယ်ယူမှုအမှာစာ #%(id)s (%(supplier)s) ကို ဖျက်မည်မှာ သေချာပါသလား?"
-
-msgid "Are you sure you want to delete return %(number)s?"
-msgstr "ပြန်အပ်မှု %(number)s ကို ဖျက်မည်မှာ သေချာပါသလား?"
-
-msgid "Are you sure you want to delete this sample delivery?"
-msgstr "ဤနမူနာပို့ဆောင်မှုကို ဖျက်မည်မှာ သေချာပါသလား?"
-
-msgid "Are you sure you want to reject this return?"
-msgstr "ဤပြန်အပ်မှုကို ငြင်းပယ်မည်မှာ သေချာပါသလား?"
-
-msgid "Audit Log"
-msgstr "မှတ်တမ်းစစ်ဆေးချက်"
-
-msgid "Audit Log Report"
-msgstr "မှတ်တမ်းစစ်ဆေးချက် အစီရင်ခံစာ"
-
-msgid "Audit log"
-msgstr "မှတ်တမ်းစစ်ဆေးချက်"
-
-msgid "Audit log archive"
-msgstr "မှတ်တမ်းစစ်ဆေးချက် မော်ကွန်း"
-
-msgid "Audit log archives"
-msgstr "မှတ်တမ်းစစ်ဆေးချက် မော်ကွန်းများ"
-
-msgid "Audit logs"
-msgstr "မှတ်တမ်းစစ်ဆေးချက်များ"
-
-msgid "Authorized By"
-msgstr "ခွင့်ပြုသူ"
-
-msgid "Available"
-msgstr "ရရှိနိုင်မှု"
-
-msgid "Back"
-msgstr "ပြန်မည်"
-
-msgid "Back to Expenses"
-msgstr "အသုံးစရိတ်များသို့ ပြန်မည်"
-
-msgid "Back to List"
-msgstr "စာရင်းသို့ ပြန်မည်"
-
-msgid "Back to Order"
-msgstr "အမှာစာသို့ ပြန်မည်"
-
-msgid "Back to Reports"
-msgstr "အစီရင်ခံစာများသို့ ပြန်မည်"
-
-msgid "Back to list"
-msgstr "စာရင်းသို့ ပြန်မည်"
-
-msgid "Balance Due"
-msgstr "ကျန်ငွေ"
-
-msgid "Base Price"
-msgstr "အခြေဈေးနှုန်း"
-
-msgid "Base currency"
-msgstr "အခြေခံငွေကြေး"
-
-msgid "Base currency for the whole system (invoices, reports, dashboard)."
-msgstr "စနစ်တစ်ခုလုံးအတွက် အခြေခံငွေကြေး (ကုန်ကျစရိတ်တောင်းခံလွှာများ၊ အစီရင်ခံစာများ၊ ဒက်ရှ်ဘုတ်)။"
-
-msgid "Basic Info"
-msgstr "အခြေခံအချက်အလက်"
-
-msgid "Batch"
-msgstr "ရက်စွဲအစု"
-
-msgid "Batch adjusted: %(product)s (%(date)s) by %(qty)+d. New batch stock: %(new)s"
-msgstr "ရက်စွဲအစု ပြင်ဆင်ပြီး: %(product)s (%(date)s) မှ %(qty)+d။ ရက်စွဲအစုလက်ကျန်သစ်: %(new)s"
-
-msgid "Batches"
-msgstr "ရက်စွဲအစုများ"
-
-msgid "Bill To"
-msgstr "ငွေတောင်းခံရမည့်သူ"
-
-msgid "By"
-msgstr "ပြုလုပ်သူ"
-
-msgid "By Payment Method"
-msgstr "ငွေပေးချေမှုနည်းလမ်းအလိုက်"
-
-msgid "CRM"
-msgstr "ဖောက်သည်ဆက်ဆံမှု"
-
-msgid "CSV"
-msgstr "CSV"
-
-msgid "Cancel"
-msgstr "ပယ်ဖျက်မည်"
-
-msgid "Cancel?"
-msgstr "ပယ်ဖျက်မည်လား?"
-
-msgid "Cancelled"
-msgstr "ပယ်ဖျက်ပြီး"
-
-msgid "Cannot change: transactional data exists (orders, products, etc.)."
-msgstr "ပြောင်းလဲ၍မရပါ - အရောင်းအဝယ်ဒေတာများ ရှိနေသည် (အမှာစာများ၊ ပစ္စည်းများ စသည်)။"
-
-msgid "Cannot deduct from non-existent batch (Expiry: %(date)s)"
-msgstr "မရှိသောရက်စွဲအစုမှ နုတ်ယူ၍မရပါ (သက်တမ်းကုန်ရက်: %(date)s)"
-
-msgid "Cannot delete order with payments. Refund or void payments first."
-msgstr "ငွေပေးချေမှုရှိနေသောအမှာစာကို ဖျက်၍မရပါ။ ဦးစွာ ငွေပြန်အမ်းပါ သို့မဟုတ် ပယ်ဖျက်ပါ။"
-
-msgid "Cannot delete order with return requests. Process or cancel returns first."
-msgstr "ပြန်အပ်ရန်တောင်းဆိုမှုရှိနေသောအမှာစာကို ဖျက်၍မရပါ။ ဦးစွာ ဆောင်ရွက်ပါ သို့မဟုတ် ပယ်ဖျက်ပါ။"
-
-msgid "Category"
-msgstr "အမျိုးအစား"
-
-msgid "Clear"
-msgstr "ရှင်းမည်"
-
-msgid "Code"
-msgstr "အမှတ်အသား"
-
-msgid "Common"
-msgstr "အသုံးပြုမှု"
-
-msgid "Company name"
-msgstr "ကုမ္ပဏီအမည်"
-
-msgid "Company setting"
-msgstr "ကုမ္ပဏီဆက်တင်း"
-
-msgid "Company settings"
-msgstr "ကုမ္ပဏီဆက်တင်းများ"
-
-msgid "Company settings saved successfully."
-msgstr "ကုမ္ပဏီဆက်တင်းများ သိမ်းဆည်းပြီးပါပြီ။"
-
-msgid "Compare purchases and sales"
-msgstr "ဝယ်ယူမှုနှင့် ရောင်းချမှုကို နှိုင်းယှဉ်ပါ"
-
-msgid "Comparison"
-msgstr "နှိုင်းယှဉ်ချက်"
-
-msgid "Complete"
-msgstr "ပြီးပါပြီ"
-
-msgid "Completed"
-msgstr "ပြီးပါပြီ"
-
-msgid "Condition Notes"
-msgstr "အခြေအနေမှတ်ချက်"
-
-msgid "Confirm"
-msgstr "အတည်ပြုမည်"
-
-msgid "Confirm Return"
-msgstr "ပြန်အပ်မှု အတည်ပြုမည်"
-
-msgid "Confirmed"
-msgstr "အတည်ပြုပြီး"
-
-msgid "Contact & Tax"
-msgstr "ဆက်သွယ်ရန်နှင့် အခွန်"
-
-msgid "Contact Logs"
-msgstr "ဆက်သွယ်မှုမှတ်တမ်းများ"
-
-msgid "Contact Type"
-msgstr "ဆက်သွယ်မှုအမျိုးအစား"
-
-msgid "Contact log"
-msgstr "ဆက်သွယ်မှုမှတ်တမ်း"
-
-msgid "Contact log added."
-msgstr "ဆက်သွယ်မှုမှတ်တမ်း ထည့်ပြီးပါပြီ။"
-
-msgid "Contact logs"
-msgstr "ဆက်သွယ်မှုမှတ်တမ်းများ"
-
-msgid "Contact person"
-msgstr "ဆက်သွယ်ရန်ပုဂ္ဂိုလ်"
-
-msgid "Contact type"
-msgstr "ဆက်သွယ်မှုအမျိုးအစား"
-
-msgid "Contact types"
-msgstr "ဆက်သွယ်မှုအမျိုးအစားများ"
-
-msgid "Contacted"
-msgstr "ဆက်သွယ်ပြီး"
-
-msgid "Convert"
-msgstr "ပြောင်းမည်"
-
-msgid "Convert Lead to Customer"
-msgstr "ဖောက်သည်လမ်းကြောင်းမှ ဖောက်သည်သို့ ပြောင်းမည်"
-
-msgid "Convert to Customer"
-msgstr "ဖောက်သည်သို့ ပြောင်းမည်"
-
-msgid "Converted"
-msgstr "ပြောင်းပြီး"
-
-msgid "Core"
-msgstr "အခြေခံ"
-
-msgid "Cost Price"
-msgstr "ကုန်ကျဈေးနှုန်း"
-
-msgid "Count"
-msgstr "အရေအတွက်"
-
-msgid "Create Lead"
-msgstr "ဖောက်သည်လမ်းကြောင်း ဖန်တီးမည်"
-
-msgid "Create Order"
-msgstr "အမှာစာ ဖန်တီးမည်"
-
-msgid "Create Purchase Order"
-msgstr "ဝယ်ယူမှုအမှာစာ ဖန်တီးမည်"
-
-msgid "Create Replacement Order"
-msgstr "အစားထိုးအမှာစာ ဖန်တီးမည်"
-
-msgid "Create Return"
-msgstr "ပြန်လည်ပေးအပ်မှု ဖန်တီးမည်"
-
-msgid "Create Return - Select Items"
-msgstr "ပြန်အပ်မှု ဖန်တီးမည် - ပစ္စည်းများ ရွေးချယ်ပါ"
-
-msgid "Create Return - Select Order"
-msgstr "ပြန်အပ်မှု ဖန်တီးမည် - အမှာစာရွေးချယ်ပါ"
-
-msgid "Create a replacement order with 0 price?"
-msgstr "တန်ဖိုး ၀ (သုည) ဖြင့် အစားထိုးအမှာစာအသစ် ဖန်တီးမည်လား?"
-
-msgid "Create your first order"
-msgstr "ပထမဆုံးအမှာစာ ဖန်တီးပါ"
-
-msgid "Create your first return"
-msgstr "ပထမဆုံးပြန်အပ်မှု ဖန်တီးပါ"
-
-msgid "Created"
-msgstr "ဖန်တီးသည့်ရက်"
-
-msgid "Created By"
-msgstr "မှတ်တမ်းတင်သူ"
-
-msgid "Credit Limit"
-msgstr "အကြွေးကန့်သတ်ချက်"
-
-msgid "Currencies"
-msgstr "ငွေကြေးများ"
-
-msgid "Currency"
-msgstr "ငွေကြေး"
-
-msgid "Current stock"
-msgstr "လက်ရှိလက်ကျန်"
-
-msgid "Customer"
-msgstr "ဖောက်သည်"
-
-msgid "Customer Detail"
-msgstr "ဖောက်သည်အသေးစိတ်"
-
-msgid "Customer Details"
-msgstr "ဖောက်သည်အသေးစိတ်"
-
-msgid "Customer Type"
-msgstr "ဖောက်သည်အမျိုးအစား"
-
-msgid "Customer created successfully."
-msgstr "ဖောက်သည်အသစ် ဖန်တီးပြီးပါပြီ။"
-
-msgid "Customer deleted successfully."
-msgstr "ဖောက်သည်ကို ဖျက်ပြီးပါပြီ။"
-
-msgid "Customer type"
-msgstr "ဖောက်သည်အမျိုးအစား"
-
-msgid "Customer types"
-msgstr "ဖောက်သည်အမျိုးအစားများ"
-
-msgid "Customer updated successfully."
-msgstr "ဖောက်သည်အချက်အလက်များ ပြင်ဆင်ပြီးပါပြီ။"
-
-msgid "Customer:"
-msgstr "ဖောက်သည်:"
-
-msgid "Customers"
-msgstr "ဖောက်သည်များ"
-
-msgid "D-day"
-msgstr "ကျန်ရက်"
-
-msgid "Daily Expense Summaries"
-msgstr "နေ့စဉ်အသုံးစရိတ် အကျဉ်းချုပ်များ"
-
-msgid "Daily Expense Summary"
-msgstr "နေ့စဉ်အသုံးစရိတ် အကျဉ်းချုပ်"
-
-msgid "Daily Inventory Snapshot"
-msgstr "နေ့စဉ်ကုန်ပစ္စည်းလက်ကျန် အခြေအနေ"
-
-msgid "Daily Inventory Snapshots"
-msgstr "နေ့စဉ်ကုန်ပစ္စည်းလက်ကျန် အခြေအနေများ"
-
-msgid "Daily Payment Summaries"
-msgstr "နေ့စဉ်ငွေပေးချေမှု အကျဉ်းချုပ်များ"
-
-msgid "Daily Payment Summary"
-msgstr "နေ့စဉ်ငွေပေးချေမှု အကျဉ်းချုပ်"
-
-msgid "Daily Sales Summaries"
-msgstr "နေ့စဉ်အရောင်း အကျဉ်းချုပ်များ"
-
-msgid "Daily Sales Summary"
-msgstr "နေ့စဉ်အရောင်း အကျဉ်းချုပ်"
-
-msgid "Dashboard"
-msgstr "ပင်မစာမျက်နှာ"
-
-msgid "Data"
-msgstr "ဒေတာ"
-
-msgid "Data Export"
-msgstr "ဒေတာထုတ်ယူမှု"
-
-msgid "Date"
-msgstr "ရက်စွဲ"
-
-msgid "Days before expiry to trigger alert"
-msgstr "သက်တမ်းမကုန်မီ သတိပေးမည့်ရက်"
-
-msgid "Days until expiry"
-msgstr "သက်တမ်းကုန်သည့်အထိ ရက်များ"
-
-msgid "Delete"
-msgstr "ဖျက်မည်"
-
-msgid "Delete Customer"
-msgstr "ဖောက်သည်ဖျက်မည်"
-
-msgid "Delete Lead"
-msgstr "ဖောက်သည်လမ်းကြောင်း ဖျက်မည်"
-
-msgid "Delete Order"
-msgstr "အမှာစာဖျက်မည်"
-
-msgid "Delete Purchase Order"
-msgstr "ဝယ်ယူမှုအမှာစာကို ဖျက်မည်"
-
-msgid "Delete Return"
-msgstr "ပြန်အပ်မှုကို ဖျက်မည်"
-
-msgid "Delete Sample Delivery"
-msgstr "နမူနာပို့ဆောင်မှုကို ဖျက်မည်"
-
-msgid "Deleted at"
-msgstr "ဖျက်သည့်အချိန်"
-
-msgid "Deliver"
-msgstr "ပို့ဆောင်မည်"
-
-msgid "Delivered"
-msgstr "ပို့ဆောင်ပြီး"
-
-msgid "Delivery"
-msgstr "ပို့ဆောင်မှု"
-
-msgid "Delivery Date"
-msgstr "ပို့ဆောင်ရက်"
-
-msgid "Delivery Fee"
-msgstr "ပို့ဆောင်ခ"
-
-msgid "Delivery date"
-msgstr "ပို့ဆောင်ရက်"
-
-msgid "Delivery fee"
-msgstr "ပို့ဆောင်ခ"
-
-msgid "Delivery route"
-msgstr "ပို့ဆောင်လမ်းကြောင်း"
-
-msgid "Delivery routes"
-msgstr "ပို့ဆောင်လမ်းကြောင်းများ"
-
-msgid "Description"
-msgstr "ဖော်ပြချက်"
-
-msgid "Discount"
-msgstr "လျှော့ဈေး"
-
-msgid "Discount Amount"
-msgstr "လျှော့ဈေးပမာဏ"
-
-msgid "Display Order"
-msgstr "ပြသသည့်အစဉ်"
-
-msgid "Django administration"
-msgstr "Django စီမံခန့်ခွဲမှု"
-
-msgid "Django site admin"
-msgstr "Django စီမံခန့်ခွဲမှု ဝဘ်ဆိုက်"
-
-msgid "Download CSV"
-msgstr "CSV ဒေါင်းလုဒ်မည်"
-
-msgid "Download Excel"
-msgstr "Excel ဒေါင်းလုဒ်မည်"
-
-msgid "Download PDF"
-msgstr "PDF ဒေါင်းလုဒ်မည်"
-
-msgid "Edit"
-msgstr "ပြင်မည်"
-
-msgid "Edit Customer"
-msgstr "ဖောက်သည်ပြင်ဆင်မည်"
-
-msgid "Edit Lead"
-msgstr "ဖောက်သည်လမ်းကြောင်း ပြင်မည်"
-
-msgid "Edit Order"
-msgstr "အမှာစာပြင်ဆင်မည်"
-
-msgid "Edit Salesperson"
-msgstr "ရောင်းချသူ ပြင်ဆင်မည်"
-
-msgid "Email"
-msgstr "အီးမေးလ်"
-
-msgid "End Date"
-msgstr "ပြီးဆုံးရက်"
-
-msgid "English"
-msgstr "အင်္ဂလိပ်"
-
-msgid "Error cancelling order: %(error)s"
-msgstr "အမှာစာပယ်ဖျက်ရာတွင် အမှားရှိနေသည်: %(error)s"
-
-msgid "Error creating order: %(error)s"
-msgstr "အမှာစာဖန်တီးရာတွင် အမှားရှိနေသည်: %(error)s"
-
-msgid "Excel"
-msgstr "Excel"
-
-msgid "Expected Date"
-msgstr "မျှော်မှန်းရက်"
-
-msgid "Expense"
-msgstr "အသုံးစရိတ်"
-
-msgid "Expense Summary"
-msgstr "အသုံးစရိတ် အကျဉ်းချုပ်"
-
-msgid "Expense categories"
-msgstr "အသုံးစရိတ်အမျိုးအစားများ"
-
+#: .\accounting\models.py:14
 msgid "Expense category"
 msgstr "အသုံးစရိတ်အမျိုးအစား"
 
-msgid "Expense recorded successfully"
-msgstr "အသုံးစရိတ် မှတ်တမ်းတင်ပြီးပါပြီ"
+#: .\accounting\models.py:15
+msgid "Expense categories"
+msgstr "အသုံးစရိတ်အမျိုးအစားများ"
 
+#: .\accounting\models.py:38
+msgid "Expense"
+msgstr "အသုံးစရိတ်"
+
+#: .\accounting\models.py:39
+#: .\accounting\templates\accounting\expense_category_confirm_delete.html:7
+#: .\accounting\templates\accounting\expense_category_form.html:7
+#: .\accounting\templates\accounting\expense_category_list.html:7
+#: .\accounting\templates\accounting\expense_create.html:7
+#: .\accounting\templates\accounting\expense_list.html:52
+#: .\accounting\templates\accounting\expense_summary.html:7
+#: .\accounting\views.py:40 .\templates\base.html:81
+#: .\templates\reports\profit_analysis.html:114
 msgid "Expenses"
 msgstr "အသုံးစရိတ်များ"
 
-msgid "Expenses by Category"
-msgstr "အမျိုးအစားအလိုက် အသုံးစရိတ်"
-
-msgid "Expiring within 2 days (by shop)"
-msgstr "၂ ရက်အတွင်း သက်တမ်းကုန်မည် (ဆိုင်အလိုက်)"
-
-msgid "Expiry"
-msgstr "သက်တမ်း"
-
-msgid "Expiry Alert Days"
-msgstr "သက်တမ်းကုန်ဆုံးရန် သတိပေးရက်များ"
-
-msgid "Expiry Date"
-msgstr "သက်တမ်းကုန်ရက်"
-
-msgid "Expiry alert"
-msgstr "သက်တမ်းကုန်ရက်"
-
-msgid "Export"
-msgstr "ထုတ်မည်"
-
-msgid "Export CSV"
-msgstr "CSV ထုတ်မည်"
-
-msgid "Export Excel"
-msgstr "Excel ထုတ်မည်"
-
-msgid "Export data to CSV or Excel format."
-msgstr "ဒေတာကို CSV သို့မဟုတ် Excel ဖော်မတ်ဖြင့် ထုတ်ယူပါ။"
-
-msgid "Filter"
-msgstr "စစ်ထုတ်မည်"
-
-msgid "Follow-up"
-msgstr "လိုက်လံဆက်သွယ်မှု"
-
-msgid "Footer text"
-msgstr "အောက်ခြေစာသား"
-
-msgid "For Shop/Distributor"
-msgstr "ဆိုင်ငယ်/ဖြန့်ချိရေးအတွက်"
-
-msgid "For Shop/Distributor - leave blank for Individual"
-msgstr "ဆိုင်/ဖြန့်ဖြူးသူများအတွက် - တစ်ဦးချင်းဖြစ်ပါက ကွက်လပ်ထားခဲ့ပါ"
-
-msgid "From"
-msgstr "မှ"
-
-msgid "From Date"
-msgstr "မှရက်"
-
-msgid "Fully returned"
-msgstr "အပြည့်အဝပြန်အပ်ပြီး"
-
-msgid "Give Sample"
-msgstr "နမူနာပေးမည်"
-
-msgid "Given at:"
-msgstr "ပေးအပ်သည့်အချိန်:"
-
-msgid "Go to Low Stock List"
-msgstr "လက်ကျန်နည်းပါးစာရင်းသို့"
-
-msgid "Grand Total"
-msgstr "စုစုပေါင်း"
-
-msgid "Gross Margin"
-msgstr "အမြတ်နှုန်း"
-
-msgid "Gross Profit"
-msgstr "အမြတ်ခ"
-
-msgid "Group By"
-msgstr "အုပ်စုဖွဲ့မည်"
-
-msgid "Grouped"
-msgstr "အုပ်စုဖွဲ့ပြီး"
-
-msgid "INVOICE"
-msgstr "ကုန်ကျစရိတ်တောင်းခံလွှာ"
-
-msgid "Insufficient stock. Available: %(qty)s"
-msgstr "လက်ကျန်မလုံလောက်ပါ။ ရရှိနိုင်မှု: %(qty)s"
-
-msgid "Invalid quantity or unit cost for item %(i)s"
-msgstr "ပစ္စည်း %(i)s အတွက် အရေအတွက် သို့မဟုတ် ဈေးနှုန်း မမှန်ကန်ပါ။"
-
-msgid "Inventory"
-msgstr "ပစ္စည်းစာရင်း"
-
-msgid "Invoice"
-msgstr "ကုန်ကျစရိတ်တောင်းခံလွှာ"
-
-msgid "Invoice No"
-msgstr "တောင်းခံလွှာအမှတ်"
-
-msgid "Item does not belong to this purchase order."
-msgstr "ဤပစ္စည်းသည် ဤဝယ်ယူမှုအမှာစာနှင့် မသက်ဆိုင်ပါ။"
-
-msgid "Items"
-msgstr "ပစ္စည်းများ"
-
-msgid "Items to Return"
-msgstr "ပြန်အပ်မည့် ပစ္စည်းများ"
-
-msgid "Last 30 Days"
-msgstr "နောက်ဆုံး ၃၀ ရက်"
-
-msgid "Last 7 Days"
-msgstr "နောက်ဆုံး ၇ ရက်"
-
-msgid "Lead"
-msgstr "လမ်းကြောင်းစ"
-
-msgid "Lead converted to customer: %(name)s"
-msgstr "ဖောက်သည်လမ်းကြောင်းမှ ဖောက်သည်သို့ ပြောင်းပြီး: %(name)s"
-
-msgid "Lead created."
-msgstr "ဖောက်သည်လမ်းကြောင်း ဖန်တီးပြီးပါပြီ။"
-
-msgid "Lead deleted successfully."
-msgstr "လမ်းကြောင်းစကို ဖျက်ပြီးပါပြီ။"
-
-msgid "Lead updated."
-msgstr "ဖောက်သည်လမ်းကြောင်း ပြင်ဆင်ပြီးပါပြီ။"
-
-msgid "Lead:"
-msgstr "လမ်းကြောင်းစ:"
-
-msgid "Leads"
-msgstr "လမ်းကြောင်းစများ"
-
-msgid "Loading prices..."
-msgstr "ဈေးနှုန်းများ တွက်ချက်နေသည်..."
-
-msgid "Log Details"
-msgstr "မှတ်တမ်းအသေးစိတ်"
-
-msgid "Login"
-msgstr "ဝင်ရောက်မည်"
-
-msgid "Logo"
-msgstr "လိုဂို"
-
-msgid "Logout"
-msgstr "ထွက်မည်"
-
-msgid "Lost"
-msgstr "ဆုံးရှုံး"
-
-msgid "Low"
-msgstr "နည်း"
-
-msgid "Low Stock"
-msgstr "လက်ကျန်နည်းပါး"
-
-msgid "Low Stock Alerts"
-msgstr "လက်ကျန်နည်းပါးသတိပေးချက်များ"
-
-msgid "Low Stock Threshold"
-msgstr "လက်ကျန်နည်းပါးအမှတ်"
-
-msgid "Low stock products"
-msgstr "လက်ကျန်နည်းပါးသောပစ္စည်းများ"
-
-msgid "Low stock: %(products)s"
-msgstr "လက်ကျန်နည်းပါး: %(products)s"
-
-msgid "Low threshold"
-msgstr "လက်ကျန်နည်းပါးအမှတ်"
-
-msgid "Margin %%"
-msgstr "အမြတ် %%"
-
-msgid "Mark"
-msgstr "မှတ်သားမည်"
-
-msgid "Mark Not Returned"
-msgstr "ပြန်မအပ်ရသေး"
-
-msgid "Mark Sample as Not Returned"
-msgstr "နမူနာပြန်မအပ်ကြောင်း မှတ်သားမည်"
-
-msgid "Master Data"
-msgstr "အခြေခံဒေတာ"
-
-msgid "Method"
-msgstr "နည်းလမ်း"
-
-msgid "Metric"
-msgstr "အတိုင်းအတာ"
-
-msgid "Module"
-msgstr "မော်ဂျူး"
-
-msgid "Month"
-msgstr "လ"
-
-msgid "Month (Optional)"
-msgstr "လ (ရွေးချယ်နိုင်သည်)"
-
-msgid "Monthly Breakdown"
-msgstr "လစဉ်ခွဲခြမ်းစိတ်ဖြာမှု"
-
-msgid "Monthly Expenses"
-msgstr "လစဉ်အသုံးစရိတ်များ"
-
-msgid "Myanmar"
-msgstr "မြန်မာ"
-
-msgid "Name"
-msgstr "အမည်"
-
-msgid "Name (English)"
-msgstr "အမည် (အင်္ဂလိပ်)"
-
-msgid "Name (Myanmar)"
-msgstr "အမည် (မြန်မာ)"
-
-msgid "Net Margin %%"
-msgstr "အသားတင်အမြတ် %%"
-
-msgid "Net Profit"
-msgstr "အသားတင်အမြတ်"
-
-msgid "Net profit calculation"
-msgstr "အသားတင်အမြတ် တွက်ချက်မှု"
-
-msgid "New"
-msgstr "အသစ်"
-
-msgid "Next"
-msgstr "နောက်"
-
-msgid "Next Follow-up Date"
-msgstr "နောက်ထပ်လိုက်လံဆက်သွယ်မည့်ရက်"
-
-msgid "Next: Select Items"
-msgstr "နောက်တစ်ဆင့် - ပစ္စည်းများ ရွေးချယ်ပါ"
-
-msgid "No audit logs found."
-msgstr "မှတ်တမ်းစစ်ဆေးချက် မတွေ့ပါ။"
-
-msgid "No contact logs."
-msgstr "ဆက်သွယ်မှုမှတ်တမ်းမရှိပါ။"
-
-msgid "No contact types found. Run: python manage.py setup_master_data"
-msgstr "ဆက်သွယ်မှုအမျိုးအစားမရှိပါ။ Run: python manage.py setup_master_data"
-
-msgid "No customer types found. Add in Admin → Master Data."
-msgstr "ဖောက်သည်အမျိုးအစားမရှိပါ။ Admin → Master Data တွင် ထည့်ပါ။"
-
-msgid "No customers match your search."
-msgstr "သင့်ရှာဖွေမှုနှင့် ကိုက်ညီသော ဖောက်သည်မရှိပါ။"
-
-msgid "No customers yet."
-msgstr "ဖောက်သည်မရှိသေးပါ။"
-
-msgid "No eligible orders for return."
-msgstr "ပြန်အပ်ရန် သင့်လျော်သော အမှာစာမရှိပါ။"
-
-msgid "No expenses found"
-msgstr "အသုံးစရိတ်မတွေ့ပါ"
-
-msgid "No expiring products"
-msgstr "သက်တမ်းကုန်မည့်ပစ္စည်းမရှိပါ"
-
-msgid "No leads yet."
-msgstr "ဖောက်သည်လမ်းကြောင်းမရှိသေးပါ။"
-
-msgid "No log"
-msgstr "မှတ်တမ်းမရှိပါ"
-
-msgid "No low stock products"
-msgstr "လက်ကျန်နည်းပါးသောပစ္စည်းမရှိပါ"
-
-msgid "No movements"
-msgstr "ရွေ့လျားမှုမရှိပါ"
-
-msgid "No orders"
-msgstr "အမှာစာမရှိပါ"
-
-msgid "No orders yet."
-msgstr "အမှာစာမရှိသေးပါ။"
-
-msgid "No outstanding"
-msgstr "ကျန်ငွေမရှိပါ"
-
-msgid "No outstanding orders"
-msgstr "ကျန်ငွေရှိသော အမှာစာမရှိပါ"
-
-msgid "No paid orders in this period."
-msgstr "ဤကာလအတွင်း ငွေပေးပြီးသော အမှာစာမရှိပါ။"
-
-msgid "No payments"
-msgstr "ငွေပေးချေမှုမရှိပါ"
-
-msgid "No payments found"
-msgstr "ငွေပေးချေမှုမရှိပါ"
-
-msgid "No products"
-msgstr "ပစ္စည်းမရှိပါ"
-
-msgid "No products yet."
-msgstr "ပစ္စည်းမရှိသေးပါ။"
-
-msgid "No purchase orders found"
-msgstr "ဝယ်ယူမှုအမှာစာမတွေ့ပါ"
-
-msgid "No regions. Add in Admin → Master Data."
-msgstr "တိုင်းဒေသကြီးမရှိပါ။ Admin → Master Data တွင် ထည့်ပါ။"
-
-msgid "No returns"
-msgstr "ပြန်အပ်မှုမရှိပါ"
-
-msgid "No returns yet."
-msgstr "ပြန်အပ်မှုမရှိသေးပါ။"
-
-msgid "No samples given"
-msgstr "နမူနာမပေးရသေးပါ"
-
-msgid "No samples given."
-msgstr "နမူနာမပေးရသေးပါ။"
-
-msgid "No stock data"
-msgstr "လက်ကျန်အချက်အလက်မရှိပါ"
-
-msgid "None"
-msgstr "မရှိ"
-
-msgid "Normal"
-msgstr "ပုံမှန်"
-
-msgid "Not Returned"
-msgstr "ပြန်မအပ်ရသေး"
-
-msgid "Notes"
-msgstr "မှတ်ချက်"
-
-msgid "Notes:"
-msgstr "မှတ်ချက်:"
-
-msgid "Only orders delivered within the return window are shown."
-msgstr "ပြန်အပ်ချိန်အတွင်း ပို့ဆောင်ပြီးသော အမှာစာများကိုသာ ပြသပါသည်။"
-
-msgid "Operating Expenses"
-msgstr "လည်ပတ်အသုံးစရိတ်"
-
-msgid "Optional. Upload company logo for invoices. Preview shown before save."
-msgstr "မဖြစ်မနေမဟုတ်ပါ။ ကုန်ကျစရိတ်တောင်းခံလွှာများအတွက် ကုမ္ပဏီလိုဂို တင်ပါ။ မသိမ်းဆည်းမီ နမူနာကြည့်နိုင်သည်။"
-
-msgid "Optional notes"
-msgstr "မှတ်ချက်"
-
-msgid "Qty"
-msgstr "အရေအတွက်"
-
-msgid "Order"
-msgstr "အမှာစာ"
-
-msgid "Order Count"
-msgstr "အမှာစာအရေအတွက်"
-
-msgid "Order Date"
-msgstr "အမှာစာရက်"
-
-msgid "Order Detail"
-msgstr "အမှာစာအသေးစိတ်"
-
-msgid "Order Details"
-msgstr "အမှာစာအသေးစိတ်"
-
-msgid "Order No"
-msgstr "အမှာစာအမှတ်"
-
-msgid "Order Total"
-msgstr "အမှာစာစုစုပေါင်း"
-
-msgid "Order cancelled successfully."
-msgstr "အမှာစာကို ပယ်ဖျက်ပြီးပါပြီ။"
-
-msgid "Order confirmed successfully."
-msgstr "အမှာစာကို အတည်ပြုပြီးပါပြီ။"
-
-msgid "Order created successfully."
-msgstr "အမှာစာအသစ် ဖန်တီးပြီးပါပြီ။"
-
-msgid "Order date"
-msgstr "အမှာစာရက်"
-
-msgid "Order deleted successfully."
-msgstr "အမှာစာကို ဖျက်ပြီးပါပြီ။"
-
-msgid "Order delivered successfully."
-msgstr "အမှာစာကို ပို့ဆောင်ပြီးပါပြီ။"
-
-msgid "Order is delivered/paid. Only notes and delivery date can be edited."
-msgstr "အမှာစာ ပို့ဆောင်ပြီး/ငွေချေပြီး ဖြစ်သည်။ မှတ်ချက်နှင့် ပို့ဆောင်ရက်ကိုသာ ပြင်ဆင်နိုင်သည်။"
-
-msgid "Order item"
-msgstr "အမှာစာအသေးစိတ်"
-
-msgid "Order items"
-msgstr "အမှာစာအသေးစိတ်များ"
-
-msgid "Order must have at least one product."
-msgstr "အမှာစာတွင် ပစ္စည်းအနည်းဆုံး တစ်ခု ပါရှိရပါမည်။"
-
-msgid "Order number"
-msgstr "အမှာစာအမှတ်"
-
-msgid "Order status"
-msgstr "အမှာစာအခြေအနေ"
-
-msgid "Order statuses"
-msgstr "အမှာစာအခြေအနေများ"
-
-msgid "Order type"
-msgstr "အမှာစာအမျိုးအစား"
-
-msgid "Order updated successfully."
-msgstr "အမှာစာ ပြင်ဆင်ပြီးပါပြီ။"
-
-msgid "Ordered"
-msgstr "အမှာစာအရေအတွက်"
-
-msgid "Ordered Qty"
-msgstr "မှာယူသည့်အရေအတွက်"
-
-msgid "Orders"
-msgstr "အမှာစာများ"
-
-msgid "Orders in Period"
-msgstr "ကာလအတွင်း အမှာစာများ"
-
-msgid "Orders with Balance Due"
-msgstr "ကျန်ငွေရှိသော အမှာစာများ"
-
-msgid "Orders/customers with balance due"
-msgstr "ကျန်ငွေရှိသော အမှာစာ/ဖောက်သည်များ"
-
-msgid "Outstanding Payments"
-msgstr "ကျန်ငွေပေးချေမှုများ"
-
-msgid "Outstanding by Customer"
-msgstr "ဖောက်သည်အလိုက် ကျန်ငွေ"
-
-msgid "Overdue"
-msgstr "ရက်လွန်"
-
-msgid "Override base price for specific customer types. Leave blank to use base price."
-msgstr "ဖောက်သည်အမျိုးအစားအလိုက် အခြေဈေးနှုန်း ပြောင်းသတ်မှတ်ပါ။ အခြေဈေးသုံးရန် ဗလာချန်ထားပါ။"
-
-msgid "PO"
-msgstr "ဝယ်ယူမှုအမှာစာ"
-
-msgid "PO #"
-msgstr "ဝယ်ယူမှုအမှာစာ #"
-
-msgid "PO Information"
-msgstr "ဝယ်ယူမှုအမှာစာ အချက်အလက်"
-
-msgid "PO Number"
-msgstr "ဝယ်ယူမှုအမှာစာအမှတ်"
-
-msgid "Page %(page)s of %(total)s"
-msgstr "စာမျက်နှာ %(page)s / %(total)s"
-
-msgid "Paid"
-msgstr "ငွေချေပြီး"
-
-msgid "Paid To"
-msgstr "ငွေလက်ခံသူ"
-
-msgid "Paid amount"
-msgstr "ပေးပြီးပမာဏ"
-
-msgid "Password"
-msgstr "စကားဝှက်"
-
-msgid "Payment"
-msgstr "ငွေပေးချေမှု"
-
-msgid "Payment Method"
-msgstr "ငွေပေးချေမှုနည်းလမ်း"
-
-msgid "Payment Methods"
-msgstr "ငွေပေးချေမှုနည်းလမ်းများ"
-
-msgid "Payment Records"
-msgstr "ငွေပေးချေမှုမှတ်တမ်းများ"
-
-msgid "Payment Report"
-msgstr "ငွေပေးချေမှုအစီရင်ခံစာ"
-
-msgid "Payment Terms"
-msgstr "ငွေပေးချေမှု စည်းကမ်းချက်များ"
-
-msgid "Payment Voucher"
-msgstr "ငွေပေးချေမှု ဖြတ်ပိုင်း"
-
-msgid "Payment by Customer"
-msgstr "ဖောက်သည်အလိုက် ငွေပေးချေမှု"
-
-msgid "Payment date"
-msgstr "ငွေပေးချေရက်"
-
-msgid "Payment method"
-msgstr "ငွေပေးချေမှုနည်းလမ်း"
-
-msgid "Payment recorded successfully."
-msgstr "ငွေပေးချေမှု မှတ်တမ်းတင်ပြီးပါပြီ။"
-
-msgid "Payments"
-msgstr "ငွေပေးချေမှုများ"
-
-msgid "Payments by date and method"
-msgstr "ရက်စွဲနှင့် နည်းလမ်းအလိုက် ငွေပေးချေမှုများ"
-
-msgid "Pending"
-msgstr "ဆိုင်းငံ့"
-
-msgid "Pending Orders"
-msgstr "ဆိုင်းငံ့အမှာစာများ"
-
-msgid "Period"
-msgstr "ကာလ"
-
-msgid "Phone"
-msgstr "ဖုန်းနံပါတ်"
-
-msgid "Please add at least one item"
-msgstr "ပစ္စည်းအနည်းဆုံး တစ်ခု ထည့်ပါ။"
-
-msgid "Please correct the errors below."
-msgstr "အောက်ပါအမှားများကို ပြင်ဆင်ပါ။"
-
-msgid "Pre-order"
-msgstr "ကြိုတင်အမှာစာ"
-
-msgid "Previous"
-msgstr "ရှေ့"
-
-msgid "Price"
-msgstr "ဈေးနှုန်း"
-
-msgid "Price Tiers"
-msgstr "ဈေးနှုန်းအဆင့်များ"
-
-msgid "Price Tiers (by Customer Type)"
-msgstr "ဈေးနှုန်းအဆင့်များ (ဖောက်သည်အမျိုးအစားအလိုက်)"
-
-msgid "Pricing & Stock"
-msgstr "ဈေးနှုန်းနှင့် လက်ကျန်"
-
-msgid "Print"
-msgstr "ပရင့်ထုတ်မည်"
-
-msgid "Processing Log"
-msgstr "လုပ်ဆောင်မှုမှတ်တမ်း"
-
-msgid "Product"
-msgstr "ကုန်ပစ္စည်း"
-
-msgid "Product categories"
-msgstr "ပစ္စည်းအမျိုးအစားများ"
-
-msgid "Product category"
-msgstr "ပစ္စည်းအမျိုးအစား"
-
-msgid "Product variant"
-msgstr "ပစ္စည်းအမျိုးကွဲ"
-
-msgid "Product variants"
-msgstr "ပစ္စည်းအမျိုးကွဲများ"
-
-msgid "Product:"
-msgstr "ကုန်ပစ္စည်း:"
-
-msgid "Products"
-msgstr "ပစ္စည်းများ"
-
-msgid "Profit"
-msgstr "အမြတ်"
-
-msgid "Profit Analysis"
-msgstr "အမြတ်ခွဲခြမ်းစိတ်ဖြာမှု"
-
-msgid "Profit Breakdown"
-msgstr "အမြတ်ခွဲခြမ်းစိတ်ဖြာမှု"
-
-msgid "Promotion"
-msgstr "ပရိုမိုးရှင်း"
-
-msgid "Promotions"
-msgstr "ပရိုမိုးရှင်းများ"
-
-msgid "Purchase Costs"
-msgstr "ဝယ်ယူမှုကုန်ကျစရိတ်"
-
-msgid "Purchase Order #%(id)s"
-msgstr "ဝယ်ယူမှုအမှာစာ #%(id)s"
-
-msgid "Purchase Order #%(id)s created successfully"
-msgstr "ဝယ်ယူမှုအမှာစာ #%(id)s ဖန်တီးပြီးပါပြီ။"
-
-msgid "Purchase Order Details"
-msgstr "ဝယ်ယူမှုအမှာစာ အသေးစိတ်"
-
-msgid "Purchase Order Information"
-msgstr "ဝယ်ယူမှုအမှာစာ အချက်အလက်"
-
-msgid "Purchase Orders"
-msgstr "ဝယ်ယူမှုအမှာစာများ"
-
-msgid "Purchase order"
-msgstr "ဝယ်ယူမှုအမှာစာ"
-
-msgid "Purchase order deleted successfully."
-msgstr "ဝယ်ယူမှုအမှာစာ ဖျက်ပြီးပါပြီ။"
-
-msgid "Purchase orders"
-msgstr "ဝယ်ယူမှုအမှာစာများ"
-
-msgid "Purchase vs Sales"
-msgstr "ဝယ်ယူမှု နှင့် ရောင်းချမှု"
-
-msgid "Purchasing"
-msgstr "ဝယ်ယူမှု"
-
-msgid "Quantity"
-msgstr "အရေအတွက်"
-
-msgid "Quantity %(qty)s for %(product)s exceeds available stock %(stock)s"
-msgstr "%(product)s အတွက် အရေအတွက် %(qty)s သည် လက်ကျန် %(stock)s ထက် ပိုများနေပါသည်။"
-
-msgid "Quantity must be positive and unit cost must be non-negative"
-msgstr "အရေအတွက်သည် အပေါင်းကိန်းဖြစ်ရမည်ဖြစ်ပြီး ဈေးနှုန်းသည် အနုတ်လက္ခဏာမဖြစ်ရပါ။"
-
-msgid "Quantity:"
-msgstr "အရေအတွက်:"
-
-msgid "Reason"
-msgstr "အကြောင်းအရာ"
-
-msgid "Receive"
-msgstr "လက်ခံမည်"
-
-msgid "Receive Items"
-msgstr "ပစ္စည်းလက်ခံမည်"
-
-msgid "Receive Now"
-msgstr "ယခုလက်ခံမည်"
-
-msgid "Receive PO #%(id)s"
-msgstr "ဝယ်ယူမှုအမှာစာ #%(id)s လက်ခံမည်"
-
-msgid "Receive qty for %(product)s exceeds remaining (%(remaining)s)"
-msgstr "%(product)s အတွက် လက်ခံရရှိမှုပမာဏသည် ကျန်ရှိနေသော %(remaining)s ထက် ကျော်လွန်နေပါသည်။"
-
-msgid "Received By"
-msgstr "လက်ခံသူ"
-
-msgid "Received Qty"
-msgstr "လက်ခံပြီးအရေအတွက်"
-
-msgid "Recent Orders"
-msgstr "နောက်ဆုံးအမှာစာများ"
-
-msgid "Recent Returns"
-msgstr "နောက်ဆုံးပြန်အပ်မှုများ"
-
-msgid "Recent Stock Movements"
-msgstr "လတ်တလော ကုန်ပစ္စည်း လှုပ်ရှားမှုများ"
-
-msgid "Record Expense"
-msgstr "အသုံးစရိတ် မှတ်တမ်းတင်မည်"
-
-msgid "Recorded By"
-msgstr "မှတ်တမ်းတင်သူ"
-
-msgid "Recorded by"
-msgstr "မှတ်တမ်းတင်သူ"
-
-msgid "Ref No"
-msgstr "ရည်ညွှန်းအမှတ်"
-
-msgid "Reference"
-msgstr "ရည်ညွှန်းအမှတ်"
-
-msgid "Reference number"
-msgstr "ရည်ညွှန်းအမှတ်"
-
-msgid "Region"
-msgstr "တိုင်းဒေသကြီး"
-
-msgid "Regions"
-msgstr "တိုင်းဒေသကြီးများ"
-
-msgid "Reject"
-msgstr "ငြင်းပယ်မည်"
-
-msgid "Rejected"
-msgstr "ငြင်းပယ်ပြီး"
-
-msgid "Remaining"
-msgstr "ကျန်ရှိ"
-
-msgid "Remove"
-msgstr "ဖယ်ရှားမည်"
-
-msgid "Replacement"
-msgstr "အစားထိုး"
-
-msgid "Replacement Order"
-msgstr "အစားထိုးအမှာစာ"
-
-msgid "Replacement order created successfully."
-msgstr "အစားထိုးအမှာစာ ဖန်တီးပြီးပါပြီ။"
-
-msgid "Reports"
-msgstr "အစီရင်ခံစာများ"
-
-msgid "Restock"
-msgstr "ပြန်လည်ဖြည့်တင်းမည်"
-
-msgid "Return"
-msgstr "ပြန်အပ်"
-
-msgid "Return #"
-msgstr "ပြန်အပ်မှု #"
-
-msgid "Return #, Order, Customer..."
-msgstr "ပြန်အပ်မှု #၊ အမှာစာ၊ ဖောက်သည်..."
-
-msgid "Return %(product)s x%(qty)s? Stock will be restored."
-msgstr "%(product)s x%(qty)s ပြန်အပ်မလား? လက်ကျန်ပြန်တိုးပါမည်။"
-
-msgid "Return Analysis"
-msgstr "ပြန်အပ်မှု ခွဲခြမ်းစိတ်ဖြာမှု"
-
-msgid "Return Qty"
-msgstr "ပြန်အပ်မှု အရေအတွက်"
-
-msgid "Return Sample"
-msgstr "နမူနာပြန်အပ်"
-
-msgid "Return Type"
-msgstr "ပြန်အပ်မှုအမျိုးအစား"
-
-msgid "Return analysis by product and reason"
-msgstr "ပစ္စည်းနှင့် အကြောင်းအရာအလိုက် ပြန်အပ်မှု ခွဲခြမ်းစိတ်ဖြာမှု"
-
-msgid "Return deleted successfully."
-msgstr "ပြန်အပ်မှုကို ဖျက်ပြီးပါပြီ။"
-
-msgid "Return processing log"
-msgstr "ပြန်အပ်လုပ်ငန်းမှတ်တမ်း"
-
-msgid "Return quantity exceeds available for %(product)s (max: %(max)s)"
-msgstr "%(product)s အတွက် ပြန်အပ်အရေအတွက်သည် ရရှိနိုင်သော %(max)s ထက် ကျော်လွန်နေပါသည်။"
-
-msgid "Return reason"
-msgstr "ပြန်အပ်အကြောင်းရင်း"
-
-msgid "Return reasons"
-msgstr "ပြန်အပ်အကြောင်းရင်းများ"
-
-msgid "Return request"
-msgstr "ပြန်အပ်တောင်းဆိုင်း"
-
-msgid "Return request status"
-msgstr "ပြန်အပ်တောင်းဆိုင်းအခြေအနေ"
-
-msgid "Return request statuses"
-msgstr "ပြန်အပ်တောင်းဆိုင်းအခြေအနေများ"
-
-msgid "Return requests"
-msgstr "ပြန်အပ်တောင်းဆိုင်းများ"
-
-msgid "Return type"
-msgstr "ပြန်အပ်အမျိုးအစား"
-
-msgid "Return types"
-msgstr "ပြန်အပ်အမျိုးအစားများ"
-
-msgid "Returned"
-msgstr "ပြန်အပ်ပြီး"
-
-msgid "Returns"
-msgstr "ပြန်လည်ပေးအပ်မှုများ"
-
-msgid "SKU"
-msgstr "ပစ္စည်းအမှတ်"
-
-msgid "Sales"
-msgstr "ရောင်းချမှု"
-
-msgid "Sales Orders"
-msgstr "အမှာစာများ"
-
-msgid "Sales Report"
-msgstr "ရောင်းချမှုအစီရင်ခံစာ"
-
-msgid "Sales Revenue"
-msgstr "ရောင်းချမှုဝင်ငွေ"
-
-msgid "Sales by period (daily/weekly/monthly)"
-msgstr "ကာလအလိုက် ရောင်းချမှု (နေ့စဉ်/အပတ်စဉ်/လစဉ်)"
-
-msgid "Salespeople"
-msgstr "ရောင်းချသူများ"
-
-msgid "No salespeople"
-msgstr "ရောင်းချသူ မရှိပါ"
-
-msgid "Salesperson"
-msgstr "ရောင်းချသူ"
-
-msgid "Salesperson created."
-msgstr "ရောင်းချသူ ဖန်တီးပြီးပါပြီ။"
-
-msgid "Salesperson updated."
-msgstr "ရောင်းချသူ ပြင်ဆင်ပြီးပါပြီ။"
-
-msgid "Sample Given"
-msgstr "နမူနာပေးပြီး"
-
-msgid "Sample deliveries"
-msgstr "နမူနာပို့ဆောင်မှုများ"
-
-msgid "Sample delivery"
-msgstr "နမူနာပို့ဆောင်မှု"
-
-msgid "Sample delivery deleted successfully."
-msgstr "နမူနာပို့ဆောင်မှုကို ဖျက်ပြီးပါပြီ။"
-
-msgid "Sample given: %(product)s x%(qty)s"
-msgstr "နမူနာပေးပြီး: %(product)s x%(qty)s"
-
-msgid "Sample marked as not returned. Stock remains deducted."
-msgstr "နမူနာပြန်မအပ်ကြောင်း မှတ်သားပြီး။ လက်ကျန်လျှော့ထားသည့်အတိုင်း ရှိပါသည်။"
-
-msgid "Sample returned, stock restored."
-msgstr "နမူနာပြန်အပ်ပြီး လက်ကျန်ပြန်တိုးပါပြီ။"
-
-msgid "Samples"
-msgstr "နမူနာများ"
-
-msgid "Save"
-msgstr "သိမ်းမည်"
-
-msgid "Search"
-msgstr "ရှာမည်"
-
-msgid "Search by name or phone..."
-msgstr "အမည် သို့မဟုတ် ဖုန်းနံပါတ်ဖြင့် ရှာပါ..."
-
-msgid "Search product or shop"
-msgstr "ပစ္စည်း သို့မဟုတ် ဆိုင် ရှာပါ"
-
-msgid "Select Items"
-msgstr "ပစ္စည်းများ ရွေးချယ်ပါ"
-
-msgid "Select Order"
-msgstr "အမှာစာ ရွေးချယ်ပါ"
-
-msgid "Select Product"
-msgstr "ပစ္စည်း ရွေးချယ်ပါ"
-
-msgid "Select customer first to see customer-type prices."
-msgstr "ဖောက်သည်အမျိုးအစားဈေးများ ကြည့်ရန် ဖောက်သည်ကို ဦးစွာရွေးချယ်ပါ။"
-
-msgid "Select region"
-msgstr "တိုင်းဒေသကြီး ရွေးချယ်ပါ"
-
-msgid "Select township"
-msgstr "မြို့နယ် ရွေးချယ်ပါ"
-
-msgid "Shop"
-msgstr "ဆိုင်"
-
-msgid "Shop/Store name"
-msgstr "ဆိုင်အမည်"
-
-msgid "Source"
-msgstr "ရင်းမြစ်"
-
-msgid "Start Date"
-msgstr "စတင်ရက်"
-
-msgid "Status"
-msgstr "အခြေအနေ"
-
-msgid "Status CONFIRMED not found"
-msgstr "အတည်ပြုပြီး အခြေအနေ မတွေ့ရှိပါ"
-
-msgid "Status DELIVERED not found"
-msgstr "ပို့ဆောင်ပြီး အခြေအနေ မတွေ့ရှိပါ"
-
-msgid "Status:"
-msgstr "အခြေအနေ:"
-
-msgid "Stock"
-msgstr "လက်ကျန်"
-
-msgid "Stock Balances (Top)"
-msgstr "လက်ကျန်စာရင်း (ထိပ်ဆုံး)"
-
-msgid "Stock Movements"
-msgstr "လက်ကျန် ရွေ့လျားမှုများ"
-
-msgid "Stock Quantity"
-msgstr "လက်ကျန်အရေအတွက်"
-
-msgid "Stock adjusted: %(product)s by %(qty)+d. New stock: %(new)s"
-msgstr "လက်ကျန် ပြင်ဆင်ပြီး: %(product)s မှ %(qty)+d။ လက်ကျန်သစ်: %(new)s"
-
-msgid "Stock by Category"
-msgstr "အမျိုးအစားအလိုက် လက်ကျန်"
-
-msgid "Stock movement"
-msgstr "ပစ္စည်းရွေ့လျားမှု"
-
-msgid "Stock movements"
-msgstr "ပစ္စည်းရွေ့လျားမှုများ"
-
-msgid "Stock updated successfully"
-msgstr "လက်ကျန် ပြင်ဆင်ပြီးပါပြီ။"
-
-msgid "Stock will be deducted on delivery"
-msgstr "ပစ္စည်းပို့ဆောင်ချိန်တွင် လက်ကျန်ဖြတ်ပါမည်"
-
-msgid "Subtotal"
-msgstr "ကြားစုစုပေါင်း"
-
-msgid "Summary"
-msgstr "အကျဉ်းချုပ်"
-
-msgid "Supplier"
-msgstr "ဖြန့်ချိသူ"
-
-msgid "Suppliers"
-msgstr "ပေးသွင်းသူများ"
-
-msgid "TOTAL"
-msgstr "စုစုပေါင်း"
-
-msgid "Tax ID"
-msgstr "အခွန်ကောက်ခံမှုနံပါတ်"
-
-msgid "Tax rate"
-msgstr "အခွန်နှုန်း"
-
-msgid "Tax rates"
-msgstr "အခွန်နှုန်းများ"
-
-msgid "Tax registration number for invoices."
-msgstr "ကုန်ကျစရိတ်တောင်းခံလွှာများအတွက် အခွန်မှတ်ပုံတင်နံပါတ်။"
-
-msgid "Text shown at bottom of invoice."
-msgstr "ကုန်ကျစရိတ်တောင်းခံလွှာ၏ အောက်ခြေတွင် ပြသမည့်စာသား။"
-
-msgid "Thank you for your business!"
-msgstr "အားပေးမှုကို ကျေးဇူးတင်ရှိပါသည်။"
-
-msgid "Threshold"
-msgstr "ခြေလျင်အမှတ်"
-
-msgid "To"
-msgstr "အထိ"
-
-msgid "To Date"
-msgstr "အထိရက်"
-
-msgid "Today"
-msgstr "ယနေ့"
-
-msgid "Today's Sales"
-msgstr "ယနေ့ရောင်းချမှု"
-
-msgid "Total"
-msgstr "စုစုပေါင်း"
-
-msgid "Total Amount"
-msgstr "စုစုပေါင်းပမာဏ"
-
-msgid "Total Cost"
-msgstr "စုစုပေါင်းကုန်ကျစရိတ်"
-
-msgid "Total Due"
-msgstr "စုစုပေါင်းကျန်ငွေ"
-
-msgid "Total Paid"
-msgstr "စုစုပေါင်းပေးပြီး"
-
-msgid "Total Payments"
-msgstr "စုစုပေါင်းငွေပေးချေမှု"
-
-msgid "Total Payments by Customer"
-msgstr "ဖောက်သည်အလိုက် စုစုပေါင်းငွေပေးချေမှု"
-
-msgid "Total Price"
-msgstr "စုစုပေါင်းဈေးနှုန်း"
-
-msgid "Total Purchase Costs"
-msgstr "စုစုပေါင်းကုန်ကျစရိတ်"
-
-msgid "Total Qty"
-msgstr "စုစုပေါင်းအရေအတွက်"
-
-msgid "Total Sales"
-msgstr "စုစုပေါင်းရောင်းချမှု"
-
-msgid "Total Sales Revenue"
-msgstr "စုစုပေါင်းရောင်းချမှုဝင်ငွေ"
-
-msgid "Total Stock"
-msgstr "စုစုပေါင်းလက်ကျန်"
-
-msgid "Total amount"
-msgstr "စုစုပေါင်းပမာဏ"
-
-msgid "Total payments per customer"
-msgstr "ဖောက်သည်တစ်ဦးချင်း စုစုပေါင်းငွေပေးချေမှု"
-
-msgid "Township"
-msgstr "မြို့နယ်"
-
-msgid "Townships"
-msgstr "မြို့နယ်များ"
-
-msgid "Type"
-msgstr "အမျိုးအစား"
-
-msgid "Unit"
-msgstr "ယူနစ်"
-
-msgid "Unit Cost"
-msgstr "ယူနစ်ကုန်ကျစရိတ်"
-
-msgid "Unit of measure"
-msgstr "ယူနစ်အတိုင်းအတာ"
-
-msgid "Unit price"
-msgstr "တစ်ခုချင်းဈေးနှုန်း"
-
-msgid "Units of measure"
-msgstr "ယူနစ်အတိုင်းအတာများ"
-
-msgid "Update Stock"
-msgstr "လက်ကျန်ပြင်ဆင်မည်"
-
-msgid "User"
-msgstr "အသုံးပြုသူ"
-
-msgid "Username"
-msgstr "အသုံးပြုသူအမည်"
-
-msgid "View"
-msgstr "ကြည့်မည်"
-
-msgid "View All"
-msgstr "အားလုံးကြည့်ရန်"
-
-msgid "View Products"
-msgstr "ပစ္စည်းများ"
-
-msgid "View Replacement Order"
-msgstr "အစားထိုးအမှာစာ ကြည့်မည်"
-
-msgid "Voucher"
-msgstr "ဖြတ်ပိုင်း"
-
-msgid "Voucher #"
-msgstr "ငွေလက်ခံဖြတ်ပိုင်းအမှတ်"
-
-msgid "Voucher No"
-msgstr "ဖြတ်ပိုင်းအမှတ်"
-
-msgid "Voucher number"
-msgstr "ငွေလက်ခံဖြတ်ပိုင်းအမှတ်"
-
-msgid "What Changed"
-msgstr "ပြောင်းလဲချက်"
-
-msgid "Year"
-msgstr "နှစ်"
-
-msgid "as not returned? Customer kept the sample. Stock will NOT be restored."
-msgstr "ပြန်မအပ်ကြောင်း မှတ်သားမလား? ဖောက်သည်က နမူနာကို ထားခဲ့ပါသည်။ လက်ကျန်ပြန်မတိုးပါ။"
-
-msgid "days"
-msgstr "ရက်"
-
-msgid "orders"
-msgstr "အမှာစာများ"
-
-msgid "products"
-msgstr "ပစ္စည်းများ"
-
-msgid "transactions"
-msgstr "ငွေချေမှုများ"
-
-msgid "txns"
-msgstr "ငွေချေမှု"
-
-msgid "ပြန်အပ်တောင်းဆိုင်းခွင့်ပြုပြီးပြီး"
-msgstr "ပြန်အပ်တောင်းဆိုင်းခွင့်ပြုပြီးပြီး"
-
-msgid "ပြန်အပ်တောင်းဆိုင်းအသစ် တည်ဆောက်ပြီး"
-msgstr "ပြန်အပ်တောင်းဆိုင်းအသစ် တည်ဆောက်ပြီး"
-
-msgid "ပြန်အပ်တောင်းဆိုင်းအသစ်ထည့်ရန်"
-msgstr "ပြန်အပ်တောင်းဆိုင်းအသစ်ထည့်ရန်"
-
-msgid "ပြန်အပ်ပစ္စည်း အနည်းဆုံး တစ်ခု ရွေးချယ်ပါ"
-msgstr "ပြန်အပ်ပစ္စည်း အနည်းဆုံး တစ်ခု ရွေးချယ်ပါ"
-
-msgid "ပြန်အပ်မှုများ"
-msgstr "ပြန်အပ်မှုများ"
-
-msgid "ပြန်အပ်အသေးစိတ်"
-msgstr "ပြန်အပ်အသေးစိတ်"
-
-msgid "အမှာစာရွေးချယ်ပါ"
-msgstr "အမှာစာရွေးချယ်ပါ"
-
-msgid "Payment Terms (Days)"
-msgstr "ငွေပေးချေမှု စည်းကမ်းချက်များ (ရက်)"
-
-msgid "Is active"
-msgstr "အသက်ဝင်သည်"
-
-msgid "Created at"
-msgstr "ဖန်တီးသည့်အချိန်"
-
-msgid "Updated at"
-msgstr "ပြင်ဆင်သည့်အချိန်"
-
-msgid "Database Backups"
-msgstr "Database Backup များ"
-
-msgid "Create Backup"
-msgstr "Backup အသစ်လုပ်မည်"
-
-msgid "Confirm Backup Creation"
-msgstr "Backup လုပ်ရန် အတည်ပြုပါ"
-
-msgid "Are you sure you want to create a new database backup?"
-msgstr "Database backup အသစ်တစ်ခု ပြုလုပ်မှာ သေချာပါသလား?"
-
-msgid "Upload & Restore"
-msgstr "Upload နှင့် Restore လုပ်မည်"
-
-msgid "Backup File"
-msgstr "Backup ဖိုင်"
-
-msgid "Confirm Upload & Restore"
-msgstr "Upload နှင့် Restore လုပ်ရန် အတည်ပြုပါ"
-
-msgid "Are you sure you want to restore this backup? Current data will be merged/overwritten."
-msgstr "ဒီ Backup ကို restore လုပ်မှာ သေချာပါသလား။ လက်ရှိ Data များ ပေါင်းစပ် သို့မဟုတ် အစားထိုးခံရပါမည်။"
-
-msgid "Danger Zone: Data Reset"
-msgstr "သတိထားရန်နယ်ပယ် - Data များကို Reset ချခြင်း"
-
-msgid "Warning: These actions are irreversible. Please ensure you have a backup before proceeding."
-msgstr "သတိပေးချက် - ဤလုပ်ဆောင်ချက်များသည် ပြန်ပြင်မရပါ။ မလုပ်ဆောင်မီ backup ရှိထားကြောင်း သေချာပါစေ။"
-
-msgid "Reset Transactions Only"
-msgstr "အရောင်းအဝယ်စာရင်းများသာ Reset လုပ်မည်"
-
-msgid "Confirm Transaction Reset"
-msgstr "Transaction Reset လုပ်ရန် အတည်ပြုပါ"
-
-msgid "Are you sure you want to delete ALL Transactional Data (Orders, Returns, etc.)? Master Data (Products, Customers) will be KEPT."
-msgstr "Transaction Data အားလုံး (အမှာစာများ၊ ပြန်အမ်းငွေများ စသည်) ကို ဖျက်မှာ သေချာပါသလား။ Master Data (ကုန်ပစ္စည်းများ၊ ဖောက်သည်များ) ကျန်ရှိနေပါမည်။"
-
-msgid "Reset Everything (Master + Transactions)"
-msgstr "အားလုံး Reset လုပ်မည် (Master + Transactions)"
-
-msgid "Confirm Full Reset"
-msgstr "အားလုံး Reset လုပ်ရန် အတည်ပြုပါ"
-
-msgid "Are you sure you want to delete EVERYTHING? This includes Products, Customers, and Settings. Only User Accounts will remain."
-msgstr "အားလုံးကို ဖျက်ပစ်မှာ သေချာပါသလား။ ကုန်ပစ္စည်းများ၊ ဖောက်သည်များနှင့် ဆက်တင်များ ပါဝင်သည်။ အသုံးပြုသူအကောင့်များသာ ကျန်ရှိပါမည်။"
-
-msgid "Filename"
-msgstr "ဖိုင်အမည်"
-
-msgid "Size"
-msgstr "ဖိုင်အရွယ်အစား"
-
-msgid "Created At"
-msgstr "ဖန်တီးခဲ့သည့်အချိန်"
-
-msgid "Download"
-msgstr "ဒေါင်းလုဒ်"
-
-msgid "Restore"
-msgstr "ပြန်လည်ထည့်သွင်းမည် (Restore)"
-
-msgid "Confirm Restore"
-msgstr "Restore လုပ်ရန် အတည်ပြုပါ"
-
-msgid "Are you sure you want to restore this backup? This action cannot be undone."
-msgstr "ဒီ Backup ကို restore လုပ်မှာ သေချာပါသလား။ ဤလုပ်ဆောင်ချက်ကို ပြန်ပြင်၍မရပါ။"
-
+#: .\accounting\templates\accounting\expense_category_confirm_delete.html:8
+#: .\accounting\templates\accounting\expense_category_form.html:8
+msgid "Categories"
+msgstr "အမျိုးအစားများ"
+
+#: .\accounting\templates\accounting\expense_category_confirm_delete.html:20
+#: .\templates\common\backup_list.html:132
 msgid "Confirm Delete"
 msgstr "ဖျက်ရန် အတည်ပြုပါ"
 
-msgid "Are you sure you want to delete this backup?"
-msgstr "ဒီ Backup ကို ဖျက်မှာ သေချာပါသလား။"
+#: .\accounting\templates\accounting\expense_category_confirm_delete.html:23
+msgid "Are you sure you want to delete this category?"
+msgstr "ဤအမျိုးအစားကို ဖျက်ရန် သေချာပါသလား?"
 
-msgid "No backups found."
-msgstr "Backup များ မတွေ့ပါ။"
+#: .\accounting\templates\accounting\expense_category_confirm_delete.html:26
+msgid "This action cannot be undone."
+msgstr "ဤလုပ်ဆောင်ချက်ကို ပြန်ပြင်၍မရပါ။"
 
+#: .\accounting\templates\accounting\expense_category_confirm_delete.html:32
+#: .\accounting\templates\accounting\expense_category_form.html:43
+#: .\accounting\templates\accounting\expense_create.html:63
+#: .\crm\templates\crm\contact_log_form.html:34
+#: .\crm\templates\crm\lead_confirm_delete.html:20
+#: .\crm\templates\crm\lead_convert.html:25
+#: .\crm\templates\crm\lead_form.html:106
+#: .\crm\templates\crm\sample_confirm_delete.html:61
+#: .\crm\templates\crm\sample_confirm_delete.html:65
+#: .\crm\templates\crm\sample_confirm_delete.html:69
+#: .\crm\templates\crm\sample_confirm_not_returned.html:25
+#: .\crm\templates\crm\sample_confirm_return.html:25
+#: .\crm\templates\crm\sample_form.html:32
+#: .\crm\templates\crm\sample_form_customer.html:32
+#: .\purchasing\templates\purchasing\create.html:88
+#: .\purchasing\templates\purchasing\po_confirm_delete.html:21
+#: .\purchasing\templates\purchasing\receive.html:66
+#: .\returns\templates\returns\return_confirm_delete.html:21
+#: .\templates\core\product_form.html:94 .\templates\core\product_form.html:96
+#: .\templates\core\stock_adjust.html:38 .\templates\core\stock_adjust.html:40
+#: .\templates\customers\customer_confirm_delete.html:20
+#: .\templates\customers\customer_form.html:79
+#: .\templates\customers\salesperson_form.html:22
+#: .\templates\includes\confirm_modal.html:14
+#: .\templates\master_data\company_setting_form.html:202
+#: .\templates\orders\create.html:102 .\templates\orders\order_detail.html:53
+#: .\templates\orders\order_form.html:146
+#: .\templates\orders\order_payment.html:51
+#: .\templates\returns\return_form.html:24
+#: .\templates\returns\return_form_items.html:74
+msgid "Cancel"
+msgstr "ပယ်ဖျက်မည်"
+
+#: .\accounting\templates\accounting\expense_category_confirm_delete.html:33
+#: .\crm\templates\crm\lead_confirm_delete.html:9
+#: .\crm\templates\crm\lead_confirm_delete.html:19
+#: .\crm\templates\crm\lead_detail.html:35
+#: .\crm\templates\crm\lead_list.html:57
+#: .\purchasing\templates\purchasing\detail.html:23
+#: .\purchasing\templates\purchasing\list.html:79
+#: .\purchasing\templates\purchasing\po_confirm_delete.html:9
+#: .\purchasing\templates\purchasing\po_confirm_delete.html:20
+#: .\returns\templates\returns\return_confirm_delete.html:9
+#: .\returns\templates\returns\return_confirm_delete.html:20
+#: .\templates\common\backup_list.html:135
+#: .\templates\common\backup_list.html:137
+#: .\templates\customers\customer_confirm_delete.html:9
+#: .\templates\customers\customer_confirm_delete.html:19
+#: .\templates\returns\return_detail.html:22
+#: .\templates\returns\return_list.html:64
+msgid "Delete"
+msgstr "ဖျက်မည်"
+
+#: .\accounting\templates\accounting\expense_category_form.html:27
+#: .\accounting\templates\accounting\expense_category_list.html:28
+#: .\core\models.py:15 .\crm\templates\crm\lead_form.html:21
+#: .\crm\templates\crm\lead_list.html:41 .\customers\models.py:14
+#: .\customers\models.py:71 .\templates\core\product_form.html:21
+#: .\templates\core\product_list.html:14
+#: .\templates\customers\customer_list.html:49
+#: .\templates\customers\salesperson_list.html:10
+#: .\templates\orders\payment_voucher.html:233
+msgid "Name"
+msgstr "အမည်"
+
+#: .\accounting\templates\accounting\expense_category_form.html:35
+#: .\accounting\templates\accounting\expense_category_list.html:29
+#: .\accounting\templates\accounting\expense_create.html:53
+#: .\accounting\templates\accounting\expense_list.html:60 .\core\models.py:16
+#: .\master_data\payment_method.py:13 .\templates\core\product_form.html:26
+msgid "Description"
+msgstr "ဖော်ပြချက်"
+
+#: .\accounting\templates\accounting\expense_category_form.html:44
+#: .\crm\templates\crm\contact_log_form.html:33
+#: .\crm\templates\crm\lead_form.html:105 .\templates\core\product_form.html:92
+#: .\templates\customers\customer_form.html:78
+#: .\templates\customers\salesperson_form.html:21
+#: .\templates\orders\order_form.html:145
+msgid "Save"
+msgstr "သိမ်းမည်"
+
+#: .\accounting\templates\accounting\expense_category_list.html:18
+msgid "Add Category"
+msgstr "အမျိုးအစား အသစ်ထည့်မည်"
+
+#: .\accounting\templates\accounting\expense_category_list.html:30
+#: .\crm\templates\crm\lead_list.html:41
+#: .\purchasing\templates\purchasing\list.html:56
+#: .\templates\common\backup_list.html:105
+#: .\templates\core\low_stock_list.html:9 .\templates\core\product_list.html:14
+#: .\templates\customers\customer_detail.html:31
+#: .\templates\customers\customer_list.html:49
+#: .\templates\customers\salesperson_list.html:10
+#: .\templates\orders\order_detail.html:79
+#: .\templates\orders\order_list.html:66
+#: .\templates\reports\outstanding_payments.html:98
+#: .\templates\reports\payment_report.html:98
+#: .\templates\returns\return_list.html:51
+msgid "Actions"
+msgstr "လုပ်ဆောင်ချက်များ"
+
+#: .\accounting\templates\accounting\expense_category_list.html:49
+msgid "No categories found"
+msgstr "အမျိုးအစားများ မတွေ့ရှိပါ"
+
+#: .\accounting\templates\accounting\expense_create.html:24
+#: .\accounting\templates\accounting\expense_list.html:58
+#: .\templates\core\product_detail.html:35
+#: .\templates\core\stock_movement_list.html:10
+#: .\templates\customers\customer_detail.html:31
+#: .\templates\customers\customer_detail.html:64
+#: .\templates\orders\invoice.html:187 .\templates\orders\order_detail.html:79
+#: .\templates\orders\order_list.html:66
+#: .\templates\orders\payment_voucher.html:220
+#: .\templates\reports\audit_log_report.html:50
+#: .\templates\reports\audit_log_report.html:79
+#: .\templates\reports\audit_log_report.html:116
+#: .\templates\reports\audit_log_report.html:125
+#: .\templates\reports\outstanding_payments.html:93
+#: .\templates\reports\payment_report.html:91
+#: .\templates\reports\sales_report.html:68
+#: .\templates\returns\return_detail.html:100
+#: .\templates\returns\return_list.html:51
+msgid "Date"
+msgstr "ရက်စွဲ"
+
+#: .\accounting\templates\accounting\expense_create.html:31
+#: .\accounting\templates\accounting\expense_list.html:35
+#: .\accounting\templates\accounting\expense_list.html:59
+#: .\accounting\templates\accounting\expense_summary.html:37
+#: .\core\models.py:20 .\templates\core\product_detail.html:20
+#: .\templates\core\product_form.html:34 .\templates\core\product_list.html:14
+#: .\templates\dashboard\index.html:240 .\templates\dashboard\index.html:249
+#: .\templates\dashboard\index.html:272 .\templates\dashboard\index.html:280
+msgid "Category"
+msgstr "အမျိုးအစား"
+
+#: .\accounting\templates\accounting\expense_create.html:40
+#: .\accounting\templates\accounting\expense_list.html:62
+#: .\accounting\templates\accounting\expense_summary.html:38
+#: .\accounting\templates\accounting\expense_summary.html:67
+#: .\orders\models.py:165 .\templates\customers\customer_detail.html:64
+#: .\templates\dashboard\index.html:126 .\templates\dashboard\index.html:147
+#: .\templates\orders\order_detail.html:79
+#: .\templates\orders\order_list.html:66
+#: .\templates\orders\order_payment.html:31
+#: .\templates\reports\payment_report.html:94
+#: .\templates\reports\purchase_vs_sales.html:81
+#: .\templates\reports\sales_report.html:69
+#: .\templates\returns\return_list.html:51
+msgid "Amount"
+msgstr "ပမာဏ"
+
+#: .\accounting\templates\accounting\expense_create.html:47
+#: .\accounting\templates\accounting\expense_list.html:61
+msgid "Paid To"
+msgstr "ငွေလက်ခံသူ"
+
+#: .\accounting\templates\accounting\expense_create.html:62
+#: .\accounting\templates\accounting\expense_list.html:18
+#: .\accounting\views.py:68
+msgid "Record Expense"
+msgstr "အသုံးစရိတ် မှတ်တမ်းတင်မည်"
+
+#: .\accounting\templates\accounting\expense_list.html:17
+#: .\purchasing\templates\purchasing\detail.html:75
+#: .\templates\reports\audit_log_report.html:73
+msgid "Summary"
+msgstr "အကျဉ်းချုပ်"
+
+#: .\accounting\templates\accounting\expense_list.html:27
+#: .\templates\reports\audit_log_report.html:21
+msgid "Start Date"
+msgstr "စတင်ရက်"
+
+#: .\accounting\templates\accounting\expense_list.html:31
+#: .\templates\reports\audit_log_report.html:25
+msgid "End Date"
+msgstr "ပြီးဆုံးရက်"
+
+#: .\accounting\templates\accounting\expense_list.html:37
+msgid "All Categories"
+msgstr "အမျိုးအစားအားလုံး"
+
+#: .\accounting\templates\accounting\expense_list.html:44
+#: .\crm\templates\crm\lead_list.html:33
+#: .\purchasing\templates\purchasing\list.html:37
+#: .\templates\customers\customer_list.html:36
+#: .\templates\orders\order_list.html:58
+#: .\templates\reports\audit_log_report.html:56
+#: .\templates\reports\outstanding_payments.html:40
+#: .\templates\reports\payment_by_customer.html:31
+#: .\templates\reports\payment_report.html:40
+#: .\templates\reports\profit_analysis.html:27
+#: .\templates\reports\purchase_vs_sales.html:36
+#: .\templates\reports\sales_report.html:31
+#: .\templates\returns\return_list.html:43
+msgid "Filter"
+msgstr "စစ်ထုတ်မည်"
+
+#: .\accounting\templates\accounting\expense_list.html:52
+#: .\accounting\templates\accounting\expense_summary.html:51
+#: .\orders\models.py:142 .\purchasing\templates\purchasing\create.html:56
+#: .\templates\orders\invoice.html:212 .\templates\orders\order_detail.html:17
+#: .\templates\orders\order_payment.html:16
+#: .\templates\reports\outstanding_payments.html:94
+#: .\templates\returns\return_detail.html:18
+msgid "Total"
+msgstr "စုစုပေါင်း"
+
+#: .\accounting\templates\accounting\expense_list.html:63
+#: .\templates\reports\payment_report.html:97
+msgid "Recorded By"
+msgstr "မှတ်တမ်းတင်သူ"
+
+#: .\accounting\templates\accounting\expense_list.html:78
+msgid "No expenses found"
+msgstr "အသုံးစရိတ်မတွေ့ပါ"
+
+#: .\accounting\templates\accounting\expense_summary.html:25
+msgid "Back to Expenses"
+msgstr "အသုံးစရိတ်များသို့ ပြန်မည်"
+
+#: .\accounting\templates\accounting\expense_summary.html:32
+msgid "Expenses by Category"
+msgstr "အမျိုးအစားအလိုက် အသုံးစရိတ်"
+
+#: .\accounting\templates\accounting\expense_summary.html:61
+msgid "Monthly Expenses"
+msgstr "လစဉ်အသုံးစရိတ်များ"
+
+#: .\accounting\templates\accounting\expense_summary.html:66
+#: .\templates\reports\profit_analysis.html:112
+msgid "Month"
+msgstr "လ"
+
+#: .\accounting\views.py:62
+msgid "Expense recorded successfully"
+msgstr "အသုံးစရိတ် မှတ်တမ်းတင်ပြီးပါပြီ"
+
+#: .\accounting\views.py:104 .\templates\base.html:87
+msgid "Expense Summary"
+msgstr "အသုံးစရိတ် အကျဉ်းချုပ်"
+
+#: .\accounting\views.py:119 .\templates\base.html:84
+msgid "Expense Categories"
+msgstr "အသုံးစရိတ်အမျိုးအစားများ"
+
+#: .\accounting\views.py:132
+msgid "Expense category created successfully."
+msgstr "အသုံးစရိတ်အမျိုးအစား ဖန်တီးပြီးပါပြီ။"
+
+#: .\accounting\views.py:138
+msgid "Create Expense Category"
+msgstr "အသုံးစရိတ်အမျိုးအစား အသစ်ဖန်တီးမည်"
+
+#: .\accounting\views.py:152
+#| msgid "Expense category created successfully."
+msgid "Expense category updated successfully."
+msgstr "အသုံးစရိတ်အမျိုးအစား ပြင်ဆင်ပြီးပါပြီ။"
+
+#: .\accounting\views.py:158
+#| msgid "Create Expense Category"
+msgid "Edit Expense Category"
+msgstr "အသုံးစရိတ်အမျိုးအစား ပြင်ဆင်မည်"
+
+#: .\accounting\views.py:171
+#| msgid "Expense category created successfully."
+msgid "Expense category deleted successfully."
+msgstr "အသုံးစရိတ်အမျိုးအစား ဖျက်ပြီးပါပြီ။"
+
+#: .\accounting\views.py:173
+msgid "Cannot delete category: it may be in use."
+msgstr "အမျိုးအစားကို ဖျက်၍မရပါ - အသုံးပြုနေဆဲဖြစ်နိုင်သည်။"
+
+#: .\accounting\views.py:177
+#| msgid "Create Expense Category"
+msgid "Delete Expense Category"
+msgstr "အသုံးစရိတ်အမျိုးအစား ဖျက်မည်"
+
+#: .\common\apps.py:8
+msgid "Common"
+msgstr "အသုံးပြုမှု"
+
+#: .\common\models.py:59
+msgid "Deleted at"
+msgstr "ဖျက်သည့်အချိန်"
+
+#: .\common\models.py:112
+msgid "Audit log"
+msgstr "မှတ်တမ်းစစ်ဆေးချက်"
+
+#: .\common\models.py:113
+msgid "Audit logs"
+msgstr "မှတ်တမ်းစစ်ဆေးချက်များ"
+
+#: .\common\models.py:140
+msgid "Audit log archive"
+msgstr "မှတ်တမ်းစစ်ဆေးချက် မော်ကွန်း"
+
+#: .\common\models.py:141
+msgid "Audit log archives"
+msgstr "မှတ်တမ်းစစ်ဆေးချက် မော်ကွန်းများ"
+
+#: .\common\views.py:29
 msgid "Invalid file format. Please upload a .json file."
 msgstr "ဖိုင်ဖော်မတ် မှားယွင်းနေပါသည်။ ကျေးဇူးပြု၍ .json ဖိုင်ကို တင်ပါ။"
 
+#: .\common\views.py:35
 msgid "Backup uploaded successfully."
 msgstr "Backup ကို အောင်မြင်စွာ တင်ပြီးပါပြီ။"
 
+#: .\common\views.py:60
 msgid "Backup created successfully."
 msgstr "Backup အသစ် အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ။"
 
-msgid "Backup file not found."
-msgstr "Backup ဖိုင် မတွေ့ပါ။"
-
-msgid "Database restored successfully."
-msgstr "Database ကို အောင်မြင်စွာ ပြန်လည်ထည့်သွင်းပြီးပါပြီ။"
-
-msgid "Backup deleted successfully."
-msgstr "Backup ကို အောင်မြင်စွာ ဖျက်ပြီးပါပြီ။"
-
-msgid "All data (Master + Transactions) has been reset successfully."
-msgstr "Data အားလုံး (Master + Transactions) ကို အောင်မြင်စွာ Reset လုပ်ပြီးပါပြီ။"
-
-msgid "Transactional data (User Input) has been reset successfully."
-msgstr "Transaction Data များ (User Input) ကို အောင်မြင်စွာ Reset လုပ်ပြီးပါပြီ။"
-
+#: .\common\views.py:62
+#, python-format
 msgid "Error creating backup: %(error)s"
 msgstr "Backup ဖန်တီးရာတွင် အမှားရှိနေသည် - %(error)s"
 
+#: .\common\views.py:70 .\common\views.py:92
+msgid "Backup file not found."
+msgstr "Backup ဖိုင် မတွေ့ပါ။"
+
+#: .\common\views.py:76
+msgid "Database restored successfully."
+msgstr "Database ကို အောင်မြင်စွာ ပြန်လည်ထည့်သွင်းပြီးပါပြီ။"
+
+#: .\common\views.py:78
+#, python-format
 msgid "Error restoring database: %(error)s"
 msgstr "Database ပြန်လည်ထည့်သွင်းရာတွင် အမှားရှိနေသည် - %(error)s"
 
+#: .\common\views.py:88
+msgid "Backup deleted successfully."
+msgstr "Backup ကို အောင်မြင်စွာ ဖျက်ပြီးပါပြီ။"
+
+#: .\common\views.py:90
+#, python-format
 msgid "Error deleting backup: %(error)s"
 msgstr "Backup ဖျက်ရာတွင် အမှားရှိနေသည် - %(error)s"
 
+#: .\common\views.py:157
+msgid "All data (Master + Transactions) has been reset successfully."
+msgstr "Data အားလုံး (Master + Transactions) ကို အောင်မြင်စွာ Reset လုပ်ပြီးပါပြီ။"
+
+#: .\common\views.py:159
+msgid "Transactional data (User Input) has been reset successfully."
+msgstr "Transaction Data များ (User Input) ကို အောင်မြင်စွာ Reset လုပ်ပြီးပါပြီ။"
+
+#: .\common\views.py:165
+#, python-format
 msgid "Error resetting data: %(error)s"
 msgstr "Data Reset လုပ်ရာတွင် အမှားရှိနေသည် - %(error)s"
 
+#: .\core\apps.py:8
+msgid "Core"
+msgstr "အခြေခံ"
+
+#: .\core\forms.py:23
+msgid "Optional"
+msgstr "စိတ်ကြိုက်"
+
+#: .\core\forms.py:29
+msgid "-- Select Category --"
+msgstr "-- အမျိုးအစားရွေးချယ်ပါ --"
+
+#: .\core\forms.py:30
+msgid "-- Select Unit --"
+msgstr "-- ယူနစ်ရွေးချယ်ပါ --"
+
+#: .\core\forms.py:50 .\templates\core\product_list.html:14
+#: .\templates\orders\invoice.html:211 .\templates\orders\order_detail.html:62
+msgid "Price"
+msgstr "ဈေးနှုန်း"
+
+#: .\core\forms.py:52
+msgid "Uses base if empty"
+msgstr "မရှိလျှင် မူရင်းဈေးနှုန်းကို သုံးမည်"
+
+#: .\core\models.py:17 .\templates\core\product_detail.html:20
+#: .\templates\core\product_form.html:30 .\templates\core\product_list.html:14
+msgid "SKU"
+msgstr "ပစ္စည်းအမှတ်"
+
+#: .\core\models.py:24 .\templates\core\product_detail.html:20
+#: .\templates\core\product_form.html:38
+msgid "Unit"
+msgstr "ယူနစ်"
+
+#: .\core\models.py:26 .\templates\core\product_detail.html:22
+#: .\templates\core\product_form.html:45
+msgid "Base Price"
+msgstr "အခြေဈေးနှုန်း"
+
+#: .\core\models.py:29 .\templates\core\product_form.html:49
+msgid "Cost Price"
+msgstr "ကုန်ကျဈေးနှုန်း"
+
+#: .\core\models.py:31 .\templates\core\product_form.html:53
+msgid "Stock Quantity"
+msgstr "လက်ကျန်အရေအတွက်"
+
+#: .\core\models.py:32 .\templates\core\product_form.html:57
+msgid "Low Stock Threshold"
+msgstr "လက်ကျန်နည်းပါးအမှတ်"
+
+#: .\core\models.py:33 .\purchasing\templates\purchasing\receive.html:39
+#: .\templates\core\product_form.html:61 .\templates\dashboard\index.html:311
+#: .\templates\dashboard\index.html:323
+msgid "Expiry Date"
+msgstr "သက်တမ်းကုန်ရက်"
+
+#: .\core\models.py:36
+msgid "Days before expiry to trigger alert"
+msgstr "သက်တမ်းမကုန်မီ သတိပေးမည့်ရက်"
+
+#: .\core\models.py:37 .\templates\core\product_form.html:65
+msgid "Expiry Alert Days"
+msgstr "သက်တမ်းကုန်ဆုံးရန် သတိပေးရက်များ"
+
+#: .\core\models.py:39 .\customers\models.py:49 .\customers\models.py:77
+msgid "Is active"
+msgstr "အသက်ဝင်သည်"
+
+#: .\core\models.py:40
+msgid "Created at"
+msgstr "ဖန်တီးသည့်အချိန်"
+
+#: .\core\models.py:41
+msgid "Updated at"
+msgstr "ပြင်ဆင်သည့်အချိန်"
+
+#: .\core\models.py:44 .\crm\templates\crm\sample_form.html:22
+#: .\crm\templates\crm\sample_form_customer.html:22 .\orders\models.py:139
+#: .\purchasing\templates\purchasing\create.html:53
+#: .\purchasing\templates\purchasing\detail.html:89
+#: .\purchasing\templates\purchasing\receive.html:35
+#: .\templates\core\low_stock_list.html:9 .\templates\core\stock_adjust.html:19
+#: .\templates\core\stock_movement_list.html:10
+#: .\templates\customers\customer_detail.html:31
+#: .\templates\dashboard\index.html:203 .\templates\dashboard\index.html:212
+#: .\templates\dashboard\index.html:239 .\templates\dashboard\index.html:248
+#: .\templates\dashboard\index.html:310 .\templates\dashboard\index.html:322
+#: .\templates\orders\create.html:50 .\templates\orders\create.html:58
+#: .\templates\orders\invoice.html:209 .\templates\orders\order_detail.html:62
+#: .\templates\orders\order_form.html:65 .\templates\orders\order_form.html:84
+#: .\templates\orders\order_form.html:95
+#: .\templates\reports\return_report.html:17
+#: .\templates\returns\return_detail.html:77
+#: .\templates\returns\return_form_items.html:31
+msgid "Product"
+msgstr "ကုန်ပစ္စည်း"
+
+#: .\core\models.py:45 .\templates\base.html:64
+#: .\templates\core\low_stock_list.html:6
+#: .\templates\core\product_detail.html:7 .\templates\core\product_form.html:7
+#: .\templates\core\product_list.html:5 .\templates\core\stock_adjust.html:7
+#: .\templates\core\stock_movement_list.html:6
+msgid "Products"
+msgstr "ပစ္စည်းများ"
+
+#: .\core\models.py:97
+msgid "Product variant"
+msgstr "ပစ္စည်းအမျိုးကွဲ"
+
+#: .\core\models.py:98
+msgid "Product variants"
+msgstr "ပစ္စည်းအမျိုးကွဲများ"
+
+#: .\core\models.py:137
+msgid "Batch"
+msgstr "ရက်စွဲအစု"
+
+#: .\core\models.py:138
+msgid "Batches"
+msgstr "ရက်စွဲအစုများ"
+
+#: .\core\models.py:219
+msgid "Stock movement"
+msgstr "ပစ္စည်းရွေ့လျားမှု"
+
+#: .\core\models.py:220
+msgid "Stock movements"
+msgstr "ပစ္စည်းရွေ့လျားမှုများ"
+
+#: .\core\views.py:30 .\templates\core\product_list.html:7
+msgid "Add Product"
+msgstr "ပစ္စည်းထည့်မည်"
+
+#: .\core\views.py:45
+#| msgid "Add Product"
+msgid "Edit Product"
+msgstr "ပစ္စည်းပြင်ဆင်မည်"
+
+#: .\core\views.py:119
+#, python-format
+msgid "Cannot deduct from non-existent batch (Expiry: %(date)s)"
+msgstr "မရှိသောရက်စွဲအစုမှ နုတ်ယူ၍မရပါ (သက်တမ်းကုန်ရက်: %(date)s)"
+
+#: .\core\views.py:134
+#, python-format
+msgid ""
+"Batch adjusted: %(product)s (%(date)s) by %(qty)+d. New batch stock: %(new)s"
+msgstr ""
+"ရက်စွဲအစု ပြင်ဆင်ပြီး: %(product)s (%(date)s) မှ %(qty)+d။ ရက်စွဲအစုလက်ကျန်သစ်: %(new)s"
+
+#: .\core\views.py:148
+#, python-format
+msgid "Stock adjusted: %(product)s by %(qty)+d. New stock: %(new)s"
+msgstr "လက်ကျန် ပြင်ဆင်ပြီး: %(product)s မှ %(qty)+d။ လက်ကျန်သစ်: %(new)s"
+
+#: .\core\views.py:161 .\templates\core\product_detail.html:16
+#: .\templates\core\stock_adjust.html:11 .\templates\core\stock_adjust.html:17
+msgid "Adjust Stock"
+msgstr "လက်ကျန်ပြင်ဆင်မည်"
+
+#: .\crm\apps.py:8
+msgid "CRM"
+msgstr "ဖောက်သည်ဆက်ဆံမှု"
+
+#: .\crm\models.py:26 .\crm\templates\crm\lead_detail.html:16
+#: .\crm\templates\crm\lead_form.html:26 .\customers\models.py:17
+#: .\templates\customers\customer_detail.html:19
+msgid "Shop/Store name"
+msgstr "ဆိုင်အမည်"
+
+#: .\crm\models.py:27 .\crm\models.py:32 .\customers\models.py:18
+#: .\customers\models.py:23
+msgid "For Shop/Distributor - leave blank for Individual"
+msgstr "ဆိုင်/ဖြန့်ဖြူးသူများအတွက် - တစ်ဦးချင်းဖြစ်ပါက ကွက်လပ်ထားခဲ့ပါ"
+
+#: .\crm\models.py:31 .\crm\templates\crm\lead_convert.html:23
+#: .\crm\templates\crm\lead_detail.html:17
+#: .\crm\templates\crm\lead_form.html:32 .\customers\models.py:22
+#: .\templates\customers\customer_detail.html:20
+msgid "Contact person"
+msgstr "ဆက်သွယ်ရန်ပုဂ္ဂိုလ်"
+
+#: .\crm\models.py:55
+msgid "Lead"
+msgstr "လမ်းကြောင်းစ"
+
+#: .\crm\models.py:56 .\crm\templates\crm\contact_log_form.html:7
+#: .\crm\templates\crm\lead_confirm_delete.html:7
+#: .\crm\templates\crm\lead_convert.html:7
+#: .\crm\templates\crm\lead_detail.html:7 .\crm\templates\crm\lead_form.html:7
+#: .\crm\templates\crm\lead_list.html:7 .\crm\templates\crm\lead_list.html:13
+#: .\crm\templates\crm\sample_confirm_not_returned.html:8
+#: .\crm\templates\crm\sample_confirm_return.html:8
+#: .\crm\templates\crm\sample_form.html:7 .\templates\base.html:47
+msgid "Leads"
+msgstr "လမ်းကြောင်းစများ"
+
+#: .\crm\models.py:90
+msgid "Contact log"
+msgstr "ဆက်သွယ်မှုမှတ်တမ်း"
+
+#: .\crm\models.py:91
+msgid "Contact logs"
+msgstr "ဆက်သွယ်မှုမှတ်တမ်းများ"
+
+#: .\crm\models.py:127
+msgid "Sample delivery"
+msgstr "နမူနာပို့ဆောင်မှု"
+
+#: .\crm\models.py:128
+msgid "Sample deliveries"
+msgstr "နမူနာပို့ဆောင်မှုများ"
+
+#: .\crm\services.py:71 .\crm\services.py:104
+#, python-format
+msgid "Insufficient stock. Available: %(qty)s"
+msgstr "လက်ကျန်မလုံလောက်ပါ။ ရရှိနိုင်မှု: %(qty)s"
+
+#: .\crm\templates\crm\contact_log_form.html:9
+#: .\crm\templates\crm\contact_log_form.html:15
+#: .\crm\templates\crm\lead_detail.html:24
+msgid "Add Contact Log"
+msgstr "ဆက်သွယ်မှုမှတ်တမ်း ထည့်မည်"
+
+#: .\crm\templates\crm\contact_log_form.html:19
+msgid "Contact Type"
+msgstr "ဆက်သွယ်မှုအမျိုးအစား"
+
+#: .\crm\templates\crm\contact_log_form.html:24
+#: .\crm\templates\crm\lead_form.html:101 .\orders\models.py:43
+#: .\orders\models.py:174 .\purchasing\templates\purchasing\create.html:40
+#: .\purchasing\templates\purchasing\detail.html:66
+#: .\templates\orders\create.html:88 .\templates\orders\order_form.html:139
+#: .\templates\orders\order_payment.html:46
+#: .\templates\returns\return_detail.html:28
+#: .\templates\returns\return_detail.html:40
+#: .\templates\returns\return_detail.html:100
+#: .\templates\returns\return_form_items.html:67
+msgid "Notes"
+msgstr "မှတ်ချက်"
+
+#: .\crm\templates\crm\contact_log_form.html:29
+msgid "Next Follow-up Date"
+msgstr "နောက်ထပ်လိုက်လံဆက်သွယ်မည့်ရက်"
+
+#: .\crm\templates\crm\lead_confirm_delete.html:15 .\crm\views.py:248
+msgid "Delete Lead"
+msgstr "ဖောက်သည်လမ်းကြောင်း ဖျက်မည်"
+
+#: .\crm\templates\crm\lead_confirm_delete.html:16
+#: .\templates\customers\customer_confirm_delete.html:16
+#, python-format
+msgid "Are you sure you want to delete %(name)s?"
+msgstr "%(name)s ကို ဖျက်မည်မှာ သေချာပါသလား?"
+
+#: .\crm\templates\crm\lead_convert.html:9
+#: .\crm\templates\crm\lead_detail.html:31
+msgid "Convert to Customer"
+msgstr "ဖောက်သည်သို့ ပြောင်းမည်"
+
+#: .\crm\templates\crm\lead_convert.html:15
+msgid "Convert Lead to Customer"
+msgstr "ဖောက်သည်လမ်းကြောင်းမှ ဖောက်သည်သို့ ပြောင်းမည်"
+
+#: .\crm\templates\crm\lead_convert.html:19 .\customers\models.py:28
+msgid "Customer Type"
+msgstr "ဖောက်သည်အမျိုးအစား"
+
+#: .\crm\templates\crm\lead_convert.html:23
+msgid "Shop"
+msgstr "ဆိုင်"
+
+#: .\crm\templates\crm\lead_convert.html:24
+msgid "Convert"
+msgstr "ပြောင်းမည်"
+
+#: .\crm\templates\crm\lead_detail.html:15
+#: .\crm\templates\crm\lead_form.html:37 .\crm\templates\crm\lead_list.html:41
+#: .\customers\models.py:25 .\customers\models.py:72
+#: .\templates\customers\customer_detail.html:18
+#: .\templates\customers\customer_list.html:49
+#: .\templates\customers\salesperson_list.html:10
+#: .\templates\dashboard\index.html:312 .\templates\dashboard\index.html:324
+#: .\templates\orders\payment_voucher.html:237
+#: .\templates\reports\outstanding_payments.html:61
+#: .\templates\reports\payment_by_customer.html:46
+msgid "Phone"
+msgstr "ဖုန်းနံပါတ်"
+
+#: .\crm\templates\crm\lead_detail.html:15
+#: .\crm\templates\crm\lead_form.html:93 .\crm\templates\crm\lead_list.html:22
+#: .\crm\templates\crm\lead_list.html:41 .\orders\models.py:42
+#: .\purchasing\templates\purchasing\detail.html:53
+#: .\purchasing\templates\purchasing\list.html:28
+#: .\purchasing\templates\purchasing\list.html:55
+#: .\templates\customers\customer_detail.html:31
+#: .\templates\customers\customer_detail.html:64
+#: .\templates\dashboard\index.html:125 .\templates\dashboard\index.html:144
+#: .\templates\dashboard\index.html:170 .\templates\dashboard\index.html:178
+#: .\templates\orders\invoice.html:190 .\templates\orders\order_detail.html:16
+#: .\templates\orders\order_form.html:37 .\templates\orders\order_list.html:22
+#: .\templates\orders\order_list.html:66
+#: .\templates\reports\outstanding_payments.html:97
+#: .\templates\returns\return_detail.html:17
+#: .\templates\returns\return_list.html:25
+#: .\templates\returns\return_list.html:51
+msgid "Status"
+msgstr "အခြေအနေ"
+
+#: .\crm\templates\crm\lead_detail.html:15
+#: .\crm\templates\crm\lead_form.html:87 .\crm\templates\crm\lead_list.html:41
+msgid "Source"
+msgstr "ရင်းမြစ်"
+
+#: .\crm\templates\crm\lead_detail.html:15
+#: .\crm\templates\crm\lead_form.html:66 .\crm\templates\crm\lead_list.html:41
+#: .\customers\forms.py:15 .\customers\models.py:32 .\master_data\forms.py:26
+#: .\master_data\forms.py:93 .\master_data\models.py:182
+#: .\templates\customers\customer_form.html:46
+#: .\templates\master_data\company_setting_form.html:121
+msgid "Township"
+msgstr "မြို့နယ်"
+
+#: .\crm\templates\crm\lead_detail.html:18
+#: .\crm\templates\crm\lead_form.html:82 .\customers\models.py:38
+msgid "Address"
+msgstr "လိပ်စာ"
+
+#: .\crm\templates\crm\lead_detail.html:21
+#: .\crm\templates\crm\lead_list.html:54
+#: .\templates\core\product_detail.html:15
+#: .\templates\core\product_list.html:39
+#: .\templates\customers\customer_detail.html:23
+#: .\templates\customers\customer_list.html:59
+#: .\templates\customers\salesperson_list.html:16
+#: .\templates\orders\order_detail.html:24
+#: .\templates\orders\order_list.html:80
+msgid "Edit"
+msgstr "ပြင်မည်"
+
+#: .\crm\templates\crm\lead_detail.html:27
+#: .\crm\templates\crm\sample_form.html:9
+#: .\crm\templates\crm\sample_form.html:15
+#: .\crm\templates\crm\sample_form.html:31
+#: .\crm\templates\crm\sample_form_customer.html:9
+#: .\crm\templates\crm\sample_form_customer.html:15
+#: .\crm\templates\crm\sample_form_customer.html:31
+#: .\templates\customers\customer_detail.html:24
+msgid "Give Sample"
+msgstr "နမူနာပေးမည်"
+
+#: .\crm\templates\crm\lead_detail.html:41
+msgid "Contact Logs"
+msgstr "ဆက်သွယ်မှုမှတ်တမ်းများ"
+
+#: .\crm\templates\crm\lead_detail.html:47
+msgid "Follow-up"
+msgstr "လိုက်လံဆက်သွယ်မှု"
+
+#: .\crm\templates\crm\lead_detail.html:50
+msgid "No contact logs."
+msgstr "ဆက်သွယ်မှုမှတ်တမ်းမရှိပါ။"
+
+#: .\crm\templates\crm\lead_detail.html:55
+#: .\templates\customers\customer_detail.html:28
+msgid "Samples"
+msgstr "နမူနာများ"
+
+#: .\crm\templates\crm\lead_detail.html:65
+#: .\templates\customers\customer_detail.html:44
+msgid "Returned"
+msgstr "ပြန်အပ်ပြီး"
+
+#: .\crm\templates\crm\lead_detail.html:69
+#: .\templates\customers\customer_detail.html:48
+msgid "Not Returned"
+msgstr "ပြန်မအပ်ရသေး"
+
+#: .\crm\templates\crm\lead_detail.html:76
+msgid "No samples given."
+msgstr "နမူနာမပေးရသေးပါ။"
+
+#: .\crm\templates\crm\lead_form.html:27
+msgid "For Shop/Distributor"
+msgstr "ဆိုင်ငယ်/ဖြန့်ချိရေးအတွက်"
+
+#: .\crm\templates\crm\lead_form.html:42 .\master_data\forms.py:16
+#: .\master_data\forms.py:77 .\master_data\models.py:146
+#: .\master_data\models.py:155 .\templates\customers\customer_form.html:22
+#: .\templates\master_data\company_setting_form.html:89
+msgid "Country"
+msgstr "နိုင်ငံ"
+
+#: .\crm\templates\crm\lead_form.html:44
+#: .\templates\customers\customer_form.html:24
+msgid "Select country"
+msgstr "နိုင်ငံရွေးချယ်ပါ"
+
+#: .\crm\templates\crm\lead_form.html:53 .\master_data\forms.py:21
+#: .\master_data\forms.py:85 .\master_data\models.py:159
+#: .\templates\customers\customer_form.html:33
+#: .\templates\master_data\company_setting_form.html:104
+msgid "Region"
+msgstr "တိုင်းဒေသကြီး"
+
+#: .\crm\templates\crm\lead_form.html:55
+#: .\templates\customers\customer_form.html:35
+msgid "Select region"
+msgstr "တိုင်းဒေသကြီး ရွေးချယ်ပါ"
+
+#: .\crm\templates\crm\lead_form.html:68
+#: .\templates\customers\customer_form.html:48
+msgid "Select township"
+msgstr "မြို့နယ် ရွေးချယ်ပါ"
+
+#: .\crm\templates\crm\lead_list.html:15
+msgid "Add Lead"
+msgstr "ဖောက်သည်လမ်းကြောင်း ထည့်မည်"
+
+#: .\crm\templates\crm\lead_list.html:24
+#: .\purchasing\templates\purchasing\list.html:30
+#: .\templates\customers\customer_list.html:29
+#: .\templates\orders\order_list.html:24 .\templates\orders\order_list.html:35
+#: .\templates\orders\order_list.html:43
+#: .\templates\reports\audit_log_report.html:31
+#: .\templates\reports\audit_log_report.html:40
+#: .\templates\returns\return_list.html:27
+msgid "All"
+msgstr "အားလုံး"
+
+#: .\crm\templates\crm\lead_list.html:25
+msgid "New"
+msgstr "အသစ်"
+
+#: .\crm\templates\crm\lead_list.html:26
+msgid "Contacted"
+msgstr "ဆက်သွယ်ပြီး"
+
+#: .\crm\templates\crm\lead_list.html:27
+msgid "Sample Given"
+msgstr "နမူနာပေးပြီး"
+
+#: .\crm\templates\crm\lead_list.html:28
+msgid "Converted"
+msgstr "ပြောင်းပြီး"
+
+#: .\crm\templates\crm\lead_list.html:29
+msgid "Lost"
+msgstr "ဆုံးရှုံး"
+
+#: .\crm\templates\crm\lead_list.html:41
+msgid "Created"
+msgstr "ဖန်တီးသည့်ရက်"
+
+#: .\crm\templates\crm\lead_list.html:52
+#: .\purchasing\templates\purchasing\list.html:73
+#: .\templates\core\low_stock_list.html:17
+#: .\templates\core\product_list.html:38 .\templates\orders\order_list.html:78
+#: .\templates\reports\report_index.html:20
+#: .\templates\reports\report_index.html:29
+#: .\templates\reports\report_index.html:38
+#: .\templates\reports\report_index.html:48
+#: .\templates\reports\report_index.html:58
+#: .\templates\reports\report_index.html:67
+#: .\templates\reports\report_index.html:76
+#: .\templates\reports\report_index.html:85
+#: .\templates\returns\return_list.html:62
+msgid "View"
+msgstr "ကြည့်မည်"
+
+#: .\crm\templates\crm\lead_list.html:62
+msgid "No leads yet."
+msgstr "ဖောက်သည်လမ်းကြောင်းမရှိသေးပါ။"
+
+#: .\crm\templates\crm\sample_confirm_delete.html:17
+msgid "Are you sure you want to delete this sample delivery?"
+msgstr "ဤနမူနာပို့ဆောင်မှုကို ဖျက်မည်မှာ သေချာပါသလား?"
+
+#: .\crm\templates\crm\sample_confirm_delete.html:22
+msgid "Product:"
+msgstr "ကုန်ပစ္စည်း:"
+
+#: .\crm\templates\crm\sample_confirm_delete.html:25
+msgid "Quantity:"
+msgstr "အရေအတွက်:"
+
+#: .\crm\templates\crm\sample_confirm_delete.html:30
+msgid "Status:"
+msgstr "အခြေအနေ:"
+
+#: .\crm\templates\crm\sample_confirm_delete.html:33
+msgid "Given at:"
+msgstr "ပေးအပ်သည့်အချိန်:"
+
+#: .\crm\templates\crm\sample_confirm_delete.html:39
+msgid "Lead:"
+msgstr "လမ်းကြောင်းစ:"
+
+#: .\crm\templates\crm\sample_confirm_delete.html:41
+msgid "Customer:"
+msgstr "ဖောက်သည်:"
+
+#: .\crm\templates\crm\sample_confirm_delete.html:48
+msgid "Notes:"
+msgstr "မှတ်ချက်:"
+
+#: .\crm\templates\crm\sample_confirm_delete.html:57 .\crm\views.py:269
+msgid "Delete Sample Delivery"
+msgstr "နမူနာပို့ဆောင်မှုကို ဖျက်မည်"
+
+#: .\crm\templates\crm\sample_confirm_not_returned.html:11
+#: .\crm\templates\crm\sample_confirm_return.html:11
+#: .\crm\templates\crm\sample_form_customer.html:7 .\customers\apps.py:8
+#: .\customers\models.py:55 .\customers\views.py:44 .\templates\base.html:44
+#: .\templates\customers\customer_confirm_delete.html:7
+#: .\templates\customers\customer_detail.html:10
+#: .\templates\customers\customer_form.html:9
+#: .\templates\customers\customer_list.html:5
+#: .\templates\customers\customer_list.html:10
+#: .\templates\customers\customer_list.html:16
+#: .\templates\customers\salesperson_list.html:7
+msgid "Customers"
+msgstr "ဖောက်သည်များ"
+
+#: .\crm\templates\crm\sample_confirm_not_returned.html:14
+msgid "Mark Not Returned"
+msgstr "ပြန်မအပ်ရသေး"
+
+#: .\crm\templates\crm\sample_confirm_not_returned.html:20
+msgid "Mark Sample as Not Returned"
+msgstr "နမူနာပြန်မအပ်ကြောင်း မှတ်သားမည်"
+
+#: .\crm\templates\crm\sample_confirm_not_returned.html:21
+msgid "Mark"
+msgstr "မှတ်သားမည်"
+
+#: .\crm\templates\crm\sample_confirm_not_returned.html:21
+msgid "as not returned? Customer kept the sample. Stock will NOT be restored."
+msgstr "ပြန်မအပ်ကြောင်း မှတ်သားမလား? ဖောက်သည်က နမူနာကို ထားခဲ့ပါသည်။ လက်ကျန်ပြန်မတိုးပါ။"
+
+#: .\crm\templates\crm\sample_confirm_not_returned.html:24
+#: .\templates\includes\confirm_modal.html:15
+#: .\templates\orders\order_detail.html:30
+msgid "Confirm"
+msgstr "အတည်ပြုမည်"
+
+#: .\crm\templates\crm\sample_confirm_return.html:14
+#: .\crm\templates\crm\sample_confirm_return.html:20
+msgid "Return Sample"
+msgstr "နမူနာပြန်အပ်"
+
+#: .\crm\templates\crm\sample_confirm_return.html:21
+#, python-format
+msgid "Return %(product)s x%(qty)s? Stock will be restored."
+msgstr "%(product)s x%(qty)s ပြန်အပ်မလား? လက်ကျန်ပြန်တိုးပါမည်။"
+
+#: .\crm\templates\crm\sample_confirm_return.html:24
+msgid "Confirm Return"
+msgstr "ပြန်အပ်မှု အတည်ပြုမည်"
+
+#: .\crm\templates\crm\sample_form.html:27
+#: .\crm\templates\crm\sample_form_customer.html:27 .\orders\models.py:140
+#: .\purchasing\templates\purchasing\create.html:54
+#: .\templates\orders\create.html:51 .\templates\orders\create.html:68
+#: .\templates\orders\order_form.html:66 .\templates\orders\order_form.html:87
+#: .\templates\orders\order_form.html:114
+msgid "Quantity"
+msgstr "အရေအတွက်"
+
+#: .\crm\views.py:71
+msgid "Lead created."
+msgstr "ဖောက်သည်လမ်းကြောင်း ဖန်တီးပြီးပါပြီ။"
+
+#: .\crm\views.py:75
+msgid "Create Lead"
+msgstr "ဖောက်သည်လမ်းကြောင်း ဖန်တီးမည်"
+
+#: .\crm\views.py:94
+msgid "Lead updated."
+msgstr "ဖောက်သည်လမ်းကြောင်း ပြင်ဆင်ပြီးပါပြီ။"
+
+#: .\crm\views.py:99
+msgid "Edit Lead"
+msgstr "ဖောက်သည်လမ်းကြောင်း ပြင်မည်"
+
+#: .\crm\views.py:114
+msgid "No contact types found. Run: python manage.py setup_master_data"
+msgstr "ဆက်သွယ်မှုအမျိုးအစားမရှိပါ။ Run: python manage.py setup_master_data"
+
+#: .\crm\views.py:131
+msgid "Contact log added."
+msgstr "ဆက်သွယ်မှုမှတ်တမ်း ထည့်ပြီးပါပြီ။"
+
+#: .\crm\views.py:161 .\crm\views.py:226
+#, python-format
+msgid "Sample given: %(product)s x%(qty)s"
+msgstr "နမူနာပေးပြီး: %(product)s x%(qty)s"
+
+#: .\crm\views.py:190
+msgid "Sample returned, stock restored."
+msgstr "နမူနာပြန်အပ်ပြီး လက်ကျန်ပြန်တိုးပါပြီ။"
+
+#: .\crm\views.py:208
+msgid "Sample marked as not returned. Stock remains deducted."
+msgstr "နမူနာပြန်မအပ်ကြောင်း မှတ်သားပြီး။ လက်ကျန်လျှော့ထားသည့်အတိုင်း ရှိပါသည်။"
+
+#: .\crm\views.py:244
+msgid "Lead deleted successfully."
+msgstr "လမ်းကြောင်းစကို ဖျက်ပြီးပါပြီ။"
+
+#: .\crm\views.py:265
+msgid "Sample delivery deleted successfully."
+msgstr "နမူနာပို့ဆောင်မှုကို ဖျက်ပြီးပါပြီ။"
+
+#: .\crm\views.py:284
+msgid "No customer types found. Add in Admin → Master Data."
+msgstr "ဖောက်သည်အမျိုးအစားမရှိပါ။ Admin → Master Data တွင် ထည့်ပါ။"
+
+#: .\crm\views.py:296
+#, python-format
+msgid "Lead converted to customer: %(name)s"
+msgstr "ဖောက်သည်လမ်းကြောင်းမှ ဖောက်သည်သို့ ပြောင်းပြီး: %(name)s"
+
+#: .\customers\forms.py:31
+#| msgid "Select township"
+msgid "Select township..."
+msgstr "မြို့နယ် ရွေးချယ်ပါ..."
+
+#: .\customers\models.py:36 .\customers\models.py:82
+msgid "Salesperson"
+msgstr "ရောင်းချသူ"
+
+#: .\customers\models.py:41 .\templates\customers\customer_detail.html:21
+#: .\templates\customers\customer_list.html:49
+msgid "Credit Limit"
+msgstr "အကြွေးကန့်သတ်ချက်"
+
+#: .\customers\models.py:42
+msgid "Maximum credit allowed"
+msgstr "ခွင့်ပြုထားသော အမြင့်ဆုံးအကြွေးပမာဏ"
+
+#: .\customers\models.py:46
+msgid "Payment Terms (Days)"
+msgstr "ငွေပေးချေမှု စည်းကမ်းချက်များ (ရက်)"
+
+#: .\customers\models.py:47
+msgid "Days until payment due after delivery"
+msgstr "ပစ္စည်းပို့ပြီးနောက် ငွေချေရမည့်ရက်"
+
+#: .\customers\models.py:54 .\orders\models.py:14
+#: .\templates\dashboard\index.html:123 .\templates\dashboard\index.html:134
+#: .\templates\dashboard\index.html:313 .\templates\dashboard\index.html:325
+#: .\templates\orders\create.html:26 .\templates\orders\order_detail.html:16
+#: .\templates\orders\order_form.html:16 .\templates\orders\order_list.html:41
+#: .\templates\orders\order_list.html:66
+#: .\templates\reports\outstanding_payments.html:31
+#: .\templates\reports\outstanding_payments.html:60
+#: .\templates\reports\outstanding_payments.html:92
+#: .\templates\reports\payment_by_customer.html:45
+#: .\templates\reports\payment_report.html:93
+#: .\templates\reports\sales_report.html:67
+msgid "Customer"
+msgstr "ဖောက်သည်"
+
+#: .\customers\models.py:75 .\templates\reports\audit_log_report.html:117
+#: .\templates\reports\audit_log_report.html:126
+msgid "User"
+msgstr "အသုံးပြုသူ"
+
+#: .\customers\models.py:83 .\customers\views.py:178 .\templates\base.html:50
+#: .\templates\customers\salesperson_list.html:5
+msgid "Salespeople"
+msgstr "ရောင်းချသူများ"
+
+#: .\customers\views.py:66
+msgid "Customer Detail"
+msgstr "ဖောက်သည်အသေးစိတ်"
+
+#: .\customers\views.py:82
+msgid "Customer created successfully."
+msgstr "ဖောက်သည်အသစ် ဖန်တီးပြီးပါပြီ။"
+
+#: .\customers\views.py:88
+msgid "Add New Customer"
+msgstr "ဖောက်သည်အသစ်ထည့်မည်"
+
+#: .\customers\views.py:105
+msgid "Customer updated successfully."
+msgstr "ဖောက်သည်အချက်အလက်များ ပြင်ဆင်ပြီးပါပြီ။"
+
+#: .\customers\views.py:111
+msgid "Edit Customer"
+msgstr "ဖောက်သည်ပြင်ဆင်မည်"
+
+#: .\customers\views.py:129
+msgid "Customer deleted successfully."
+msgstr "ဖောက်သည်ကို ဖျက်ပြီးပါပြီ။"
+
+#: .\customers\views.py:133
+#: .\templates\customers\customer_confirm_delete.html:15
+msgid "Delete Customer"
+msgstr "ဖောက်သည်ဖျက်မည်"
+
+#: .\customers\views.py:190
+msgid "Salesperson created."
+msgstr "ရောင်းချသူ ဖန်တီးပြီးပါပြီ။"
+
+#: .\customers\views.py:196 .\templates\customers\salesperson_list.html:6
+msgid "Add Salesperson"
+msgstr "ရောင်းချသူ ထည့်မည်"
+
+#: .\customers\views.py:209
+msgid "Salesperson updated."
+msgstr "ရောင်းချသူ ပြင်ဆင်ပြီးပါပြီ။"
+
+#: .\customers\views.py:215
+msgid "Edit Salesperson"
+msgstr "ရောင်းချသူ ပြင်ဆင်မည်"
+
+#: .\dashboard\apps.py:8 .\templates\admin\base_site.html:16
+#: .\templates\base.html:32 .\templates\dashboard\index.html:4
+#: .\templates\dashboard\index.html:9 .\templates\dashboard\index.html:15
+#: .\templates\master_data\company_setting_form.html:9
+msgid "Dashboard"
+msgstr "ပင်မစာမျက်နှာ"
+
+#: .\dashboard\views.py:226
+#, python-format
+msgid "Low stock: %(products)s"
+msgstr "လက်ကျန်နည်းပါး: %(products)s"
+
+#: .\master_data\apps.py:8
+msgid "Master Data"
+msgstr "အခြေခံဒေတာ"
+
+#: .\master_data\models.py:42
+msgid "Customer type"
+msgstr "ဖောက်သည်အမျိုးအစား"
+
+#: .\master_data\models.py:43
+msgid "Customer types"
+msgstr "ဖောက်သည်အမျိုးအစားများ"
+
+#: .\master_data\models.py:52
+msgid "Return reason"
+msgstr "ပြန်အပ်အကြောင်းရင်း"
+
+#: .\master_data\models.py:53
+msgid "Return reasons"
+msgstr "ပြန်အပ်အကြောင်းရင်းများ"
+
+#: .\master_data\models.py:60
+msgid "Return type"
+msgstr "ပြန်အပ်အမျိုးအစား"
+
+#: .\master_data\models.py:61
+msgid "Return types"
+msgstr "ပြန်အပ်အမျိုးအစားများ"
+
+#: .\master_data\models.py:68 .\master_data\payment_method.py:21
+#: .\templates\orders\order_payment.html:36
+#: .\templates\reports\payment_report.html:31
+msgid "Payment Method"
+msgstr "ငွေပေးချေမှုနည်းလမ်း"
+
+#: .\master_data\models.py:69 .\master_data\payment_method.py:22
+msgid "Payment Methods"
+msgstr "ငွေပေးချေမှုနည်းလမ်းများ"
+
+#: .\master_data\models.py:78
+msgid "Order status"
+msgstr "အမှာစာအခြေအနေ"
+
+#: .\master_data\models.py:79
+msgid "Order statuses"
+msgstr "အမှာစာအခြေအနေများ"
+
+#: .\master_data\models.py:93
+msgid "Return request status"
+msgstr "ပြန်အပ်တောင်းဆိုင်းအခြေအနေ"
+
+#: .\master_data\models.py:94
+msgid "Return request statuses"
+msgstr "ပြန်အပ်တောင်းဆိုင်းအခြေအနေများ"
+
+#: .\master_data\models.py:108
+msgid "Product category"
+msgstr "ပစ္စည်းအမျိုးအစား"
+
+#: .\master_data\models.py:109
+msgid "Product categories"
+msgstr "ပစ္စည်းအမျိုးအစားများ"
+
+#: .\master_data\models.py:116
+msgid "Unit of measure"
+msgstr "ယူနစ်အတိုင်းအတာ"
+
+#: .\master_data\models.py:117
+msgid "Units of measure"
+msgstr "ယူနစ်အတိုင်းအတာများ"
+
+#: .\master_data\models.py:126
+msgid "Tax rate"
+msgstr "အခွန်နှုန်း"
+
+#: .\master_data\models.py:127
+msgid "Tax rates"
+msgstr "အခွန်နှုန်းများ"
+
+#: .\master_data\models.py:136
+msgid "Contact type"
+msgstr "ဆက်သွယ်မှုအမျိုးအစား"
+
+#: .\master_data\models.py:137
+msgid "Contact types"
+msgstr "ဆက်သွယ်မှုအမျိုးအစားများ"
+
+#: .\master_data\models.py:147
+msgid "Countries"
+msgstr "နိုင်ငံများ"
+
+#: .\master_data\models.py:160
+msgid "Regions"
+msgstr "တိုင်းဒေသကြီးများ"
+
+#: .\master_data\models.py:167
+msgid "Delivery route"
+msgstr "ပို့ဆောင်လမ်းကြောင်း"
+
+#: .\master_data\models.py:168
+msgid "Delivery routes"
+msgstr "ပို့ဆောင်လမ်းကြောင်းများ"
+
+#: .\master_data\models.py:183
+msgid "Townships"
+msgstr "မြို့နယ်များ"
+
+#: .\master_data\models.py:195 .\purchasing\templates\purchasing\create.html:26
+#: .\purchasing\templates\purchasing\detail.html:41
+#: .\purchasing\templates\purchasing\list.html:51
+#: .\purchasing\templates\purchasing\receive.html:21
+msgid "Supplier"
+msgstr "ဖြန့်ချိသူ"
+
+#: .\master_data\models.py:196
+msgid "Suppliers"
+msgstr "ပေးသွင်းသူများ"
+
+#: .\master_data\models.py:208 .\orders\models.py:27
+msgid "Promotion"
+msgstr "ပရိုမိုးရှင်း"
+
+#: .\master_data\models.py:209
+msgid "Promotions"
+msgstr "ပရိုမိုးရှင်းများ"
+
+#: .\master_data\models.py:222
+msgid "Currency"
+msgstr "ငွေကြေး"
+
+#: .\master_data\models.py:223
+msgid "Currencies"
+msgstr "ငွေကြေးများ"
+
+#: .\master_data\models.py:230 .\templates\base.html:133
+msgid "Company setting"
+msgstr "ကုမ္ပဏီဆက်တင်း"
+
+#: .\master_data\models.py:231
+msgid "Company settings"
+msgstr "ကုမ္ပဏီဆက်တင်းများ"
+
+#: .\master_data\payment_method.py:10
+msgid "Code"
+msgstr "အမှတ်အသား"
+
+#: .\master_data\payment_method.py:11
+msgid "Name (English)"
+msgstr "အမည် (အင်္ဂလိပ်)"
+
+#: .\master_data\payment_method.py:12
+msgid "Name (Myanmar)"
+msgstr "အမည် (မြန်မာ)"
+
+#: .\master_data\payment_method.py:14 .\templates\core\product_form.html:72
+msgid "Active"
+msgstr "အသက်ဝင်"
+
+#: .\master_data\payment_method.py:15
+msgid "Display Order"
+msgstr "ပြသသည့်အစဉ်"
+
+#: .\master_data\views.py:30
+msgid "Company settings saved successfully."
+msgstr "ကုမ္ပဏီဆက်တင်းများ သိမ်းဆည်းပြီးပါပြီ။"
+
+#: .\orders\apps.py:8 .\orders\views.py:172 .\templates\base.html:41
+#: .\templates\orders\create.html:7 .\templates\orders\order_detail.html:8
+#: .\templates\orders\order_form.html:7 .\templates\orders\order_list.html:7
+#: .\templates\orders\order_list.html:13
+#: .\templates\orders\order_payment.html:7
+#: .\templates\reports\outstanding_payments.html:62
+#: .\templates\reports\report_index.html:98
+msgid "Orders"
+msgstr "အမှာစာများ"
+
+#: .\orders\forms.py:39
+msgid "Optional notes"
+msgstr "မှတ်ချက်"
+
+#: .\orders\models.py:15
+msgid "Order number"
+msgstr "အမှာစာအမှတ်"
+
+#: .\orders\models.py:16
+msgid "Order date"
+msgstr "အမှာစာရက်"
+
+#: .\orders\models.py:17
+msgid "Delivery date"
+msgstr "ပို့ဆောင်ရက်"
+
+#: .\orders\models.py:20 .\templates\orders\invoice.html:232
+#: .\templates\orders\order_detail.html:62
+msgid "Subtotal"
+msgstr "ကြားစုစုပေါင်း"
+
+#: .\orders\models.py:21 .\templates\orders\invoice.html:237
+msgid "Discount"
+msgstr "လျှော့ဈေး"
+
+#: .\orders\models.py:22
+msgid "Total amount"
+msgstr "စုစုပေါင်းပမာဏ"
+
+#: .\orders\models.py:23
+msgid "Paid amount"
+msgstr "ပေးပြီးပမာဏ"
+
+#: .\orders\models.py:24
+msgid "Delivery fee"
+msgstr "ပို့ဆောင်ခ"
+
+#: .\orders\models.py:32 .\templates\dashboard\index.html:141
+#: .\templates\orders\order_list.html:36
+msgid "Normal"
+msgstr "ပုံမှန်"
+
+#: .\orders\models.py:33 .\templates\dashboard\index.html:139
+#: .\templates\orders\create.html:34 .\templates\orders\order_list.html:37
+msgid "Pre-order"
+msgstr "ကြိုတင်အမှာစာ"
+
+#: .\orders\models.py:34 .\templates\dashboard\index.html:137
+msgid "Replacement"
+msgstr "အစားထိုး"
+
+#: .\orders\models.py:38
+msgid "Order type"
+msgstr "အမှာစာအမျိုးအစား"
+
+#: .\orders\models.py:46
+msgid "Recorded by"
+msgstr "မှတ်တမ်းတင်သူ"
+
+#: .\orders\models.py:51 .\orders\models.py:138 .\orders\models.py:162
+#: .\returns\forms.py:57 .\templates\customers\customer_detail.html:64
+#: .\templates\dashboard\index.html:122 .\templates\dashboard\index.html:133
+#: .\templates\orders\order_detail.html:15
+#: .\templates\orders\order_form.html:16 .\templates\orders\order_list.html:66
+#: .\templates\reports\outstanding_payments.html:91
+#: .\templates\reports\payment_report.html:92
+#: .\templates\reports\sales_report.html:66
+#: .\templates\returns\return_detail.html:16
+#: .\templates\returns\return_form_items.html:16
+#: .\templates\returns\return_list.html:51
+msgid "Order"
+msgstr "အမှာစာ"
+
+#: .\orders\models.py:52
+msgid "Sales Orders"
+msgstr "အမှာစာများ"
+
+#: .\orders\models.py:95
+#, python-format
+#| msgid ""
+#| "Cannot delete order with return requests. Process or cancel returns first."
+msgid ""
+"Cannot delete order in '%(status)s' status. Please cancel it first to "
+"restore stock."
+msgstr "'%(status)s' အခြေအနေရှိ အမှာစာကို ဖျက်၍မရပါ။ လက်ကျန်ပြန်ရရန် ဦးစွာ ပယ်ဖျက်ပါ။"
+
+#: .\orders\models.py:141
+msgid "Unit price"
+msgstr "တစ်ခုချင်းဈေးနှုန်း"
+
+#: .\orders\models.py:148
+msgid "Order item"
+msgstr "အမှာစာအသေးစိတ်"
+
+#: .\orders\models.py:149
+msgid "Order items"
+msgstr "အမှာစာအသေးစိတ်များ"
+
+#: .\orders\models.py:163
+msgid "Voucher number"
+msgstr "ငွေလက်ခံဖြတ်ပိုင်းအမှတ်"
+
+#: .\orders\models.py:164
+msgid "Payment date"
+msgstr "ငွေပေးချေရက်"
+
+#: .\orders\models.py:169
+msgid "Payment method"
+msgstr "ငွေပေးချေမှုနည်းလမ်း"
+
+#: .\orders\models.py:173
+msgid "Reference number"
+msgstr "ရည်ညွှန်းအမှတ်"
+
+#: .\orders\models.py:180
+msgid "Payment"
+msgstr "ငွေပေးချေမှု"
+
+#: .\orders\models.py:181 .\templates\orders\order_detail.html:76
+#: .\templates\reports\payment_by_customer.html:47
+msgid "Payments"
+msgstr "ငွေပေးချေမှုများ"
+
+#: .\orders\services.py:50
+#, python-format
+msgid "Row %(row)s: quantity is required."
+msgstr "အတန်း %(row)s: အရေအတွက် လိုအပ်ပါသည်။"
+
+#: .\orders\services.py:55
+#, python-format
+msgid "Row %(row)s: invalid quantity."
+msgstr "အတန်း %(row)s: အရေအတွက် မမှန်ကန်ပါ။"
+
+#: .\orders\services.py:58
+#, python-format
+msgid "Row %(row)s: quantity must be positive."
+msgstr "အတန်း %(row)s: အရေအတွက်သည် အပေါင်းကိန်းဖြစ်ရမည်။"
+
+#: .\orders\services.py:65
+#, python-format
+msgid "Row %(row)s: product not found or inactive."
+msgstr "အတန်း %(row)s: ပစ္စည်းမတွေ့ပါ သို့မဟုတ် မလုပ်ဆောင်တော့ပါ။"
+
+#: .\orders\services.py:74
+#, python-format
+msgid "Quantity %(qty)s for %(product)s exceeds available stock %(stock)s"
+msgstr "%(product)s အတွက် အရေအတွက် %(qty)s သည် လက်ကျန် %(stock)s ထက် ပိုများနေပါသည်။"
+
+#: .\orders\views.py:48 .\orders\views.py:70 .\orders\views.py:102
+#: .\orders\views.py:126 .\templates\customers\customer_detail.html:25
+#: .\templates\orders\create.html:8 .\templates\orders\create.html:14
+#: .\templates\orders\create.html:101 .\templates\orders\order_list.html:15
+#: .\templates\returns\return_detail.html:62
+msgid "Create Order"
+msgstr "အမှာစာ ဖန်တီးမည်"
+
+#: .\orders\views.py:87
+msgid "Add at least one product."
+msgstr "ပစ္စည်းအနည်းဆုံး တစ်ခု ထည့်ပါ။"
+
+#: .\orders\views.py:98
+msgid "Add at least one valid product."
+msgstr "မှန်ကန်သော ပစ္စည်းအနည်းဆုံး တစ်ခု ထည့်ပါ။"
+
+#: .\orders\views.py:123
+#, python-format
+msgid "Error creating order: %(error)s"
+msgstr "အမှာစာဖန်တီးရာတွင် အမှားရှိနေသည်: %(error)s"
+
+#: .\orders\views.py:196
+msgid "Order Detail"
+msgstr "အမှာစာအသေးစိတ်"
+
+#: .\orders\views.py:214
+msgid "Order created successfully."
+msgstr "အမှာစာအသစ် ဖန်တီးပြီးပါပြီ။"
+
+#: .\orders\views.py:247
+msgid "Order must have at least one product."
+msgstr "အမှာစာတွင် ပစ္စည်းအနည်းဆုံး တစ်ခု ပါရှိရပါမည်။"
+
+#: .\orders\views.py:299
+msgid "Order updated successfully."
+msgstr "အမှာစာ ပြင်ဆင်ပြီးပါပြီ။"
+
+#: .\orders\views.py:309
+msgid "Edit Order"
+msgstr "အမှာစာပြင်ဆင်မည်"
+
+#: .\orders\views.py:329
+msgid "Order confirmed successfully."
+msgstr "အမှာစာကို အတည်ပြုပြီးပါပြီ။"
+
+#: .\orders\views.py:331
+msgid "Status CONFIRMED not found"
+msgstr "အတည်ပြုပြီး အခြေအနေ မတွေ့ရှိပါ"
+
+#: .\orders\views.py:347
+msgid "Order delivered successfully."
+msgstr "အမှာစာကို ပို့ဆောင်ပြီးပါပြီ။"
+
+#: .\orders\views.py:349
+msgid "Status DELIVERED not found"
+msgstr "ပို့ဆောင်ပြီး အခြေအနေ မတွေ့ရှိပါ"
+
+#: .\orders\views.py:365
+msgid "Order cancelled successfully."
+msgstr "အမှာစာကို ပယ်ဖျက်ပြီးပါပြီ။"
+
+#: .\orders\views.py:369
+#, python-format
+msgid "Error cancelling order: %(error)s"
+msgstr "အမှာစာပယ်ဖျက်ရာတွင် အမှားရှိနေသည်: %(error)s"
+
+#: .\orders\views.py:390
+msgid "Cannot delete order with payments. Refund or void payments first."
+msgstr "ငွေပေးချေမှုရှိနေသောအမှာစာကို ဖျက်၍မရပါ။ ဦးစွာ ငွေပြန်အမ်းပါ သို့မဟုတ် ပယ်ဖျက်ပါ။"
+
+#: .\orders\views.py:396
+msgid ""
+"Cannot delete order with return requests. Process or cancel returns first."
+msgstr "ပြန်အပ်ရန်တောင်းဆိုမှုရှိနေသောအမှာစာကို ဖျက်၍မရပါ။ ဦးစွာ ဆောင်ရွက်ပါ သို့မဟုတ် ပယ်ဖျက်ပါ။"
+
+#: .\orders\views.py:407
+msgid "Order deleted successfully."
+msgstr "အမှာစာကို ဖျက်ပြီးပါပြီ။"
+
+#: .\orders\views.py:411
+msgid "Delete Order"
+msgstr "အမှာစာဖျက်မည်"
+
+#: .\orders\views.py:513
+msgid "Payment recorded successfully."
+msgstr "ငွေပေးချေမှု မှတ်တမ်းတင်ပြီးပါပြီ။"
+
+#: .\orders\views.py:517 .\templates\orders\order_detail.html:43
+#: .\templates\orders\order_payment.html:9
+#: .\templates\orders\order_payment.html:15
+#: .\templates\orders\order_payment.html:50
+#: .\templates\reports\outstanding_payments.html:112
+msgid "Add Payment"
+msgstr "ငွေချေမှုထည့်မည်"
+
+#: .\orders\voucher_views.py:255 .\templates\orders\payment_voucher.html:213
+msgid "Payment Voucher"
+msgstr "ငွေပေးချေမှု ဖြတ်ပိုင်း"
+
+#: .\orders\voucher_views.py:326 .\templates\orders\order_detail.html:21
+msgid "Invoice"
+msgstr "ကုန်ကျစရိတ်တောင်းခံလွှာ"
+
+#: .\purchasing\apps.py:8 .\templates\base.html:67
+msgid "Purchasing"
+msgstr "ဝယ်ယူမှု"
+
+#: .\purchasing\models.py:40
+msgid "Purchase order"
+msgstr "ဝယ်ယူမှုအမှာစာ"
+
+#: .\purchasing\models.py:41
+msgid "Purchase orders"
+msgstr "ဝယ်ယူမှုအမှာစာများ"
+
+#: .\purchasing\services.py:32
+msgid "Item does not belong to this purchase order."
+msgstr "ဤပစ္စည်းသည် ဤဝယ်ယူမှုအမှာစာနှင့် မသက်ဆိုင်ပါ။"
+
+#: .\purchasing\services.py:36
+#, python-format
+msgid "Receive qty for %(product)s exceeds remaining (%(remaining)s)"
+msgstr "%(product)s အတွက် လက်ခံရရှိမှုပမာဏသည် ကျန်ရှိနေသော %(remaining)s ထက် ကျော်လွန်နေပါသည်။"
+
+#: .\purchasing\services.py:77 .\purchasing\services.py:111
+#: .\purchasing\services.py:125
+msgid "Please add at least one item"
+msgstr "ပစ္စည်းအနည်းဆုံး တစ်ခု ထည့်ပါ။"
+
+#: .\purchasing\services.py:120
+#, python-format
+msgid "Invalid quantity or unit cost for item %(i)s"
+msgstr "ပစ္စည်း %(i)s အတွက် အရေအတွက် သို့မဟုတ် ဈေးနှုန်း မမှန်ကန်ပါ။"
+
+#: .\purchasing\services.py:122
+msgid "Quantity must be positive and unit cost must be non-negative"
+msgstr "အရေအတွက်သည် အပေါင်းကိန်းဖြစ်ရမည်ဖြစ်ပြီး ဈေးနှုန်းသည် အနုတ်လက္ခဏာမဖြစ်ရပါ။"
+
+#: .\purchasing\templates\purchasing\create.html:7
+#: .\purchasing\templates\purchasing\detail.html:7
+#: .\purchasing\templates\purchasing\list.html:7
+#: .\purchasing\templates\purchasing\po_confirm_delete.html:7
+#: .\purchasing\templates\purchasing\receive.html:7 .\purchasing\views.py:35
+msgid "Purchase Orders"
+msgstr "ဝယ်ယူမှုအမှာစာများ"
+
+#: .\purchasing\templates\purchasing\create.html:21
+msgid "Purchase Order Details"
+msgstr "ဝယ်ယူမှုအမှာစာ အသေးစိတ်"
+
+#: .\purchasing\templates\purchasing\create.html:33
+#: .\purchasing\templates\purchasing\detail.html:49
+#: .\purchasing\templates\purchasing\list.html:53
+msgid "Expected Date"
+msgstr "မျှော်မှန်းရက်"
+
+#: .\purchasing\templates\purchasing\create.html:48
+#: .\purchasing\templates\purchasing\detail.html:84
+#: .\templates\orders\create.html:41 .\templates\orders\order_detail.html:59
+#: .\templates\orders\order_form.html:53
+#: .\templates\returns\return_detail.html:74
+msgid "Items"
+msgstr "ပစ္စည်းများ"
+
+#: .\purchasing\templates\purchasing\create.html:55
+#: .\purchasing\templates\purchasing\detail.html:92
+msgid "Unit Cost"
+msgstr "ယူနစ်ကုန်ကျစရိတ်"
+
+#: .\purchasing\templates\purchasing\create.html:64
+#: .\templates\orders\create.html:60 .\templates\orders\order_form.html:97
+#: .\templates\orders\order_form.html:126
+msgid "Select Product"
+msgstr "ပစ္စည်း ရွေးချယ်ပါ"
+
+#: .\purchasing\templates\purchasing\create.html:75
+#: .\templates\orders\create.html:72 .\templates\orders\order_form.html:118
+#: .\templates\orders\order_form.html:119
+msgid "Remove"
+msgstr "ဖယ်ရှားမည်"
+
+#: .\purchasing\templates\purchasing\create.html:79
+#: .\templates\orders\create.html:77 .\templates\orders\order_form.html:135
+msgid "Add Item"
+msgstr "ပစ္စည်းထည့်မည်"
+
+#: .\purchasing\templates\purchasing\create.html:81
+#: .\purchasing\templates\purchasing\detail.html:116
+msgid "Grand Total"
+msgstr "စုစုပေါင်း"
+
+#: .\purchasing\templates\purchasing\create.html:87
+#: .\purchasing\templates\purchasing\list.html:18 .\purchasing\views.py:71
+msgid "Create Purchase Order"
+msgstr "ဝယ်ယူမှုအမှာစာ ဖန်တီးမည်"
+
+#: .\purchasing\templates\purchasing\detail.html:8
+#: .\purchasing\templates\purchasing\po_confirm_delete.html:8
+#: .\purchasing\templates\purchasing\receive.html:8
+msgid "PO"
+msgstr "ဝယ်ယူမှုအမှာစာ"
+
+#: .\purchasing\templates\purchasing\detail.html:20
+#: .\purchasing\templates\purchasing\receive.html:30
+msgid "Receive Items"
+msgstr "ပစ္စည်းလက်ခံမည်"
+
+#: .\purchasing\templates\purchasing\detail.html:26
+msgid "Back to List"
+msgstr "စာရင်းသို့ ပြန်မည်"
+
+#: .\purchasing\templates\purchasing\detail.html:33
+msgid "Purchase Order Information"
+msgstr "ဝယ်ယူမှုအမှာစာ အချက်အလက်"
+
+#: .\purchasing\templates\purchasing\detail.html:37
+msgid "PO Number"
+msgstr "ဝယ်ယူမှုအမှာစာအမှတ်"
+
+#: .\purchasing\templates\purchasing\detail.html:45
+#: .\purchasing\templates\purchasing\list.html:52
+#: .\purchasing\templates\purchasing\receive.html:22
+msgid "Order Date"
+msgstr "အမှာစာရက်"
+
+#: .\purchasing\templates\purchasing\detail.html:62
+msgid "Created By"
+msgstr "မှတ်တမ်းတင်သူ"
+
+#: .\purchasing\templates\purchasing\detail.html:77
+#: .\purchasing\templates\purchasing\list.html:54
+msgid "Total Amount"
+msgstr "စုစုပေါင်းပမာဏ"
+
+#: .\purchasing\templates\purchasing\detail.html:90
+#: .\templates\returns\return_form_items.html:32
+msgid "Ordered Qty"
+msgstr "မှာယူသည့်အရေအတွက်"
+
+#: .\purchasing\templates\purchasing\detail.html:91
+msgid "Received Qty"
+msgstr "လက်ခံပြီးအရေအတွက်"
+
+#: .\purchasing\templates\purchasing\detail.html:93
+msgid "Total Cost"
+msgstr "စုစုပေါင်းကုန်ကျစရိတ်"
+
+#: .\purchasing\templates\purchasing\detail.html:104
+#: .\templates\orders\order_list.html:25
+#: .\templates\returns\return_list.html:28
+msgid "Pending"
+msgstr "ဆိုင်းငံ့"
+
+#: .\purchasing\templates\purchasing\detail.html:106
+msgid "Complete"
+msgstr "ပြီးပါပြီ"
+
+#: .\purchasing\templates\purchasing\list.html:50
+msgid "PO #"
+msgstr "ဝယ်ယူမှုအမှာစာ #"
+
+#: .\purchasing\templates\purchasing\list.html:76
+msgid "Receive"
+msgstr "လက်ခံမည်"
+
+#: .\purchasing\templates\purchasing\list.html:86
+msgid "No purchase orders found"
+msgstr "ဝယ်ယူမှုအမှာစာမတွေ့ပါ"
+
+#: .\purchasing\templates\purchasing\po_confirm_delete.html:15
+#: .\purchasing\views.py:120
+msgid "Delete Purchase Order"
+msgstr "ဝယ်ယူမှုအမှာစာကို ဖျက်မည်"
+
+#: .\purchasing\templates\purchasing\po_confirm_delete.html:16
+#, python-format
+msgid "Are you sure you want to delete PO #%(id)s (%(supplier)s)?"
+msgstr "ဝယ်ယူမှုအမှာစာ #%(id)s (%(supplier)s) ကို ဖျက်မည်မှာ သေချာပါသလား?"
+
+#: .\purchasing\templates\purchasing\po_confirm_delete.html:17
+msgid ""
+"Received purchase orders cannot be deleted because stock was already added."
+msgstr "လက်ခံရရှိထားသော အဝယ်အမှာစာများကို ဖျက်၍မရပါ။ အဘယ်ကြောင့်ဆိုသော် ကုန်ပစ္စည်းလက်ကျန်စာရင်းသို့ ပေါင်းထည့်ပြီးသောကြောင့်ဖြစ်သည်။"
+
+#: .\purchasing\templates\purchasing\receive.html:19
+msgid "PO Information"
+msgstr "ဝယ်ယူမှုအမှာစာ အချက်အလက်"
+
+#: .\purchasing\templates\purchasing\receive.html:36
+msgid "Ordered"
+msgstr "အမှာစာအရေအတွက်"
+
+#: .\purchasing\templates\purchasing\receive.html:37
+msgid "Already Received"
+msgstr "လက်ခံပြီးပါပြီ"
+
+#: .\purchasing\templates\purchasing\receive.html:38
+msgid "Receive Now"
+msgstr "ယခုလက်ခံမည်"
+
+#: .\purchasing\templates\purchasing\receive.html:65
+msgid "Update Stock"
+msgstr "လက်ကျန်ပြင်ဆင်မည်"
+
+#: .\purchasing\views.py:64
+#, python-format
+msgid "Purchase Order #%(id)s created successfully"
+msgstr "ဝယ်ယူမှုအမှာစာ #%(id)s ဖန်တီးပြီးပါပြီ။"
+
+#: .\purchasing\views.py:90
+#, python-format
+msgid "Purchase Order #%(id)s"
+msgstr "ဝယ်ယူမှုအမှာစာ #%(id)s"
+
+#: .\purchasing\views.py:109
+msgid "Cannot delete received purchase orders. Stock was already added."
+msgstr "လက်ခံရရှိပြီးသော ဝယ်ယူမှုအမှာစာများကို ဖျက်၍မရပါ။ လက်ကျန်စာရင်းသွင်းပြီးဖြစ်သည်။"
+
+#: .\purchasing\views.py:116
+msgid "Purchase order deleted successfully."
+msgstr "ဝယ်ယူမှုအမှာစာ ဖျက်ပြီးပါပြီ။"
+
+#: .\purchasing\views.py:167
+msgid "Stock updated successfully"
+msgstr "လက်ကျန် ပြင်ဆင်ပြီးပါပြီ။"
+
+#: .\purchasing\views.py:176
+#, python-format
+msgid "Receive PO #%(id)s"
+msgstr "ဝယ်ယူမှုအမှာစာ #%(id)s လက်ခံမည်"
+
+#: .\reports\apps.py:8 .\templates\base.html:94
+#: .\templates\reports\audit_log_report.html:7
+#: .\templates\reports\outstanding_payments.html:7
+#: .\templates\reports\payment_by_customer.html:7
+#: .\templates\reports\payment_report.html:7
+#: .\templates\reports\profit_analysis.html:7
+#: .\templates\reports\purchase_vs_sales.html:7
+#: .\templates\reports\report_index.html:7
+#: .\templates\reports\report_index.html:13
+#: .\templates\reports\return_report.html:7
+#: .\templates\reports\sales_report.html:7
+msgid "Reports"
+msgstr "အစီရင်ခံစာများ"
+
+#: .\reports\models.py:15
+msgid "Daily Sales Summary"
+msgstr "နေ့စဉ်အရောင်း အကျဉ်းချုပ်"
+
+#: .\reports\models.py:16
+msgid "Daily Sales Summaries"
+msgstr "နေ့စဉ်အရောင်း အကျဉ်းချုပ်များ"
+
+#: .\reports\models.py:34
+msgid "Daily Inventory Snapshot"
+msgstr "နေ့စဉ်ကုန်ပစ္စည်းလက်ကျန် အခြေအနေ"
+
+#: .\reports\models.py:35
+msgid "Daily Inventory Snapshots"
+msgstr "နေ့စဉ်ကုန်ပစ္စည်းလက်ကျန် အခြေအနေများ"
+
+#: .\reports\models.py:57
+msgid "Daily Payment Summary"
+msgstr "နေ့စဉ်ငွေပေးချေမှု အကျဉ်းချုပ်"
+
+#: .\reports\models.py:58
+msgid "Daily Payment Summaries"
+msgstr "နေ့စဉ်ငွေပေးချေမှု အကျဉ်းချုပ်များ"
+
+#: .\reports\models.py:75
+msgid "Daily Expense Summary"
+msgstr "နေ့စဉ်အသုံးစရိတ် အကျဉ်းချုပ်"
+
+#: .\reports\models.py:76
+msgid "Daily Expense Summaries"
+msgstr "နေ့စဉ်အသုံးစရိတ် အကျဉ်းချုပ်များ"
+
+#: .\returns\apps.py:8 .\returns\templates\returns\return_confirm_delete.html:7
+#: .\templates\base.html:53 .\templates\reports\report_index.html:103
+#: .\templates\returns\return_detail.html:8
+#: .\templates\returns\return_form.html:7
+#: .\templates\returns\return_form_items.html:7
+#: .\templates\returns\return_list.html:8
+#: .\templates\returns\return_list.html:14
+msgid "Returns"
+msgstr "ပြန်လည်ပေးအပ်မှုများ"
+
+#: .\returns\forms.py:56
+msgid "-- Select Order --"
+msgstr "-- အမှာစာရွေးချယ်ပါ --"
+
+#: .\returns\models.py:30
+msgid "Replacement Order"
+msgstr "အစားထိုးအမှာစာ"
+
+#: .\returns\models.py:38
+msgid "Return request"
+msgstr "ပြန်အပ်တောင်းဆိုင်း"
+
+#: .\returns\models.py:39
+msgid "Return requests"
+msgstr "ပြန်အပ်တောင်းဆိုင်းများ"
+
+#: .\returns\models.py:69
+msgid "If checked, items will be added back to stock upon approval."
+msgstr "ရွေးချယ်ထားပါက၊ အတည်ပြုပြီးချိန်တွင် ပစ္စည်းများကို လက်ကျန်သို့ ပြန်ထည့်ပါမည်။"
+
+#: .\returns\models.py:99 .\returns\models.py:100
+msgid "Return processing log"
+msgstr "ပြန်အပ်လုပ်ငန်းမှတ်တမ်း"
+
+#: .\returns\services.py:79
+msgid "This order already has a return request."
+msgstr "ဤအမှာစာတွင် ပြန်အပ်တောင်းဆိုမှု ရှိနှင့်ပြီးဖြစ်သည်။"
+
+#: .\returns\services.py:99
+#, python-format
+msgid "Return quantity exceeds available for %(product)s (max: %(max)s)"
+msgstr "%(product)s အတွက် ပြန်အပ်အရေအတွက်သည် ရရှိနိုင်သော %(max)s ထက် ကျော်လွန်နေပါသည်။"
+
+#: .\returns\services.py:178
+#| msgid "Replacement order created successfully."
+msgid "Replacement order already exists for this return."
+msgstr "ဤပြန်အပ်မှုအတွက် အစားထိုးအမှာစာ ရှိနှင့်ပြီးဖြစ်သည်။"
+
+#: .\returns\templates\returns\return_confirm_delete.html:15
+#: .\returns\views.py:115
+msgid "Delete Return"
+msgstr "ပြန်အပ်မှုကို ဖျက်မည်"
+
+#: .\returns\templates\returns\return_confirm_delete.html:16
+#, python-format
+msgid "Are you sure you want to delete return %(number)s?"
+msgstr "ပြန်အပ်မှု %(number)s ကို ဖျက်မည်မှာ သေချာပါသလား?"
+
+#: .\returns\templates\returns\return_confirm_delete.html:17
+msgid ""
+"Only Pending or Rejected returns can be deleted. Approved/Completed returns "
+"affect stock and cannot be deleted."
+msgstr "ဆိုင်းငံ့ထားသော သို့မဟုတ် ပယ်ချထားသော ပြန်လည်ပေးအပ်မှုများကိုသာ ဖျက်သိမ်းနိုင်သည်။ အတည်ပြုပြီး/ပြီးစီးသွားသော ပြန်လည်ပေးအပ်မှုများသည် ကုန်ပစ္စည်းလက်ကျန်စာရင်းကို သက်ရောက်မှုရှိသောကြောင့် ဖျက်သိမ်း၍မရပါ။"
+
+#: .\returns\views.py:62
+msgid "ပြန်အပ်မှုများ"
+msgstr "ပြန်အပ်မှုများ"
+
+#: .\returns\views.py:85
+msgid "ပြန်အပ်အသေးစိတ်"
+msgstr "ပြန်အပ်အသေးစိတ်"
+
+#: .\returns\views.py:104
+msgid ""
+"Cannot delete approved/completed returns. They affect stock and accounting."
+msgstr "အတည်ပြုပြီး/ပြီးစီးသွားသော ပြန်လည်ပေးအပ်မှုများကို ဖျက်သိမ်း၍မရပါ။ ၎င်းတို့သည် ကုန်ပစ္စည်းလက်ကျန်နှင့် စာရင်းကိုင်အပေါ် သက်ရောက်မှုရှိသည်။"
+
+#: .\returns\views.py:111
+msgid "Return deleted successfully."
+msgstr "ပြန်အပ်မှုကို ဖျက်ပြီးပါပြီ။"
+
+#: .\returns\views.py:149
+msgid "အမှာစာရွေးချယ်ပါ"
+msgstr "အမှာစာရွေးချယ်ပါ"
+
+#: .\returns\views.py:151
+msgid "ပြန်အပ်တောင်းဆိုင်းအသစ်ထည့်ရန်"
+msgstr "ပြန်အပ်တောင်းဆိုင်းအသစ်ထည့်ရန်"
+
+#: .\returns\views.py:203
+msgid "ပြန်အပ်တောင်းဆိုင်းအသစ် တည်ဆောက်ပြီး"
+msgstr "ပြန်အပ်တောင်းဆိုင်းအသစ် တည်ဆောက်ပြီး"
+
+#: .\returns\views.py:211
+msgid "ပြန်အပ်ပစ္စည်း အနည်းဆုံး တစ်ခု ရွေးချယ်ပါ"
+msgstr "ပြန်အပ်ပစ္စည်း အနည်းဆုံး တစ်ခု ရွေးချယ်ပါ"
+
+#: .\returns\views.py:237
+msgid "ပြန်အပ်တောင်းဆိုင်းခွင့်ပြုပြီးပြီး"
+msgstr "ပြန်အပ်တောင်းဆိုင်းခွင့်ပြုပြီးပြီး"
+
+#: .\returns\views.py:257
+#| msgid "ပြန်အပ်တောင်းဆိုင်းခွင့်ပြုပြီးပြီး"
+msgid "ပြန်အပ်တောင်းဆိုင်းငြင်ပယ်ပြီးပြီး"
+msgstr "ပြန်အပ်တောင်းဆိုမှုကို ငြင်းပယ်လိုက်ပါပြီ။"
+
+#: .\returns\views.py:261
+#| msgid "ပြန်အပ်တောင်းဆိုင်းအသစ်ထည့်ရန်"
+msgid "ပြန်အပ်တောင်းဆိုင်းငြင်ပယ်ပြီး"
+msgstr "ပြန်အပ်တောင်းဆိုမှုကို ငြင်းပယ်ပြီး"
+
+#: .\returns\views.py:278
+msgid "Replacement order created successfully."
+msgstr "အစားထိုးအမှာစာ ဖန်တီးပြီးပါပြီ။"
+
+#: .\templates\admin\base_site.html:4
+msgid "Django site admin"
+msgstr "Django စီမံခန့်ခွဲမှု ဝဘ်ဆိုက်"
+
+#: .\templates\admin\base_site.html:7
+msgid "Django administration"
+msgstr "Django စီမံခန့်ခွဲမှု"
+
+#: .\templates\base.html:37 .\templates\reports\profit_analysis.html:113
+msgid "Sales"
+msgstr "ရောင်းချမှု"
+
+#: .\templates\base.html:60 .\templates\reports\report_index.html:108
+msgid "Inventory"
+msgstr "ပစ္စည်းစာရင်း"
+
+#: .\templates\base.html:70 .\templates\core\product_detail.html:21
+#: .\templates\dashboard\index.html:58
+msgid "Low Stock"
+msgstr "လက်ကျန်နည်းပါး"
+
+#: .\templates\base.html:98 .\templates\reports\report_index.html:18
+#: .\templates\reports\sales_report.html:8
+#: .\templates\reports\sales_report.html:15
+msgid "Sales Report"
+msgstr "ရောင်းချမှုအစီရင်ခံစာ"
+
+#: .\templates\base.html:101 .\templates\reports\report_index.html:27
+#: .\templates\reports\return_report.html:8
+#: .\templates\reports\return_report.html:14
+msgid "Return Analysis"
+msgstr "ပြန်အပ်မှု ခွဲခြမ်းစိတ်ဖြာမှု"
+
+#: .\templates\base.html:104 .\templates\reports\report_index.html:36
+msgid "Payment Report"
+msgstr "ငွေပေးချေမှုအစီရင်ခံစာ"
+
+#: .\templates\base.html:107 .\templates\reports\report_index.html:46
+msgid "Outstanding Payments"
+msgstr "ကျန်ငွေပေးချေမှုများ"
+
+#: .\templates\base.html:110 .\templates\reports\report_index.html:56
+msgid "Payment by Customer"
+msgstr "ဖောက်သည်အလိုက် ငွေပေးချေမှု"
+
+#: .\templates\base.html:113 .\templates\reports\report_index.html:65
+msgid "Purchase vs Sales"
+msgstr "ဝယ်ယူမှု နှင့် ရောင်းချမှု"
+
+#: .\templates\base.html:116 .\templates\reports\report_index.html:74
+msgid "Profit Analysis"
+msgstr "အမြတ်ခွဲခြမ်းစိတ်ဖြာမှု"
+
+#: .\templates\base.html:119 .\templates\reports\report_index.html:83
+#: .\templates\reports\report_index.html:113
+msgid "Audit Log"
+msgstr "မှတ်တမ်းစစ်ဆေးချက်"
+
+#: .\templates\base.html:126 .\templates\base.html:130
+msgid "Admin"
+msgstr "စီမံခန့်ခွဲမှု"
+
+#: .\templates\base.html:136
 msgid "Database Backup"
 msgstr "Database Backup"
 
+#: .\templates\base.html:143 .\templates\base.html:161
+msgid "Myanmar"
+msgstr "မြန်မာ"
+
+#: .\templates\base.html:143 .\templates\base.html:151
+msgid "English"
+msgstr "အင်္ဂလိပ်"
+
+#: .\templates\base.html:174
+msgid "Logout"
+msgstr "ထွက်မည်"
+
+#: .\templates\common\backup_list.html:4 .\templates\common\backup_list.html:17
+msgid "Database Backups"
+msgstr "Database Backup များ"
+
+#: .\templates\common\backup_list.html:21
+msgid "Are you sure you want to create a new database backup?"
+msgstr "Database backup အသစ်တစ်ခု ပြုလုပ်မှာ သေချာပါသလား?"
+
+#: .\templates\common\backup_list.html:23
+msgid "Confirm Backup Creation"
+msgstr "Backup လုပ်ရန် အတည်ပြုပါ"
+
+#: .\templates\common\backup_list.html:26
+#: .\templates\common\backup_list.html:27
+msgid "Create Backup"
+msgstr "Backup အသစ်လုပ်မည်"
+
+#: .\templates\common\backup_list.html:35
+#: .\templates\common\backup_list.html:54
+#: .\templates\common\backup_list.html:55
+msgid "Upload & Restore"
+msgstr "Upload နှင့် Restore လုပ်မည်"
+
+#: .\templates\common\backup_list.html:42
 msgid "Browse..."
 msgstr "ဖိုင်ရွေးချယ်ပါ..."
 
+#: .\templates\common\backup_list.html:45
+#: .\templates\common\backup_list.html:46
 msgid "No file selected."
 msgstr "မည်သည့်ဖိုင်မှ ရွေးချယ်ထားခြင်းမရှိပါ။"
 
+#: .\templates\common\backup_list.html:49
+msgid ""
+"Are you sure you want to restore this backup? Current data will be merged/"
+"overwritten."
+msgstr ""
+"ဒီ Backup ကို restore လုပ်မှာ သေချာပါသလား။ လက်ရှိ Data များ ပေါင်းစပ် သို့မဟုတ် အစားထိုးခံရပါမည်။"
 
+#: .\templates\common\backup_list.html:51
+msgid "Confirm Upload & Restore"
+msgstr "Upload နှင့် Restore လုပ်ရန် အတည်ပြုပါ"
 
+#: .\templates\common\backup_list.html:64
+msgid "Danger Zone: Data Reset"
+msgstr "သတိထားရန်နယ်ပယ် - Data များကို Reset ချခြင်း"
 
+#: .\templates\common\backup_list.html:67
+msgid ""
+"Warning: These actions are irreversible. Please ensure you have a backup "
+"before proceeding."
+msgstr ""
+"သတိပေးချက် - ဤလုပ်ဆောင်ချက်များသည် ပြန်ပြင်မရပါ။ မလုပ်ဆောင်မီ backup ရှိထားကြောင်း သေချာပါစေ။"
+
+#: .\templates\common\backup_list.html:69
+msgid ""
+"Are you sure you want to delete ALL Transactional Data (Orders, Returns, "
+"etc.)? Master Data (Products, Customers) will be KEPT."
+msgstr ""
+"Transaction Data အားလုံး (အမှာစာများ၊ ပြန်အမ်းငွေများ စသည်) ကို ဖျက်မှာ သေချာပါသလား။ "
+"Master Data (ကုန်ပစ္စည်းများ၊ ဖောက်သည်များ) ကျန်ရှိနေပါမည်။"
+
+#: .\templates\common\backup_list.html:71
+msgid "Confirm Transaction Reset"
+msgstr "Transaction Reset လုပ်ရန် အတည်ပြုပါ"
+
+#: .\templates\common\backup_list.html:74
+#| msgid "Reset Transactions Only"
+msgid "Reset Transactions"
+msgstr "အရောင်းအဝယ်စာရင်းများ Reset လုပ်မည်"
+
+#: .\templates\common\backup_list.html:78
+msgid "Reset Transactions Only"
+msgstr "အရောင်းအဝယ်စာရင်းများသာ Reset လုပ်မည်"
+
+#: .\templates\common\backup_list.html:82
+msgid ""
+"Are you sure you want to delete EVERYTHING? This includes Products, "
+"Customers, and Settings. Only User Accounts will remain."
+msgstr ""
+"အားလုံးကို ဖျက်ပစ်မှာ သေချာပါသလား။ ကုန်ပစ္စည်းများ၊ ဖောက်သည်များနှင့် ဆက်တင်များ ပါဝင်သည်။ "
+"အသုံးပြုသူအကောင့်များသာ ကျန်ရှိပါမည်။"
+
+#: .\templates\common\backup_list.html:84
+msgid "Confirm Full Reset"
+msgstr "အားလုံး Reset လုပ်ရန် အတည်ပြုပါ"
+
+#: .\templates\common\backup_list.html:87
+msgid "Reset Everything"
+msgstr "အားလုံး Reset လုပ်မည်"
+
+#: .\templates\common\backup_list.html:91
+msgid "Reset Everything (Master + Transactions)"
+msgstr "အားလုံး Reset လုပ်မည် (Master + Transactions)"
+
+#: .\templates\common\backup_list.html:102
+msgid "Filename"
+msgstr "ဖိုင်အမည်"
+
+#: .\templates\common\backup_list.html:103
+msgid "Size"
+msgstr "ဖိုင်အရွယ်အစား"
+
+#: .\templates\common\backup_list.html:104
+msgid "Created At"
+msgstr "ဖန်တီးခဲ့သည့်အချိန်"
+
+#: .\templates\common\backup_list.html:116
+msgid "Download"
+msgstr "ဒေါင်းလုဒ်"
+
+#: .\templates\common\backup_list.html:119
+msgid ""
+"Are you sure you want to restore this backup? This action cannot be undone."
+msgstr "ဒီ Backup ကို restore လုပ်မှာ သေချာပါသလား။ ဤလုပ်ဆောင်ချက်ကို ပြန်ပြင်၍မရပါ။"
+
+#: .\templates\common\backup_list.html:121
+msgid "Confirm Restore"
+msgstr "Restore လုပ်ရန် အတည်ပြုပါ"
+
+#: .\templates\common\backup_list.html:124
+#: .\templates\common\backup_list.html:126
+msgid "Restore"
+msgstr "ပြန်လည်ထည့်သွင်းမည် (Restore)"
+
+#: .\templates\common\backup_list.html:130
+msgid "Are you sure you want to delete this backup?"
+msgstr "ဒီ Backup ကို ဖျက်မှာ သေချာပါသလား။"
+
+#: .\templates\common\backup_list.html:146
+msgid "No backups found."
+msgstr "Backup များ မတွေ့ပါ။"
+
+#: .\templates\core\low_stock_list.html:5 .\templates\core\product_list.html:8
+msgid "Low Stock Alerts"
+msgstr "လက်ကျန်နည်းပါးသတိပေးချက်များ"
+
+#: .\templates\core\low_stock_list.html:9
+#: .\templates\core\product_detail.html:21
+#: .\templates\core\product_list.html:14 .\templates\dashboard\index.html:105
+#: .\templates\dashboard\index.html:241 .\templates\dashboard\index.html:250
+#: .\templates\orders\create.html:62 .\templates\orders\order_form.html:103
+#: .\templates\orders\order_form.html:128
+msgid "Stock"
+msgstr "လက်ကျန်"
+
+#: .\templates\core\low_stock_list.html:9
+msgid "Threshold"
+msgstr "ခြေလျင်အမှတ်"
+
+#: .\templates\core\low_stock_list.html:18
+#| msgid "Adjust Stock"
+msgid "Adjust"
+msgstr "ညှိနှိုင်းမည်"
+
+#: .\templates\core\low_stock_list.html:22
+msgid "No low stock products"
+msgstr "လက်ကျန်နည်းပါးသောပစ္စည်းမရှိပါ"
+
+#: .\templates\core\product_detail.html:17
+#: .\templates\orders\order_detail.html:98
+#: .\templates\returns\return_detail.html:116
+msgid "Back to list"
+msgstr "စာရင်းသို့ ပြန်မည်"
+
+#: .\templates\core\product_detail.html:21
+msgid "Low threshold"
+msgstr "လက်ကျန်နည်းပါးအမှတ်"
+
+#: .\templates\core\product_detail.html:24
+msgid "Price Tiers"
+msgstr "ဈေးနှုန်းအဆင့်များ"
+
+#: .\templates\core\product_detail.html:32 .\templates\core\product_list.html:9
+#: .\templates\core\stock_movement_list.html:5
+msgid "Stock Movements"
+msgstr "လက်ကျန် ရွေ့လျားမှုများ"
+
+#: .\templates\core\product_detail.html:35
+#: .\templates\core\stock_movement_list.html:10
+#: .\templates\customers\customer_detail.html:18
+#: .\templates\customers\customer_list.html:27
+#: .\templates\customers\customer_list.html:49
+#: .\templates\dashboard\index.html:124 .\templates\dashboard\index.html:135
+#: .\templates\dashboard\index.html:204 .\templates\dashboard\index.html:213
+#: .\templates\orders\order_detail.html:16
+#: .\templates\orders\order_list.html:33 .\templates\orders\order_list.html:66
+#: .\templates\returns\return_detail.html:17
+msgid "Type"
+msgstr "အမျိုးအစား"
+
+#: .\templates\core\product_detail.html:35
+#: .\templates\core\stock_movement_list.html:10
+#| msgid "Expiry"
+msgid "Batch/Expiry"
+msgstr "ရက်စွဲအစု/သက်တမ်း"
+
+#: .\templates\core\product_detail.html:35
+#: .\templates\core\stock_movement_list.html:10
+#: .\templates\customers\customer_detail.html:31
+#: .\templates\dashboard\index.html:205 .\templates\dashboard\index.html:214
+#: .\templates\orders\create.html:69 .\templates\orders\create.html:113
+#: .\templates\orders\invoice.html:210 .\templates\orders\order_detail.html:62
+#: .\templates\orders\order_form.html:115
+#: .\templates\orders\order_form.html:158
+#: .\templates\returns\return_detail.html:77
+msgid "Qty"
+msgstr "အရေအတွက်"
+
+#: .\templates\core\product_detail.html:35
+#: .\templates\core\stock_movement_list.html:10
+#: .\templates\orders\order_payment.html:41
+#: .\templates\reports\payment_report.html:96
+msgid "Reference"
+msgstr "ရည်ညွှန်းအမှတ်"
+
+#: .\templates\core\product_detail.html:53
+#: .\templates\core\stock_movement_list.html:29
+#: .\templates\dashboard\index.html:219
+msgid "No movements"
+msgstr "ရွေ့လျားမှုမရှိပါ"
+
+#: .\templates\core\product_form.html:19
+msgid "Basic Info"
+msgstr "အခြေခံအချက်အလက်"
+
+#: .\templates\core\product_form.html:43
+msgid "Pricing & Stock"
+msgstr "ဈေးနှုန်းနှင့် လက်ကျန်"
+
+#: .\templates\core\product_form.html:78
+msgid "Price Tiers (by Customer Type)"
+msgstr "ဈေးနှုန်းအဆင့်များ (ဖောက်သည်အမျိုးအစားအလိုက်)"
+
+#: .\templates\core\product_form.html:79
+msgid ""
+"Override base price for specific customer types. Leave blank to use base "
+"price."
+msgstr "ဖောက်သည်အမျိုးအစားအလိုက် အခြေဈေးနှုန်း ပြောင်းသတ်မှတ်ပါ။ အခြေဈေးသုံးရန် ဗလာချန်ထားပါ။"
+
+#: .\templates\core\product_list.html:14
+msgid "Expiry"
+msgstr "သက်တမ်း"
+
+#: .\templates\core\product_list.html:34
+msgid "Low"
+msgstr "နည်း"
+
+#: .\templates\core\product_list.html:46
+msgid "No products yet."
+msgstr "ပစ္စည်းမရှိသေးပါ။"
+
+#: .\templates\core\product_list.html:47
+msgid "Add your first product"
+msgstr "ပထမဆုံးပစ္စည်းထည့်ပါ"
+
+#: .\templates\core\product_list.html:57
+#: .\templates\customers\customer_list.html:77
+#: .\templates\orders\order_list.html:99
+#: .\templates\returns\return_list.html:83
+msgid "Previous"
+msgstr "ရှေ့"
+
+#: .\templates\core\product_list.html:59
+#: .\templates\customers\customer_list.html:79
+#: .\templates\orders\order_list.html:101
+#: .\templates\returns\return_list.html:85
+#, python-format
+msgid "Page %(page)s of %(total)s"
+msgstr "စာမျက်နှာ %(page)s / %(total)s"
+
+#: .\templates\core\product_list.html:61
+#: .\templates\customers\customer_list.html:81
+#: .\templates\orders\order_list.html:103
+#: .\templates\returns\return_list.html:87
+msgid "Next"
+msgstr "နောက်"
+
+#: .\templates\core\stock_adjust.html:19
+msgid "Current stock"
+msgstr "လက်ရှိလက်ကျန်"
+
+#: .\templates\core\stock_adjust.html:36
+msgid "Apply Adjustment"
+msgstr "ပြင်ဆင်ချက်ကို အတည်ပြုမည်"
+
+#: .\templates\customers\customer_detail.html:21
+msgid "Payment Terms"
+msgstr "ငွေပေးချေမှု စည်းကမ်းချက်များ"
+
+#: .\templates\customers\customer_detail.html:21
+#: .\templates\dashboard\index.html:330
+msgid "days"
+msgstr "ရက်"
+
+#: .\templates\customers\customer_detail.html:55
+msgid "No samples given"
+msgstr "နမူနာမပေးရသေးပါ"
+
+#: .\templates\customers\customer_detail.html:61
+#: .\templates\dashboard\index.html:116
+msgid "Recent Orders"
+msgstr "နောက်ဆုံးအမှာစာများ"
+
+#: .\templates\customers\customer_detail.html:74
+msgid "No orders"
+msgstr "အမှာစာမရှိပါ"
+
+#: .\templates\customers\customer_list.html:17
+msgid "Add Customer"
+msgstr "ဖောက်သည်ထည့်မည်"
+
+#: .\templates\customers\customer_list.html:23
+#: .\templates\returns\return_list.html:21
+msgid "Search"
+msgstr "ရှာမည်"
+
+#: .\templates\customers\customer_list.html:24
+msgid "Search by name or phone..."
+msgstr "အမည် သို့မဟုတ် ဖုန်းနံပါတ်ဖြင့် ရှာပါ..."
+
+#: .\templates\customers\customer_list.html:40
+#: .\templates\customers\customer_list.html:67
+msgid "Clear"
+msgstr "ရှင်းမည်"
+
+#: .\templates\customers\customer_list.html:66
+msgid "No customers match your search."
+msgstr "သင့်ရှာဖွေမှုနှင့် ကိုက်ညီသော ဖောက်သည်မရှိပါ။"
+
+#: .\templates\customers\customer_list.html:66
+msgid "No customers yet."
+msgstr "ဖောက်သည်မရှိသေးပါ။"
+
+#: .\templates\customers\customer_list.html:67
+msgid "Add your first customer"
+msgstr "ပထမဆုံးဖောက်သည်ထည့်ပါ"
+
+#: .\templates\customers\salesperson_list.html:19
+msgid "No salespeople"
+msgstr "ရောင်းချသူ မရှိပါ"
+
+#: .\templates\dashboard\index.html:23
+msgid "Today's Sales"
+msgstr "ယနေ့ရောင်းချမှု"
+
+#: .\templates\dashboard\index.html:40
+msgid "Pending Orders"
+msgstr "ဆိုင်းငံ့အမှာစာများ"
+
+#: .\templates\dashboard\index.html:43 .\templates\dashboard\index.html:79
+#: .\templates\reports\purchase_vs_sales.html:49
+#: .\templates\reports\purchase_vs_sales.html:58
+#: .\templates\reports\sales_report.html:52
+msgid "orders"
+msgstr "အမှာစာများ"
+
+#: .\templates\dashboard\index.html:61
+msgid "products"
+msgstr "ပစ္စည်းများ"
+
+#: .\templates\dashboard\index.html:77
+msgid "Overdue"
+msgstr "ရက်လွန်"
+
+#: .\templates\dashboard\index.html:94
+msgid "Expiry alert"
+msgstr "သက်တမ်းကုန်ရက်"
+
+#: .\templates\dashboard\index.html:94
+#, python-format
+msgid "%(count)s product expiring soon"
+msgid_plural "%(count)s products expiring soon"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\dashboard\index.html:95
+msgid "View Products"
+msgstr "ပစ္စည်းများ"
+
+#: .\templates\dashboard\index.html:102
+msgid "Low stock products"
+msgstr "လက်ကျန်နည်းပါးသောပစ္စည်းများ"
+
+#: .\templates\dashboard\index.html:108
+msgid "Go to Low Stock List"
+msgstr "လက်ကျန်နည်းပါးစာရင်းသို့"
+
+#: .\templates\dashboard\index.html:152 .\templates\orders\order_list.html:88
+msgid "No orders yet."
+msgstr "အမှာစာမရှိသေးပါ။"
+
+#: .\templates\dashboard\index.html:163
+msgid "Recent Returns"
+msgstr "နောက်ဆုံးပြန်အပ်မှုများ"
+
+#: .\templates\dashboard\index.html:169 .\templates\dashboard\index.html:177
+#: .\templates\returns\return_detail.html:15
+msgid "Return"
+msgstr "ပြန်အပ်"
+
+#: .\templates\dashboard\index.html:183
+#: .\templates\reports\return_report.html:27
+msgid "No returns"
+msgstr "ပြန်အပ်မှုမရှိပါ"
+
+#: .\templates\dashboard\index.html:197
+msgid "Recent Stock Movements"
+msgstr "လတ်တလော ကုန်ပစ္စည်း လှုပ်ရှားမှုများ"
+
+#: .\templates\dashboard\index.html:226
+msgid "View All"
+msgstr "အားလုံးကြည့်ရန်"
+
+#: .\templates\dashboard\index.html:233
+msgid "Stock Balances (Top)"
+msgstr "လက်ကျန်စာရင်း (ထိပ်ဆုံး)"
+
+#: .\templates\dashboard\index.html:255
+msgid "No products"
+msgstr "ပစ္စည်းမရှိပါ"
+
+#: .\templates\dashboard\index.html:266
+msgid "Stock by Category"
+msgstr "အမျိုးအစားအလိုက် လက်ကျန်"
+
+#: .\templates\dashboard\index.html:273 .\templates\dashboard\index.html:281
+msgid "Total Stock"
+msgstr "စုစုပေါင်းလက်ကျန်"
+
+#: .\templates\dashboard\index.html:286
+msgid "No stock data"
+msgstr "လက်ကျန်အချက်အလက်မရှိပါ"
+
+#: .\templates\dashboard\index.html:300
+msgid "Expiring within 2 days (by shop)"
+msgstr "၂ ရက်အတွင်း သက်တမ်းကုန်မည် (ဆိုင်အလိုက်)"
+
+#: .\templates\dashboard\index.html:305
+msgid "Search product or shop"
+msgstr "ပစ္စည်း သို့မဟုတ် ဆိုင် ရှာပါ"
+
+#: .\templates\dashboard\index.html:314 .\templates\dashboard\index.html:326
+msgid "Remaining"
+msgstr "ကျန်ရှိ"
+
+#: .\templates\dashboard\index.html:315 .\templates\dashboard\index.html:327
+msgid "D-day"
+msgstr "ကျန်ရက်"
+
+#: .\templates\dashboard\index.html:329
+msgid "Days until expiry"
+msgstr "သက်တမ်းကုန်သည့်အထိ ရက်များ"
+
+#: .\templates\dashboard\index.html:335
+msgid "No expiring products"
+msgstr "သက်တမ်းကုန်မည့်ပစ္စည်းမရှိပါ"
+
+#: .\templates\includes\confirm_modal.html:7
+#| msgid "Confirm"
+msgid "Confirmation"
+msgstr "အတည်ပြုခြင်း"
+
+#: .\templates\includes\confirm_modal.html:11
+#| msgid "Are you sure you want to delete %(name)s?"
+msgid "Are you sure you want to proceed?"
+msgstr "ရှေ့ဆက်လုပ်ဆောင်မည်မှာ သေချာပါသလား?"
+
+#: .\templates\master_data\company_setting_form.html:4
+#: .\templates\master_data\company_setting_form.html:10
+#| msgid "Company setting"
+msgid "Company Setting"
+msgstr "ကုမ္ပဏီဆက်တင်း"
+
+#: .\templates\master_data\company_setting_form.html:20
+#| msgid "Company name"
+msgid "Company Profile"
+msgstr "ကုမ္ပဏီအချက်အလက်"
+
+#: .\templates\master_data\company_setting_form.html:21
+msgid "Manage your company information and preferences"
+msgstr "ကုမ္ပဏီအချက်အလက်များနှင့် ဦးစားပေးများကို စီမံခန့်ခွဲပါ"
+
+#: .\templates\master_data\company_setting_form.html:37
+#| msgid "Company name"
+msgid "Company Logo"
+msgstr "ကုမ္ပဏီလိုဂို"
+
+#: .\templates\master_data\company_setting_form.html:53
+msgid "Change Logo"
+msgstr "လိုဂိုပြောင်းမည်"
+
+#: .\templates\master_data\company_setting_form.html:57
+msgid "Recommended: Square PNG or JPG, max 2MB"
+msgstr "အကြံပြုချက်: စတုရန်းပုံ PNG သို့မဟုတ် JPG၊ အများဆုံး 2MB"
+
+#: .\templates\master_data\company_setting_form.html:63
+#| msgid "PO Information"
+msgid "Basic Information"
+msgstr "အခြေခံအချက်အလက်"
+
+#: .\templates\master_data\company_setting_form.html:69
+#| msgid "Company name"
+msgid "Company Name"
+msgstr "ကုမ္ပဏီအမည်"
+
+#: .\templates\master_data\company_setting_form.html:76
+#| msgid "Action"
+msgid "Location"
+msgstr "တည်နေရာ"
+
+#: .\templates\master_data\company_setting_form.html:129
+#| msgid "Address"
+msgid "Full Address"
+msgstr "လိပ်စာအပြည့်အစုံ"
+
+#: .\templates\master_data\company_setting_form.html:135
+#| msgid "Contact & Tax"
+msgid "Contact & Tax Details"
+msgstr "ဆက်သွယ်ရန်နှင့် အခွန်အချက်အလက်များ"
+
+#: .\templates\master_data\company_setting_form.html:141
+#| msgid "PO Number"
+msgid "Phone Number"
+msgstr "ဖုန်းနံပါတ်"
+
+#: .\templates\master_data\company_setting_form.html:148
+#| msgid "Address"
+msgid "Email Address"
+msgstr "အီးမေးလ်လိပ်စာ"
+
+#: .\templates\master_data\company_setting_form.html:155
+msgid "Tax Identification Number"
+msgstr "အခွန်မှတ်ပုံတင်နံပါတ်"
+
+#: .\templates\master_data\company_setting_form.html:162
+#| msgid "Footer text"
+msgid "Invoice Footer Text"
+msgstr "ဘောက်ချာ အောက်ခြေစာသား"
+
+#: .\templates\master_data\company_setting_form.html:164
+#| msgid "Text shown at bottom of invoice."
+msgid "This text will appear at the bottom of your invoices"
+msgstr "ဤစာသားသည် ဘောက်ချာများ၏ အောက်ခြေတွင် ပေါ်နေပါမည်"
+
+#: .\templates\master_data\company_setting_form.html:170
+msgid "System Configuration"
+msgstr "စနစ် ပြင်ဆင်သတ်မှတ်ချက်"
+
+#: .\templates\master_data\company_setting_form.html:176
+#| msgid "Base currency"
+msgid "Base Currency"
+msgstr "အခြေခံငွေကြေး"
+
+#: .\templates\master_data\company_setting_form.html:177
+msgid "The default currency used for all system transactions and reporting."
+msgstr "စနစ်တစ်ခုလုံး၏ အရောင်းအဝယ်များနှင့် အစီရင်ခံစာများအတွက် သုံးမည့် အခြေခံငွေကြေး။"
+
+#: .\templates\master_data\company_setting_form.html:190
+msgid "Cannot change: transactional data exists (orders, products, etc.)."
+msgstr "ပြောင်းလဲ၍မရပါ - အရောင်းအဝယ်ဒေတာများ ရှိနေသည် (အမှာစာများ၊ ပစ္စည်းများ စသည်)။"
+
+#: .\templates\master_data\company_setting_form.html:204
+#| msgid "What Changed"
+msgid "Save Changes"
+msgstr "ပြောင်းလဲမှုများကို သိမ်းဆည်းမည်"
+
+#: .\templates\orders\create.html:34
+msgid "Stock will be deducted on delivery"
+msgstr "ပစ္စည်းပို့ဆောင်ချိန်တွင် လက်ကျန်ဖြတ်ပါမည်"
+
+#: .\templates\orders\create.html:45 .\templates\orders\order_form.html:55
+msgid "Loading prices..."
+msgstr "ဈေးနှုန်းများ တွက်ချက်နေသည်..."
+
+#: .\templates\orders\create.html:46
+msgid "Select customer first to see customer-type prices."
+msgstr "ဖောက်သည်အမျိုးအစားဈေးများ ကြည့်ရန် ဖောက်သည်ကို ဦးစွာရွေးချယ်ပါ။"
+
+#: .\templates\orders\create.html:52
+#: .\templates\reports\audit_log_report.html:29
+#: .\templates\reports\audit_log_report.html:51
+#: .\templates\reports\audit_log_report.html:81
+#: .\templates\reports\audit_log_report.html:118
+#: .\templates\reports\audit_log_report.html:127
+#: .\templates\returns\return_detail.html:100
+msgid "Action"
+msgstr "လုပ်ဆောင်ချက်"
+
+#: .\templates\orders\create.html:82
+msgid "Discount Amount"
+msgstr "လျှော့ဈေးပမာဏ"
+
+#: .\templates\orders\invoice.html:155
+#: .\templates\orders\payment_voucher.html:188
+msgid "Print"
+msgstr "ပရင့်ထုတ်မည်"
+
+#: .\templates\orders\invoice.html:158 .\templates\orders\order_detail.html:88
+#: .\templates\orders\payment_voucher.html:191
+msgid "Download PDF"
+msgstr "PDF ဒေါင်းလုဒ်မည်"
+
+#: .\templates\orders\invoice.html:161
+#: .\templates\orders\payment_voucher.html:194
+msgid "Back to Order"
+msgstr "အမှာစာသို့ ပြန်မည်"
+
+#: .\templates\orders\invoice.html:180
+msgid "INVOICE"
+msgstr "ကုန်ကျစရိတ်တောင်းခံလွှာ"
+
+#: .\templates\orders\invoice.html:186
+msgid "Invoice No"
+msgstr "တောင်းခံလွှာအမှတ်"
+
+#: .\templates\orders\invoice.html:192
+msgid "Delivery"
+msgstr "ပို့ဆောင်မှု"
+
+#: .\templates\orders\invoice.html:199
+msgid "Bill To"
+msgstr "ငွေတောင်းခံရမည့်သူ"
+
+#: .\templates\orders\invoice.html:243
+msgid "Delivery Fee"
+msgstr "ပို့ဆောင်ခ"
+
+#: .\templates\orders\invoice.html:248
+msgid "TOTAL"
+msgstr "စုစုပေါင်း"
+
+#: .\templates\orders\invoice.html:259
+#: .\templates\orders\payment_voucher.html:268
+msgid "Received By"
+msgstr "လက်ခံသူ"
+
+#: .\templates\orders\invoice.html:264
+#: .\templates\orders\payment_voucher.html:273
+msgid "Authorized By"
+msgstr "ခွင့်ပြုသူ"
+
+#: .\templates\orders\invoice.html:270
+#: .\templates\orders\payment_voucher.html:279
+msgid "Thank you for your business!"
+msgstr "အားပေးမှုကို ကျေးဇူးတင်ရှိပါသည်။"
+
+#: .\templates\orders\order_detail.html:17
+#: .\templates\orders\order_list.html:28
+#: .\templates\reports\outstanding_payments.html:95
+msgid "Paid"
+msgstr "ငွေချေပြီး"
+
+#: .\templates\orders\order_detail.html:37
+msgid "Deliver"
+msgstr "ပို့ဆောင်မည်"
+
+#: .\templates\orders\order_detail.html:49
+#| msgid ""
+#| "Are you sure you want to restore this backup? This action cannot be "
+#| "undone."
+msgid ""
+"Are you sure you want to cancel this order? This action cannot be undone."
+msgstr "ဤအမှာစာကို ပယ်ဖျက်မည်မှာ သေချာပါသလား? ဤလုပ်ဆောင်ချက်ကို ပြန်ပြင်၍မရပါ။"
+
+#: .\templates\orders\order_detail.html:50
+#| msgid "Confirm Backup Creation"
+msgid "Confirm Cancellation"
+msgstr "ပယ်ဖျက်မှု အတည်ပြုမည်"
+
+#: .\templates\orders\order_detail.html:52
+#| msgid "Create Order"
+msgid "Cancel Order"
+msgstr "အမှာစာ ပယ်ဖျက်မည်"
+
+#: .\templates\orders\order_detail.html:79
+#: .\templates\orders\payment_voucher.html:224
+#: .\templates\reports\payment_report.html:95
+msgid "Method"
+msgstr "နည်းလမ်း"
+
+#: .\templates\orders\order_detail.html:87
+msgid "Voucher"
+msgstr "ဖြတ်ပိုင်း"
+
+#: .\templates\orders\order_detail.html:92
+msgid "No payments"
+msgstr "ငွေပေးချေမှုမရှိပါ"
+
+#: .\templates\orders\order_form.html:32
+msgid "Order is delivered/paid. Only notes and delivery date can be edited."
+msgstr "အမှာစာ ပို့ဆောင်ပြီး/ငွေချေပြီး ဖြစ်သည်။ မှတ်ချက်နှင့် ပို့ဆောင်ရက်ကိုသာ ပြင်ဆင်နိုင်သည်။"
+
+#: .\templates\orders\order_form.html:44
+msgid "Delivery Date"
+msgstr "ပို့ဆောင်ရက်"
+
+#: .\templates\orders\order_form.html:67
+msgid "Total Price"
+msgstr "စုစုပေါင်းဈေးနှုန်း"
+
+#: .\templates\orders\order_form.html:109
+msgid "Available"
+msgstr "ရရှိနိုင်မှု"
+
+#: .\templates\orders\order_list.html:26
+msgid "Confirmed"
+msgstr "အတည်ပြုပြီး"
+
+#: .\templates\orders\order_list.html:27
+msgid "Delivered"
+msgstr "ပို့ဆောင်ပြီး"
+
+#: .\templates\orders\order_list.html:29
+msgid "Cancelled"
+msgstr "ပယ်ဖျက်ပြီး"
+
+#: .\templates\orders\order_list.html:50
+#: .\templates\returns\return_list.html:35
+msgid "From"
+msgstr "မှ"
+
+#: .\templates\orders\order_list.html:54
+#: .\templates\returns\return_list.html:39
+msgid "To"
+msgstr "အထိ"
+
+#: .\templates\orders\order_list.html:89
+msgid "Create your first order"
+msgstr "ပထမဆုံးအမှာစာ ဖန်တီးပါ"
+
+#: .\templates\orders\order_payment.html:28
+msgid "Please correct the errors below."
+msgstr "အောက်ပါအမှားများကို ပြင်ဆင်ပါ။"
+
+#: .\templates\orders\payment_voucher.html:219
+msgid "Voucher No"
+msgstr "ဖြတ်ပိုင်းအမှတ်"
+
+#: .\templates\orders\payment_voucher.html:223
+msgid "Ref No"
+msgstr "ရည်ညွှန်းအမှတ်"
+
+#: .\templates\orders\payment_voucher.html:231
+msgid "Customer Details"
+msgstr "ဖောက်သည်အသေးစိတ်"
+
+#: .\templates\orders\payment_voucher.html:242
+msgid "Order Details"
+msgstr "အမှာစာအသေးစိတ်"
+
+#: .\templates\orders\payment_voucher.html:244
+msgid "Order No"
+msgstr "အမှာစာအမှတ်"
+
+#: .\templates\orders\payment_voucher.html:248
+msgid "Order Total"
+msgstr "အမှာစာစုစုပေါင်း"
+
+#: .\templates\orders\payment_voucher.html:256
+msgid "Amount Received"
+msgstr "ရရှိငွေပမာဏ"
+
+#: .\templates\registration\login.html:11
+#: .\templates\registration\login.html:26
+msgid "Login"
+msgstr "ဝင်ရောက်မည်"
+
+#: .\templates\registration\login.html:19
+msgid "Username"
+msgstr "အသုံးပြုသူအမည်"
+
+#: .\templates\registration\login.html:23
+msgid "Password"
+msgstr "စကားဝှက်"
+
+#: .\templates\registration\login.html:28
+msgid "Admin Login"
+msgstr "စီမံခန့်ခွဲမှု ဝင်ရောက်မှု"
+
+#: .\templates\reports\audit_log_report.html:8
+#: .\templates\reports\audit_log_report.html:14
+msgid "Audit Log Report"
+msgstr "မှတ်တမ်းစစ်ဆေးချက် အစီရင်ခံစာ"
+
+#: .\templates\reports\audit_log_report.html:15
+#: .\templates\reports\outstanding_payments.html:16
+#: .\templates\reports\payment_by_customer.html:16
+#: .\templates\reports\payment_report.html:16
+#: .\templates\reports\profit_analysis.html:16
+#: .\templates\reports\purchase_vs_sales.html:16
+#: .\templates\reports\return_report.html:15
+#: .\templates\reports\sales_report.html:16
+msgid "Back to Reports"
+msgstr "အစီရင်ခံစာများသို့ ပြန်မည်"
+
+#: .\templates\reports\audit_log_report.html:38
+#: .\templates\reports\audit_log_report.html:52
+#: .\templates\reports\audit_log_report.html:83
+#: .\templates\reports\audit_log_report.html:119
+#: .\templates\reports\audit_log_report.html:128
+msgid "Module"
+msgstr "မော်ဂျူး"
+
+#: .\templates\reports\audit_log_report.html:47
+msgid "Group By"
+msgstr "အုပ်စုဖွဲ့မည်"
+
+#: .\templates\reports\audit_log_report.html:49
+msgid "None"
+msgstr "မရှိ"
+
+#: .\templates\reports\audit_log_report.html:64
+msgid "Export CSV"
+msgstr "CSV ထုတ်မည်"
+
+#: .\templates\reports\audit_log_report.html:67
+msgid "Export Excel"
+msgstr "Excel ထုတ်မည်"
+
+#: .\templates\reports\audit_log_report.html:73
+msgid "Grouped"
+msgstr "အုပ်စုဖွဲ့ပြီး"
+
+#: .\templates\reports\audit_log_report.html:85
+#: .\templates\reports\return_report.html:17
+msgid "Count"
+msgstr "အရေအတွက်"
+
+#: .\templates\reports\audit_log_report.html:110
+msgid "Log Details"
+msgstr "မှတ်တမ်းအသေးစိတ်"
+
+#: .\templates\reports\audit_log_report.html:119
+#: .\templates\reports\audit_log_report.html:128
+msgid "What Changed"
+msgstr "ပြောင်းလဲချက်"
+
+#: .\templates\reports\audit_log_report.html:137
+msgid "No audit logs found."
+msgstr "မှတ်တမ်းစစ်ဆေးချက် မတွေ့ပါ။"
+
+#: .\templates\reports\outstanding_payments.html:23
+#: .\templates\reports\payment_by_customer.html:23
+#: .\templates\reports\payment_report.html:23
+msgid "From Date"
+msgstr "မှရက်"
+
+#: .\templates\reports\outstanding_payments.html:27
+#: .\templates\reports\payment_by_customer.html:27
+#: .\templates\reports\payment_report.html:27
+msgid "To Date"
+msgstr "အထိရက်"
+
+#: .\templates\reports\outstanding_payments.html:33
+msgid "All Customers"
+msgstr "ဖောက်သည်အားလုံး"
+
+#: .\templates\reports\outstanding_payments.html:43
+#: .\templates\reports\report_index.html:95
+msgid "CSV"
+msgstr "CSV"
+
+#: .\templates\reports\outstanding_payments.html:45
+#: .\templates\reports\report_index.html:95
+msgid "Excel"
+msgstr "Excel"
+
+#: .\templates\reports\outstanding_payments.html:54
+msgid "Outstanding by Customer"
+msgstr "ဖောက်သည်အလိုက် ကျန်ငွေ"
+
+#: .\templates\reports\outstanding_payments.html:63
+msgid "Total Due"
+msgstr "စုစုပေါင်းကျန်ငွေ"
+
+#: .\templates\reports\outstanding_payments.html:75
+msgid "No outstanding"
+msgstr "ကျန်ငွေမရှိပါ"
+
+#: .\templates\reports\outstanding_payments.html:85
+msgid "Orders with Balance Due"
+msgstr "ကျန်ငွေရှိသော အမှာစာများ"
+
+#: .\templates\reports\outstanding_payments.html:96
+msgid "Balance Due"
+msgstr "ကျန်ငွေ"
+
+#: .\templates\reports\outstanding_payments.html:116
+msgid "No outstanding orders"
+msgstr "ကျန်ငွေရှိသော အမှာစာမရှိပါ"
+
+#: .\templates\reports\payment_by_customer.html:39
+msgid "Total Payments by Customer"
+msgstr "ဖောက်သည်အလိုက် စုစုပေါင်းငွေပေးချေမှု"
+
+#: .\templates\reports\payment_by_customer.html:48
+msgid "Total Paid"
+msgstr "စုစုပေါင်းပေးပြီး"
+
+#: .\templates\reports\payment_by_customer.html:60
+#: .\templates\reports\payment_report.html:129
+msgid "No payments found"
+msgstr "ငွေပေးချေမှုမရှိပါ"
+
+#: .\templates\reports\payment_report.html:33
+msgid "All Methods"
+msgstr "နည်းလမ်းအားလုံး"
+
+#: .\templates\reports\payment_report.html:44
+#: .\templates\reports\report_index.html:39
+#: .\templates\reports\report_index.html:49
+#: .\templates\reports\report_index.html:86
+msgid "Export"
+msgstr "ထုတ်မည်"
+
+#: .\templates\reports\payment_report.html:56
+msgid "Total Payments"
+msgstr "စုစုပေါင်းငွေပေးချေမှု"
+
+#: .\templates\reports\payment_report.html:58
+msgid "transactions"
+msgstr "ငွေချေမှုများ"
+
+#: .\templates\reports\payment_report.html:64
+msgid "By Payment Method"
+msgstr "ငွေပေးချေမှုနည်းလမ်းအလိုက်"
+
+#: .\templates\reports\payment_report.html:72
+msgid "txns"
+msgstr "ငွေချေမှု"
+
+#: .\templates\reports\payment_report.html:84
+msgid "Payment Records"
+msgstr "ငွေပေးချေမှုမှတ်တမ်းများ"
+
+#: .\templates\reports\payment_report.html:90
+msgid "Voucher #"
+msgstr "ငွေလက်ခံဖြတ်ပိုင်းအမှတ်"
+
+#: .\templates\reports\profit_analysis.html:23
+#: .\templates\reports\purchase_vs_sales.html:23
+msgid "Year"
+msgstr "နှစ်"
+
+#: .\templates\reports\profit_analysis.html:38
+#: .\templates\reports\profit_analysis.html:77
+#: .\templates\reports\purchase_vs_sales.html:47
+msgid "Sales Revenue"
+msgstr "ရောင်းချမှုဝင်ငွေ"
+
+#: .\templates\reports\profit_analysis.html:46
+#: .\templates\reports\profit_analysis.html:81
+#: .\templates\reports\purchase_vs_sales.html:56
+msgid "Purchase Costs"
+msgstr "ဝယ်ယူမှုကုန်ကျစရိတ်"
+
+#: .\templates\reports\profit_analysis.html:54
+#: .\templates\reports\profit_analysis.html:89
+msgid "Operating Expenses"
+msgstr "လည်ပတ်အသုံးစရိတ်"
+
+#: .\templates\reports\profit_analysis.html:62
+#: .\templates\reports\profit_analysis.html:93
+msgid "Net Profit"
+msgstr "အသားတင်အမြတ်"
+
+#: .\templates\reports\profit_analysis.html:72
+msgid "Profit Breakdown"
+msgstr "အမြတ်ခွဲခြမ်းစိတ်ဖြာမှု"
+
+#: .\templates\reports\profit_analysis.html:85
+msgid "Gross Profit"
+msgstr "အမြတ်ခ"
+
+#: .\templates\reports\profit_analysis.html:97
+#, python-format
+msgid "Net Margin %%"
+msgstr "အသားတင်အမြတ် %%"
+
+#: .\templates\reports\profit_analysis.html:107
+msgid "Monthly Breakdown"
+msgstr "လစဉ်ခွဲခြမ်းစိတ်ဖြာမှု"
+
+#: .\templates\reports\profit_analysis.html:115
+msgid "Profit"
+msgstr "အမြတ်"
+
+#: .\templates\reports\purchase_vs_sales.html:27
+msgid "Month (Optional)"
+msgstr "လ (ရွေးချယ်နိုင်သည်)"
+
+#: .\templates\reports\purchase_vs_sales.html:29
+msgid "All Months"
+msgstr "လအားလုံး"
+
+#: .\templates\reports\purchase_vs_sales.html:65
+#: .\templates\reports\purchase_vs_sales.html:94
+msgid "Gross Margin"
+msgstr "အမြတ်နှုန်း"
+
+#: .\templates\reports\purchase_vs_sales.html:75
+msgid "Comparison"
+msgstr "နှိုင်းယှဉ်ချက်"
+
+#: .\templates\reports\purchase_vs_sales.html:80
+msgid "Metric"
+msgstr "အတိုင်းအတာ"
+
+#: .\templates\reports\purchase_vs_sales.html:86
+msgid "Total Sales Revenue"
+msgstr "စုစုပေါင်းရောင်းချမှုဝင်ငွေ"
+
+#: .\templates\reports\purchase_vs_sales.html:90
+msgid "Total Purchase Costs"
+msgstr "စုစုပေါင်းကုန်ကျစရိတ်"
+
+#: .\templates\reports\purchase_vs_sales.html:98
+#, python-format
+msgid "Margin %%"
+msgstr "အမြတ် %%"
+
+#: .\templates\reports\report_index.html:19
+msgid "Sales by period (daily/weekly/monthly)"
+msgstr "ကာလအလိုက် ရောင်းချမှု (နေ့စဉ်/အပတ်စဉ်/လစဉ်)"
+
+#: .\templates\reports\report_index.html:28
+msgid "Return analysis by product and reason"
+msgstr "ပစ္စည်းနှင့် အကြောင်းအရာအလိုက် ပြန်အပ်မှု ခွဲခြမ်းစိတ်ဖြာမှု"
+
+#: .\templates\reports\report_index.html:37
+msgid "Payments by date and method"
+msgstr "ရက်စွဲနှင့် နည်းလမ်းအလိုက် ငွေပေးချေမှုများ"
+
+#: .\templates\reports\report_index.html:47
+msgid "Orders/customers with balance due"
+msgstr "ကျန်ငွေရှိသော အမှာစာ/ဖောက်သည်များ"
+
+#: .\templates\reports\report_index.html:57
+msgid "Total payments per customer"
+msgstr "ဖောက်သည်တစ်ဦးချင်း စုစုပေါင်းငွေပေးချေမှု"
+
+#: .\templates\reports\report_index.html:66
+msgid "Compare purchases and sales"
+msgstr "ဝယ်ယူမှုနှင့် ရောင်းချမှုကို နှိုင်းယှဉ်ပါ"
+
+#: .\templates\reports\report_index.html:75
+msgid "Net profit calculation"
+msgstr "အသားတင်အမြတ် တွက်ချက်မှု"
+
+#: .\templates\reports\report_index.html:84
+msgid "Activity log with filters and export"
+msgstr "စစ်ထုတ်ချက်များနှင့် ထုတ်ယူမှုပါ လုပ်ဆောင်မှုမှတ်တမ်း"
+
+#: .\templates\reports\report_index.html:92
+msgid "Data Export"
+msgstr "ဒေတာထုတ်ယူမှု"
+
+#: .\templates\reports\report_index.html:93
+msgid "Export data to CSV or Excel format."
+msgstr "ဒေတာကို CSV သို့မဟုတ် Excel ဖော်မတ်ဖြင့် ထုတ်ယူပါ။"
+
+#: .\templates\reports\report_index.html:95
+msgid "Data"
+msgstr "ဒေတာ"
+
+#: .\templates\reports\report_index.html:99
+#: .\templates\reports\report_index.html:104
+#: .\templates\reports\report_index.html:109
+#: .\templates\reports\report_index.html:114
+msgid "Download CSV"
+msgstr "CSV ဒေါင်းလုဒ်မည်"
+
+#: .\templates\reports\report_index.html:100
+#: .\templates\reports\report_index.html:105
+#: .\templates\reports\report_index.html:110
+#: .\templates\reports\report_index.html:115
+msgid "Download Excel"
+msgstr "Excel ဒေါင်းလုဒ်မည်"
+
+#: .\templates\reports\return_report.html:17
+#: .\templates\returns\return_detail.html:77
+#: .\templates\returns\return_form_items.html:34
+msgid "Reason"
+msgstr "အကြောင်းအရာ"
+
+#: .\templates\reports\return_report.html:17
+msgid "Total Qty"
+msgstr "စုစုပေါင်းအရေအတွက်"
+
+#: .\templates\reports\sales_report.html:23
+msgid "Period"
+msgstr "ကာလ"
+
+#: .\templates\reports\sales_report.html:25
+msgid "Today"
+msgstr "ယနေ့"
+
+#: .\templates\reports\sales_report.html:26
+msgid "Last 7 Days"
+msgstr "နောက်ဆုံး ၇ ရက်"
+
+#: .\templates\reports\sales_report.html:27
+msgid "Last 30 Days"
+msgstr "နောက်ဆုံး ၃၀ ရက်"
+
+#: .\templates\reports\sales_report.html:42
+msgid "Total Sales"
+msgstr "စုစုပေါင်းရောင်းချမှု"
+
+#: .\templates\reports\sales_report.html:50
+msgid "Order Count"
+msgstr "အမှာစာအရေအတွက်"
+
+#: .\templates\reports\sales_report.html:60
+msgid "Orders in Period"
+msgstr "ကာလအတွင်း အမှာစာများ"
+
+#: .\templates\reports\sales_report.html:84
+msgid "No paid orders in this period."
+msgstr "ဤကာလအတွင်း ငွေပေးပြီးသော အမှာစာမရှိပါ။"
+
+#: .\templates\returns\return_detail.html:29
+msgid ""
+"Are you sure you want to approve this return? Stock will be updated based on "
+"item selection."
+msgstr ""
+"ဤပြန်အပ်မှုကို အတည်ပြုမည်မှာ သေချာပါသလား? ရွေးချယ်ထားသော ပစ္စည်းများအပေါ် မူတည်၍ လက်ကျန်စာရင်းကို "
+"ပြင်ဆင်သွားပါမည်။"
+
+#: .\templates\returns\return_detail.html:31
+#| msgid "Confirm"
+msgid "Confirm Approval"
+msgstr "အတည်ပြုချက်ပေးရန် သေချာပါသလား"
+
+#: .\templates\returns\return_detail.html:34
+#: .\templates\returns\return_detail.html:35
+msgid "Approve"
+msgstr "ခွင့်ပြုမည်"
+
+#: .\templates\returns\return_detail.html:41
+msgid "Are you sure you want to reject this return?"
+msgstr "ဤပြန်အပ်မှုကို ငြင်းပယ်မည်မှာ သေချာပါသလား?"
+
+#: .\templates\returns\return_detail.html:43
+#| msgid "Confirm Return"
+msgid "Confirm Rejection"
+msgstr "ငြင်းပယ်ရန် သေချာပါသလား"
+
+#: .\templates\returns\return_detail.html:46
+#: .\templates\returns\return_detail.html:47
+msgid "Reject"
+msgstr "ငြင်းပယ်မည်"
+
+#: .\templates\returns\return_detail.html:57
+msgid "Create a replacement order with 0 price?"
+msgstr "တန်ဖိုး ၀ (သုည) ဖြင့် အစားထိုးအမှာစာအသစ် ဖန်တီးမည်လား?"
+
+#: .\templates\returns\return_detail.html:59
+#| msgid "Replacement"
+msgid "Confirm Replacement"
+msgstr "အစားထိုးရန် သေချာပါသလား"
+
+#: .\templates\returns\return_detail.html:63
+msgid "Create Replacement Order"
+msgstr "အစားထိုးအမှာစာ ဖန်တီးမည်"
+
+#: .\templates\returns\return_detail.html:68
+msgid "View Replacement Order"
+msgstr "အစားထိုးအမှာစာ ကြည့်မည်"
+
+#: .\templates\returns\return_detail.html:77
+#: .\templates\returns\return_form_items.html:35
+msgid "Restock"
+msgstr "ပြန်လည်ဖြည့်တင်းမည်"
+
+#: .\templates\returns\return_detail.html:97
+msgid "Processing Log"
+msgstr "လုပ်ဆောင်မှုမှတ်တမ်း"
+
+#: .\templates\returns\return_detail.html:100
+msgid "By"
+msgstr "ပြုလုပ်သူ"
+
+#: .\templates\returns\return_detail.html:110
+msgid "No log"
+msgstr "မှတ်တမ်းမရှိပါ"
+
+#: .\templates\returns\return_form.html:8
+#: .\templates\returns\return_form_items.html:8
+#: .\templates\returns\return_form_items.html:72
+#: .\templates\returns\return_list.html:15
+msgid "Create Return"
+msgstr "ပြန်လည်ပေးအပ်မှု ဖန်တီးမည်"
+
+#: .\templates\returns\return_form.html:14
+msgid "Create Return - Select Order"
+msgstr "ပြန်အပ်မှု ဖန်တီးမည် - အမှာစာရွေးချယ်ပါ"
+
+#: .\templates\returns\return_form.html:18
+msgid "Select Order"
+msgstr "အမှာစာ ရွေးချယ်ပါ"
+
+#: .\templates\returns\return_form.html:21
+msgid "Only orders delivered within the return window are shown."
+msgstr "ပြန်အပ်ချိန်အတွင်း ပို့ဆောင်ပြီးသော အမှာစာများကိုသာ ပြသပါသည်။"
+
+#: .\templates\returns\return_form.html:23
+msgid "Next: Select Items"
+msgstr "နောက်တစ်ဆင့် - ပစ္စည်းများ ရွေးချယ်ပါ"
+
+#: .\templates\returns\return_form.html:27
+msgid "No eligible orders for return."
+msgstr "ပြန်အပ်ရန် သင့်လျော်သော အမှာစာမရှိပါ။"
+
+#: .\templates\returns\return_form_items.html:9
+msgid "Select Items"
+msgstr "ပစ္စည်းများ ရွေးချယ်ပါ"
+
+#: .\templates\returns\return_form_items.html:15
+msgid "Create Return - Select Items"
+msgstr "ပြန်အပ်မှု ဖန်တီးမည် - ပစ္စည်းများ ရွေးချယ်ပါ"
+
+#: .\templates\returns\return_form_items.html:21
+msgid "Return Type"
+msgstr "ပြန်အပ်မှုအမျိုးအစား"
+
+#: .\templates\returns\return_form_items.html:26
+msgid "Items to Return"
+msgstr "ပြန်အပ်မည့် ပစ္စည်းများ"
+
+#: .\templates\returns\return_form_items.html:33
+msgid "Return Qty"
+msgstr "ပြန်အပ်မှု အရေအတွက်"
+
+#: .\templates\returns\return_form_items.html:36
+msgid "Condition Notes"
+msgstr "အခြေအနေမှတ်ချက်"
+
+#: .\templates\returns\return_form_items.html:43
+msgid "Fully returned"
+msgstr "အပြည့်အဝပြန်အပ်ပြီး"
+
+#: .\templates\returns\return_form_items.html:73
+msgid "Back"
+msgstr "ပြန်မည်"
+
+#: .\templates\returns\return_list.html:22
+msgid "Return #, Order, Customer..."
+msgstr "ပြန်အပ်မှု #၊ အမှာစာ၊ ဖောက်သည်..."
+
+#: .\templates\returns\return_list.html:29
+msgid "Approved"
+msgstr "ခွင့်ပြုပြီး"
+
+#: .\templates\returns\return_list.html:30
+msgid "Rejected"
+msgstr "ငြင်းပယ်ပြီး"
+
+#: .\templates\returns\return_list.html:31
+msgid "Completed"
+msgstr "ပြီးပါပြီ"
+
+#: .\templates\returns\return_list.html:51
+msgid "Return #"
+msgstr "ပြန်အပ်မှု #"
+
+#: .\templates\returns\return_list.html:72
+msgid "No returns yet."
+msgstr "ပြန်အပ်မှုမရှိသေးပါ။"
+
+#: .\templates\returns\return_list.html:73
+msgid "Create your first return"
+msgstr "ပထမဆုံးပြန်အပ်မှု ဖန်တီးပါ"
+
+#, fuzzy
+#~| msgid "Backup File"
+#~ msgid "Static Files"
+#~ msgstr "Backup ဖိုင်"
+
+#, fuzzy
+#~| msgid "Order number"
+#~ msgid "Enter a number."
+#~ msgstr "အမှာစာအမှတ်"
+
+#, fuzzy
+#~| msgid "This action cannot be undone."
+#~ msgid "This field cannot be null."
+#~ msgstr "ဤလုပ်ဆောင်ချက်ကို ပြန်ပြင်၍မရပါ။"
+
+#, fuzzy
+#~| msgid "This action cannot be undone."
+#~ msgid "This field cannot be blank."
+#~ msgstr "ဤလုပ်ဆောင်ချက်ကို ပြန်ပြင်၍မရပါ။"
+
+#, fuzzy
+#~| msgid "Order number"
+#~ msgid "Decimal number"
+#~ msgstr "အမှာစာအမှတ်"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Duration"
+#~ msgstr "ဖော်ပြချက်"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Email address"
+#~ msgstr "လိပ်စာ"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "IPv4 address"
+#~ msgstr "လိပ်စာ"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "IP address"
+#~ msgstr "လိပ်စာ"
+
+#, fuzzy
+#~| msgid "Filename"
+#~ msgid "File"
+#~ msgstr "ဖိုင်အမည်"
+
+#, fuzzy
+#~| msgid "No file selected."
+#~ msgid "No file was submitted."
+#~ msgstr "မည်သည့်ဖိုင်မှ ရွေးချယ်ထားခြင်းမရှိပါ။"
+
+#, fuzzy, python-format
+#~| msgid "Please add at least one item"
+#~ msgid "Please submit at least %(num)d form."
+#~ msgid_plural "Please submit at least %(num)d forms."
+#~ msgstr[0] "ပစ္စည်းအနည်းဆုံး တစ်ခု ထည့်ပါ။"
+#~ msgstr[1] "ပစ္စည်းအနည်းဆုံး တစ်ခု ထည့်ပါ။"
+
+#, fuzzy, python-format
+#~| msgid "Please correct the errors below."
+#~ msgid "Please correct the duplicate data for %(field)s."
+#~ msgstr "အောက်ပါအမှားများကို ပြင်ဆင်ပါ။"
+
+#, fuzzy
+#~| msgid "Please correct the errors below."
+#~ msgid "Please correct the duplicate values below."
+#~ msgstr "အောက်ပါအမှားများကို ပြင်ဆင်ပါ။"
+
+#, fuzzy
+#~| msgid "Currency"
+#~ msgid "Currently"
+#~ msgstr "ငွေကြေး"
+
+#, fuzzy
+#~| msgid "What Changed"
+#~ msgid "Change"
+#~ msgstr "ပြောင်းလဲချက်"
+
+#, fuzzy
+#~| msgid "None"
+#~ msgid "No"
+#~ msgstr "မရှိ"
+
+#, fuzzy
+#~| msgid "Month"
+#~ msgid "Mon"
+#~ msgstr "လ"
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "Sat"
+#~ msgstr "အခြေအနေ"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "March"
+#~ msgstr "ရှာမည်"
+
+#, fuzzy
+#~| msgid "No movements"
+#~ msgid "November"
+#~ msgstr "ရွေ့လျားမှုမရှိပါ"
+
+#, fuzzy
+#~| msgid "Myanmar"
+#~ msgid "mar"
+#~ msgstr "မြန်မာ"
+
+#, fuzzy
+#~| msgid "Summary"
+#~ msgid "may"
+#~ msgstr "အကျဉ်းချုပ်"
+
+#, fuzzy
+#~| msgid "Product"
+#~ msgid "oct"
+#~ msgstr "ကုန်ပစ္စည်း"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgctxt "abbrev. month"
+#~ msgid "March"
+#~ msgstr "ရှာမည်"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgctxt "alt. month"
+#~ msgid "March"
+#~ msgstr "ရှာမည်"
+
+#, fuzzy
+#~| msgid "No movements"
+#~ msgctxt "alt. month"
+#~ msgid "November"
+#~ msgstr "ရွေ့လျားမှုမရှိပါ"
+
+#, fuzzy
+#~| msgid "Core"
+#~ msgid "or"
+#~ msgstr "အခြေခံ"
+
+#, fuzzy
+#~| msgid "Django administration"
+#~ msgid "Django Documentation"
+#~ msgstr "Django စီမံခန့်ခွဲမှု"
+
+#~ msgid "Affects invoices, reports, dashboard."
+#~ msgstr "ကုန်ကျစရိတ်တောင်းခံလွှာများ၊ အစီရင်ခံစာများ၊ ဒက်ရှ်ဘုတ်တို့ကို သက်ရောက်မှုရှိသည်။"
+
+#~ msgid "Base currency for the whole system (invoices, reports, dashboard)."
+#~ msgstr "စနစ်တစ်ခုလုံးအတွက် အခြေခံငွေကြေး (ကုန်ကျစရိတ်တောင်းခံလွှာများ၊ အစီရင်ခံစာများ၊ ဒက်ရှ်ဘုတ်)။"
+
+#~ msgid "Cancel?"
+#~ msgstr "ပယ်ဖျက်မည်လား?"
+
+#~ msgid "Email"
+#~ msgstr "အီးမေးလ်"
+
+#~ msgid "Logo"
+#~ msgstr "လိုဂို"
+
+#~ msgid "No regions. Add in Admin → Master Data."
+#~ msgstr "တိုင်းဒေသကြီးမရှိပါ။ Admin → Master Data တွင် ထည့်ပါ။"
+
+#~ msgid ""
+#~ "Optional. Upload company logo for invoices. Preview shown before save."
+#~ msgstr ""
+#~ "မဖြစ်မနေမဟုတ်ပါ။ ကုန်ကျစရိတ်တောင်းခံလွှာများအတွက် ကုမ္ပဏီလိုဂို တင်ပါ။ မသိမ်းဆည်းမီ နမူနာကြည့်နိုင်သည်။"
+
+#~ msgid "Please select an item in the list."
+#~ msgstr "စာရင်းမှ အမှာစာတစ်ခု ရွေးချယ်ပါ။"
+
+#~ msgid "Tax ID"
+#~ msgstr "အခွန်ကောက်ခံမှုနံပါတ်"
+
+#~ msgid "Tax registration number for invoices."
+#~ msgstr "ကုန်ကျစရိတ်တောင်းခံလွှာများအတွက် အခွန်မှတ်ပုံတင်နံပါတ်။"

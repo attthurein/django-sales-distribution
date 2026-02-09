@@ -2,22 +2,28 @@
 Master Data forms.
 """
 from django import forms
-from .models import CompanySetting, Township, Currency
+from django.utils.translation import gettext_lazy as _
+from .models import CompanySetting, Township, Currency, Region, Country
 from .utils import has_transactional_data
-from common.utils import get_regions_with_townships
+from common.utils import get_regions_with_townships, get_countries_with_regions
 
 
 class CompanySettingForm(forms.ModelForm):
     """Form for company settings (singleton)."""
+    country_id = forms.ChoiceField(
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-select', 'id': 'id_country'}),
+        label=_('Country'),
+    )
     region_id = forms.ChoiceField(
         required=False,
         widget=forms.Select(attrs={'class': 'form-select', 'id': 'id_region'}),
-        label='Region',
+        label=_('Region'),
     )
     township = forms.ChoiceField(
         required=False,
         widget=forms.Select(attrs={'class': 'form-select', 'id': 'id_township'}),
-        label='Township',
+        label=_('Township'),
     )
 
     class Meta:
@@ -47,23 +53,36 @@ class CompanySettingForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields.pop('region', None)
         self.fields.pop('township', None)
-        regions = get_regions_with_townships()
+        countries = get_countries_with_regions()
 
-        region_choices = [('', '---')] + [
-            (str(r.id), r.name_en) for r in regions
+        country_choices = [('', '---')] + [
+            (str(c.id), c.name) for c in countries
         ]
+        
+        region_choices = [('', '---')]
         township_choices = [('', '---')]
-        for region in regions:
-            for t in region.townships.all():
-                township_choices.append((str(t.id), t.name_en))
+        
+        for country in countries:
+            for region in country.regions.all():
+                region_choices.append((str(region.id), region.name))
+                for t in region.townships.all():
+                    township_choices.append((str(t.id), t.name))
 
+        self.fields['country_id'] = forms.ChoiceField(
+            required=False,
+            choices=country_choices,
+            widget=forms.Select(
+                attrs={'class': 'form-select', 'id': 'id_country'}
+            ),
+            label=_('Country'),
+        )
         self.fields['region_id'] = forms.ChoiceField(
             required=False,
             choices=region_choices,
             widget=forms.Select(
                 attrs={'class': 'form-select', 'id': 'id_region'}
             ),
-            label='Region',
+            label=_('Region'),
         )
         self.fields['township'] = forms.ChoiceField(
             required=False,
@@ -71,7 +90,7 @@ class CompanySettingForm(forms.ModelForm):
             widget=forms.Select(
                 attrs={'class': 'form-select', 'id': 'id_township'}
             ),
-            label='Township',
+            label=_('Township'),
         )
 
         if self.instance and self.instance.pk:
@@ -79,6 +98,8 @@ class CompanySettingForm(forms.ModelForm):
                 self.fields['region_id'].initial = str(
                     self.instance.region_id
                 )
+                if self.instance.region.country_id:
+                     self.fields['country_id'].initial = str(self.instance.region.country_id)
             if self.instance.township_id:
                 self.fields['township'].initial = str(
                     self.instance.township_id

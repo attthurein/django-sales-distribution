@@ -6,7 +6,7 @@ from decimal import Decimal
 
 from django.db.models import Prefetch
 
-from master_data.models import Region, Township
+from master_data.models import Region, Township, Country
 
 # Myanmar numerals for display formatting
 MYANMAR_DIGITS = '၀၁၂၃၄၅၆၇၈၉'
@@ -76,6 +76,23 @@ def get_regions_with_townships():
         Prefetch(
             'townships',
             queryset=Township.objects.filter(is_active=True).order_by('name_en')
+        )
+    ).order_by('country__sort_order', 'country__name_en', 'name_en')
+
+
+def get_countries_with_regions():
+    """
+    Return Country queryset with active regions and townships prefetched.
+    """
+    return Country.objects.filter(is_active=True).prefetch_related(
+        Prefetch(
+            'regions',
+            queryset=Region.objects.filter(is_active=True).prefetch_related(
+                Prefetch(
+                    'townships',
+                    queryset=Township.objects.filter(is_active=True).order_by('name_en')
+                )
+            ).order_by('name_en')
         )
     ).order_by('name_en')
 

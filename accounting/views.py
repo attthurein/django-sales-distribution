@@ -10,7 +10,7 @@ from django.db.models.functions import TruncMonth
 from django.core.paginator import Paginator
 from datetime import datetime
 from .models import Expense, ExpenseCategory
-from .forms import ExpenseForm
+from .forms import ExpenseForm, ExpenseCategoryForm
 
 
 @login_required
@@ -109,3 +109,71 @@ def expense_summary(request):
         'total_expenses': total_expenses,
     }
     return render(request, 'accounting/expense_summary.html', context)
+
+
+@login_required
+def expense_category_list(request):
+    """List all expense categories."""
+    categories = ExpenseCategory.objects.all().order_by('name')
+    return render(request, 'accounting/expense_category_list.html', {
+        'title': _('Expense Categories'),
+        'categories': categories
+    })
+
+
+@login_required
+@permission_required('accounting.add_expensecategory', raise_exception=True)
+def expense_category_create(request):
+    """Create new expense category."""
+    if request.method == 'POST':
+        form = ExpenseCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Expense category created successfully.'))
+            return redirect('accounting:expense_category_list')
+    else:
+        form = ExpenseCategoryForm()
+
+    return render(request, 'accounting/expense_category_form.html', {
+        'title': _('Create Expense Category'),
+        'form': form
+    })
+
+
+@login_required
+@permission_required('accounting.change_expensecategory', raise_exception=True)
+def expense_category_update(request, pk):
+    """Update expense category."""
+    category = ExpenseCategory.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = ExpenseCategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Expense category updated successfully.'))
+            return redirect('accounting:expense_category_list')
+    else:
+        form = ExpenseCategoryForm(instance=category)
+
+    return render(request, 'accounting/expense_category_form.html', {
+        'title': _('Edit Expense Category'),
+        'form': form
+    })
+
+
+@login_required
+@permission_required('accounting.delete_expensecategory', raise_exception=True)
+def expense_category_delete(request, pk):
+    """Delete expense category."""
+    category = ExpenseCategory.objects.get(pk=pk)
+    if request.method == 'POST':
+        try:
+            category.delete()
+            messages.success(request, _('Expense category deleted successfully.'))
+        except Exception as e:
+            messages.error(request, _('Cannot delete category: it may be in use.'))
+        return redirect('accounting:expense_category_list')
+    
+    return render(request, 'accounting/expense_category_confirm_delete.html', {
+        'title': _('Delete Expense Category'),
+        'category': category
+    })

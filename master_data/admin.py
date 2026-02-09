@@ -3,16 +3,22 @@ from .models import (
     CustomerType, ReturnReason, ReturnType, PaymentMethod,
     OrderStatus, ReturnRequestStatus, ProductCategory, UnitOfMeasure, TaxRate,
     ContactType, Region, Township, DeliveryRoute, Supplier, Promotion,
-    Currency, CompanySetting
+    Currency, CompanySetting, Country
 )
 
 
 @admin.register(CustomerType, ReturnReason, ReturnType, PaymentMethod,
                 OrderStatus, ReturnRequestStatus, ProductCategory, UnitOfMeasure, TaxRate,
-                ContactType, Region, DeliveryRoute, Supplier, Currency)
+                ContactType, Country, DeliveryRoute, Supplier, Currency)
 class MasterDataAdmin(admin.ModelAdmin):
     list_display = ['code', 'name_en', 'name_my', 'is_active']
     list_filter = ['is_active']
+
+@admin.register(Region)
+class RegionAdmin(admin.ModelAdmin):
+    list_display = ['code', 'name_en', 'name_my', 'country', 'is_active']
+    list_filter = ['is_active', 'country']
+
 
 @admin.register(Township)
 class TownshipAdmin(admin.ModelAdmin):

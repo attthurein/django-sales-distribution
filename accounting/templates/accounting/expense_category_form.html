@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load i18n widget_tweaks %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'accounting:expense_list' %}">{% trans "Expenses" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'accounting:expense_category_list' %}">{% trans "Categories" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">{{ title }}</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">{% trans "Name" %} *</label>
+                            {{ form.name|add_class:"form-control" }}
+                            {% if form.name.errors %}
+                            <div class="invalid-feedback d-block">{{ form.name.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.description.id_for_label }}" class="form-label">{% trans "Description" %}</label>
+                            {{ form.description|add_class:"form-control" }}
+                            {% if form.description.errors %}
+                            <div class="invalid-feedback d-block">{{ form.description.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'accounting:expense_category_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+                            <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

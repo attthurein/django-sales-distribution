@@ -13,7 +13,7 @@ from .forms import CustomerForm, SalespersonForm
 from master_data.models import CustomerType
 from orders.models import SalesOrder
 from crm.models import SampleDelivery
-from common.utils import get_regions_with_townships
+from common.utils import get_regions_with_townships, get_countries_with_regions
 from common.constants import PAGE_SIZE_CUSTOMERS, LIMIT_CUSTOMER_SEARCH, LIMIT_RECENT_ORDERS
 
 
@@ -83,11 +83,11 @@ def customer_create(request):
             return redirect('customers:customer_detail', pk=customer.pk)
     else:
         form = CustomerForm()
-    regions = get_regions_with_townships()
+    countries = get_countries_with_regions()
     context = {
         'title': _('Add New Customer'),
         'form': form,
-        'regions': regions,
+        'countries': countries,
         'customer': None,
     }
     return render(request, 'customers/customer_form.html', context)
@@ -106,12 +106,12 @@ def customer_update(request, pk):
             return redirect('customers:customer_detail', pk=customer.pk)
     else:
         form = CustomerForm(instance=customer)
-    regions = get_regions_with_townships()
+    countries = get_countries_with_regions()
     context = {
         'title': _('Edit Customer'),
         'form': form,
         'customer': customer,
-        'regions': regions,
+        'countries': countries,
     }
     return render(request, 'customers/customer_form.html', context)
 

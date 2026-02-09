@@ -3,7 +3,8 @@ from master_data.models import (
     CustomerType, Region, Township, DeliveryRoute, 
     PaymentMethod, OrderStatus, UnitOfMeasure,
     Supplier, Promotion, Currency,
-    ContactType, ReturnReason, ReturnType, ReturnRequestStatus
+    ContactType, ReturnReason, ReturnType, ReturnRequestStatus,
+    Country
 )
 
 class CustomerTypeSerializer(serializers.ModelSerializer):
@@ -31,10 +32,17 @@ class ReturnRequestStatusSerializer(serializers.ModelSerializer):
         model = ReturnRequestStatus
         fields = ['id', 'code', 'name_en', 'name_my', 'sort_order']
 
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = ['id', 'code', 'name_en', 'name_my', 'sort_order']
+
 class RegionSerializer(serializers.ModelSerializer):
+    country_detail = CountrySerializer(source='country', read_only=True)
+    
     class Meta:
         model = Region
-        fields = ['id', 'code', 'name_en', 'name_my']
+        fields = ['id', 'code', 'name_en', 'name_my', 'country', 'country_detail']
 
 class DeliveryRouteSerializer(serializers.ModelSerializer):
     class Meta:

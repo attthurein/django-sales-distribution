@@ -20,7 +20,7 @@ from master_data.constants import (
     SAMPLE_STATUS_RETURNED,
     SAMPLE_STATUS_NOT_RETURNED,
 )
-from common.utils import get_regions_with_townships
+from common.utils import get_regions_with_townships, get_countries_with_regions
 from core.services import restore_stock
 from .services import give_sample_to_lead, give_sample_to_customer, convert_lead_to_customer
 
@@ -70,12 +70,12 @@ def lead_create(request):
             lead.save()
         messages.success(request, _('Lead created.'))
         return redirect('crm:lead_list')
-    regions = get_regions_with_townships()
+    countries = get_countries_with_regions()
     return render(request, 'crm/lead_form.html', {
         'title': _('Create Lead'),
         'form': form,
         'lead': None,
-        'regions': regions,
+        'countries': countries,
     })
 
 
@@ -93,12 +93,12 @@ def lead_edit(request, pk):
             form.save()
         messages.success(request, _('Lead updated.'))
         return redirect('crm:lead_detail', pk=pk)
-    regions = get_regions_with_townships()
+    countries = get_countries_with_regions()
     return render(request, 'crm/lead_form.html', {
         'lead': lead,
         'title': _('Edit Lead'),
         'form': form,
-        'regions': regions,
+        'countries': countries,
     })
 
 

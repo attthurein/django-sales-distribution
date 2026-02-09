@@ -2,7 +2,7 @@
 Master Data views.
 """
 from django.contrib.auth.decorators import login_required, permission_required
-from common.utils import get_regions_with_townships
+from common.utils import get_countries_with_regions
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
@@ -17,7 +17,7 @@ from .utils import has_transactional_data
 def company_setting(request):
     """View and edit company settings (singleton)."""
     instance = CompanySetting.objects.first()
-    regions = get_regions_with_townships()
+    countries = get_countries_with_regions()
 
     if request.method == 'POST':
         form = CompanySettingForm(
@@ -39,6 +39,6 @@ def company_setting(request):
     return render(request, 'master_data/company_setting_form.html', {
         'form': form,
         'setting': instance,
-        'regions': regions,
+        'countries': countries,
         'base_currency_locked': has_transactional_data(),
     })

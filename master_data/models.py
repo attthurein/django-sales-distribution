@@ -31,7 +31,7 @@ class BaseMasterModel(SoftDeleteMixin):
         return self.get_display_name(get_language())
 
     def __str__(self):
-        return self.name_en
+        return self.name
 
 
 class CustomerType(BaseMasterModel):
@@ -138,8 +138,23 @@ class ContactType(BaseMasterModel):
         ordering = ['sort_order', 'code']
 
 
+class Country(BaseMasterModel):
+    """Country"""
+    sort_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = _("Country")
+        verbose_name_plural = _("Countries")
+        ordering = ['sort_order', 'code']
+
+
 class Region(BaseMasterModel):
     """State/Division"""
+    country = models.ForeignKey(
+        Country, on_delete=models.PROTECT, related_name='regions',
+        null=True, blank=True, verbose_name=_("Country")
+    )
+
     class Meta:
         verbose_name = _("Region")
         verbose_name_plural = _("Regions")

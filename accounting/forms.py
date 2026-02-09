@@ -2,7 +2,18 @@
 Accounting forms - Expense with validation.
 """
 from django import forms
-from .models import Expense
+from .models import Expense, ExpenseCategory
+
+
+class ExpenseCategoryForm(forms.ModelForm):
+    """Form for expense categories."""
+    class Meta:
+        model = ExpenseCategory
+        fields = ['name', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
+        }
 
 
 class ExpenseForm(forms.ModelForm):

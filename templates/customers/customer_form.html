@@ -19,11 +19,26 @@
     {% for field in form %}
     {% if field.name == 'township' %}
     <div class="mb-3">
+        <label class="form-label" for="id_country">{% trans "Country" %}</label>
+        <select name="country_id" id="id_country" class="form-select">
+            <option value="">{% trans "Select country" %}...</option>
+            {% for country in countries %}
+            <option value="{{ country.id }}" {% if customer and customer.township and customer.township.region.country_id == country.id %}selected{% endif %}>
+                {{ country.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
         <label class="form-label" for="id_region">{% trans "Region" %}</label>
         <select name="region_id" id="id_region" class="form-select">
             <option value="">{% trans "Select region" %}...</option>
-            {% for region in regions %}
-            <option value="{{ region.id }}" {% if customer and customer.township and customer.township.region_id == region.id %}selected{% endif %}>{{ region.name_en }}</option>
+            {% for country in countries %}
+                {% for region in country.regions.all %}
+                <option value="{{ region.id }}" data-country-id="{{ country.id }}" {% if customer and customer.township and customer.township.region_id == region.id %}selected{% endif %}>
+                    {{ region.name }}
+                </option>
+                {% endfor %}
             {% endfor %}
         </select>
     </div>
@@ -31,10 +46,14 @@
         <label class="form-label" for="id_township">{% trans "Township" %}</label>
         <select name="township" id="id_township" class="form-select">
             <option value="">{% trans "Select township" %}...</option>
-            {% for region in regions %}
-            {% for t in region.townships.all %}
-            <option value="{{ t.id }}" data-region-id="{{ region.id }}" {% if customer and customer.township_id == t.id %}selected{% endif %}>{{ t.name_en }}</option>
-            {% endfor %}
+            {% for country in countries %}
+                {% for region in country.regions.all %}
+                    {% for t in region.townships.all %}
+                    <option value="{{ t.id }}" data-region-id="{{ region.id }}" {% if customer and customer.township_id == t.id %}selected{% endif %}>
+                        {{ t.name }}
+                    </option>
+                    {% endfor %}
+                {% endfor %}
             {% endfor %}
         </select>
         {% if field.errors %}<div class="text-danger">{{ field.errors }}</div>{% endif %}

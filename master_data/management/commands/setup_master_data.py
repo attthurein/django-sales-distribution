@@ -6,7 +6,7 @@ from django.db import transaction
 from master_data.models import (
     CustomerType, ReturnReason, ReturnType, PaymentMethod,
     OrderStatus, ReturnRequestStatus, ProductCategory, UnitOfMeasure, TaxRate,
-    ContactType, Region, Township, Supplier, Currency,
+    ContactType, Region, Township, Supplier, Currency, Country
 )
 
 
@@ -15,6 +15,12 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.stdout.write('Setting up master data...')
+
+        # Country
+        country, _ = Country.objects.get_or_create(code='MM', defaults={
+            'name_en': 'Myanmar', 'name_my': 'မြန်မာ'
+        })
+        self.stdout.write('  - Country: OK')
 
         # CustomerType
         customer_types = [
@@ -598,7 +604,8 @@ class Command(BaseCommand):
                     defaults={
                         'name_en': r_name_en,
                         'name_my': r_name_my,
-                        'is_active': True
+                        'is_active': True,
+                        'country': country
                     }
                 )
 
