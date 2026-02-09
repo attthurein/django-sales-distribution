@@ -4,12 +4,13 @@ Payment report views.
 import csv
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, permission_required
-from django.db.models import Sum, Count, F
+from django.db.models import Sum, Count, F, Q
 from django.http import HttpResponse
 from datetime import datetime
 from orders.models import Payment, SalesOrder
 from customers.models import Customer
 from master_data.models import PaymentMethod
+from master_data.constants import ORDER_CANCELLED
 from openpyxl import Workbook
 
 

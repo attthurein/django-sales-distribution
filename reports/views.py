@@ -118,6 +118,7 @@ from .models import DailySalesSummary, DailyInventorySnapshot, DailyPaymentSumma
 def dashboard(request):
     """Executive Dashboard showing daily summaries."""
     from datetime import timedelta
+    from accounting.models import Expense
     
     # Get last 7 days including today
     today = timezone.now().date()
