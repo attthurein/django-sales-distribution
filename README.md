@@ -86,12 +86,11 @@ This system is a monolithic Django application optimized for reliability and tra
 - **Backend**: Python 3.10+, Django 4.2.7
 - **Database**: SQLite (Dev) / PostgreSQL (Production ready)
 - **Frontend**: Bootstrap 5, Crispy Forms, Django Templates
-- **Server**: Gunicorn, Whitenoise (Static files)
+- **Server**: GunicoSi
 - **Utilities**:
   - `django-environ`: Configuration management
   - `reportlab`: PDF generation
   - `openpyxl`: Excel exports
-
 ### Module Diagram
 
 ```mermaid
@@ -137,7 +136,13 @@ The system uses a **Batch-based Inventory System**:
 ### Security & Audit
 - **SoftDeleteMixin**: Most models (Product, Order, Payment, Customer) inherit from this. `Model.objects.all()` returns only active records. Use `Model.all_objects.all()` to see deleted ones.
 - **AuditMiddleware**: A custom middleware captures the actor (User) for every request. Signals automatically create `AuditLog` entries for creations, updates, and deletions.
+etions.
 
+### API Documentation
+Th sysem provdes a cmpreheive REST API for all major modules, documented using OpenAPI 3.0.
+- **Swagger UI**: `/api/docs/` - Interactive API documentation and testing.
+- **ReDoc**: `/api/schema/redoc/` - Alternative API reference documentation.
+- **Schema**: `/api/schema/` - Raw OpenAPI schema (YAML)
 ---
 
 ## Installation & Setup
@@ -187,10 +192,17 @@ The system uses a **Batch-based Inventory System**:
    ```
 
 7. **Run the Server**
+   **Development Mode:**
    ```bash
    python manage.py runserver
    ```
    Visit `http://127.0.0.1:8000`
+
+   **Windows / Production-like Mode (using Waitress):**
+   ```bash
+   python run_waitress.py
+   ```
+   This uses the `waitress` WSGI server, which is robust and suitable for Windows deployments.
 
 ---
 
