@@ -27,13 +27,25 @@
     {% csrf_token %}
     <input type="text" name="notes" placeholder="{% trans 'Notes' %}" class="form-control d-inline-block w-auto">
     {% trans "Are you sure you want to approve this return? Stock will be updated based on item selection." as approve_msg %}
-    <button class="btn btn-success" onclick="return confirm('{{ approve_msg|escapejs }}')">{% trans "Approve" %}</button>
+    <button class="btn btn-success" onclick="return confirmAction(event)"
+        data-title="{% trans 'Confirm Approval' %}"
+        data-message="{{ approve_msg }}"
+        data-btn-class="btn-success"
+        data-btn-text="{% trans 'Approve' %}">
+        {% trans "Approve" %}
+    </button>
 </form>
 <form method="post" action="{% url 'returns:reject_return' return_request.pk %}" class="d-inline">
     {% csrf_token %}
     <input type="text" name="notes" placeholder="{% trans 'Notes' %}" class="form-control d-inline-block w-auto">
     {% trans "Are you sure you want to reject this return?" as reject_msg %}
-    <button class="btn btn-danger" onclick="return confirm('{{ reject_msg|escapejs }}')">{% trans "Reject" %}</button>
+    <button class="btn btn-danger" onclick="return confirmAction(event)"
+        data-title="{% trans 'Confirm Rejection' %}"
+        data-message="{{ reject_msg }}"
+        data-btn-class="btn-danger"
+        data-btn-text="{% trans 'Reject' %}">
+        {% trans "Reject" %}
+    </button>
 </form>
 {% endif %}
 
@@ -43,7 +55,11 @@
     <form action="{% url 'returns:create_replacement_order' return_request.pk %}" method="post" class="d-inline">
         {% csrf_token %}
         {% trans "Create a replacement order with 0 price?" as replace_msg %}
-        <button type="submit" class="btn btn-primary" onclick="return confirm('{{ replace_msg|escapejs }}')">
+        <button type="submit" class="btn btn-primary" onclick="return confirmAction(event)"
+            data-title="{% trans 'Confirm Replacement' %}"
+            data-message="{{ replace_msg }}"
+            data-btn-class="btn-primary"
+            data-btn-text="{% trans 'Create Order' %}">
             <i class="bi bi-arrow-repeat"></i> {% trans "Create Replacement Order" %}
         </button>
     </form>

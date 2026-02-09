@@ -50,6 +50,7 @@ urlpatterns = [
     path('api/', include('returns.api_urls')),
     path('api/', include('accounting.api_urls')),
     path('api/common/', include('common.api_urls')),
+    path('system/', include('common.urls')),
     path('api/reports/', include('reports.api_urls')),
     path('api-auth/', include('rest_framework.urls')),
     

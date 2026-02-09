@@ -45,7 +45,11 @@
     {% endif %}
     {% if not order.status or order.status.code != 'DELIVERED' and order.status.code != 'PAID' and order.status.code != 'CANCELLED' %}
     {% if perms.orders.change_salesorder %}
-    <form method="post" action="{% url 'orders:order_cancel' order.pk %}" class="d-inline" data-confirm="{% trans "Cancel?" %}">
+    <form method="post" action="{% url 'orders:order_cancel' order.pk %}" class="d-inline"
+        data-confirm="{% trans 'Are you sure you want to cancel this order? This action cannot be undone.' %}"
+        data-title="{% trans 'Confirm Cancellation' %}"
+        data-btn-class="btn-danger"
+        data-btn-text="{% trans 'Cancel Order' %}">
         {% csrf_token %}<button class="btn btn-sm btn-danger">{% trans "Cancel" %}</button>
     </form>
     {% endif %}

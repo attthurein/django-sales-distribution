@@ -14,6 +14,7 @@ from core.models import StockMovement, Batch, ProductPriceTier, ProductVariant, 
 from accounting.models import Expense, ExpenseCategory
 from customers.models import Customer, Salesperson
 from common.models import AuditLog
+from common.utils import reset_model_sequences
 
 
 class Command(BaseCommand):
@@ -84,6 +85,9 @@ class Command(BaseCommand):
                     deleted[name] = model.all_objects.all().delete()[0]
                 else:
                     deleted[name] = model.objects.all().delete()[0]
+            
+            # Reset sequences (IDs start from 1)
+            reset_model_sequences([m[0] for m in models_to_reset])
 
         total = sum(deleted.values())
         self.stdout.write(self.style.SUCCESS(

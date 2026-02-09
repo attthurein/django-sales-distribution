@@ -78,3 +78,32 @@ def get_regions_with_townships():
             queryset=Township.objects.filter(is_active=True).order_by('name_en')
         )
     ).order_by('name_en')
+
+
+def reset_model_sequences(models_list):
+    """
+    Reset database auto-increment counters for the given models.
+    Supports SQLite and PostgreSQL.
+    """
+    from django.db import connection
+    
+    with connection.cursor() as cursor:
+        if connection.vendor == 'sqlite':
+            # SQLite: Delete from sqlite_sequence
+            table_names = [model._meta.db_table for model in models_list]
+            if table_names:
+                placeholders = ', '.join(['%s'] * len(table_names))
+                cursor.execute(
+                    f"DELETE FROM sqlite_sequence WHERE name IN ({placeholders})",
+                    table_names
+                )
+        elif connection.vendor == 'postgresql':
+            # PostgreSQL: ALTER SEQUENCE RESTART WITH 1
+            for model in models_list:
+                db_table = model._meta.db_table
+                seq_name = f"{db_table}_id_seq"
+                try:
+                    cursor.execute(f"ALTER SEQUENCE {seq_name} RESTART WITH 1;")
+                except Exception:
+                    # Sequence might be named differently or not exist
+                    pass

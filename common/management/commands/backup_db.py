@@ -69,7 +69,7 @@ class Command(BaseCommand):
                     '--natural-foreign',
                     '--natural-primary',
                     '--indent', '2',
-                    '--exclude', *exclude,
+                    exclude=exclude,
                     stdout=f,
                 )
             self.stdout.write(self.style.SUCCESS(f'Backup saved: {filename}'))

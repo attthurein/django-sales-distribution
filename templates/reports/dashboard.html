@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load humanize %}
+{% load humanize static %}
 
 {% block title %}Executive Dashboard{% endblock %}
 
@@ -123,7 +123,7 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/chart.js' %}"></script>
 {{ chart_data.labels|json_script:"chart-labels" }}
 {{ chart_data.revenue|json_script:"chart-revenue" }}
 {{ chart_data.expenses|json_script:"chart-expenses" }}
