@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.apps import apps
 
 
 class SoftDeleteQuerySet(models.QuerySet):
@@ -62,6 +63,7 @@ class SoftDeleteMixin(models.Model):
     
     class Meta:
         abstract = True
+        app_label = 'common'
         indexes = [
             models.Index(fields=['deleted_at']),
         ]
@@ -100,11 +102,13 @@ class AuditLog(models.Model):
     action = models.CharField(max_length=100)
     model_name = models.CharField(max_length=100)
     object_id = models.PositiveIntegerField(null=True, blank=True)
+
     changes = models.JSONField(default=dict, blank=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        app_label = 'common'
         verbose_name = _("Audit log")
         verbose_name_plural = _("Audit logs")
         ordering = ['-created_at']

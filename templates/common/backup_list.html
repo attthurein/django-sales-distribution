@@ -3,6 +3,15 @@
 
 {% block title %}{% trans "Database Backups" %}{% endblock %}
 
+{% block extra_js %}
+<script>
+    document.getElementById('upload_backup').addEventListener('change', function() {
+        const fileName = this.files.length > 0 ? this.files[0].name : this.getAttribute('data-no-file-text');
+        document.getElementById('file-chosen').textContent = fileName;
+    });
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">{% trans "Database Backups" %}</h1>
@@ -29,8 +38,12 @@
         <form method="post" enctype="multipart/form-data" class="row g-3 align-items-center">
             {% csrf_token %}
             <div class="col-auto">
-                <label for="upload_backup" class="visually-hidden">{% trans "Backup File" %}</label>
-                <input type="file" class="form-control" id="upload_backup" name="upload_backup" accept=".json" required>
+                <label for="upload_backup" class="btn btn-secondary">
+                    <i class="bi bi-folder2-open"></i> {% trans "Browse..." %}
+                </label>
+                <input type="file" id="upload_backup" name="upload_backup" accept=".json" required style="display: none;" 
+                    data-no-file-text="{% trans 'No file selected.' %}">
+                <span id="file-chosen" class="ms-2">{% trans "No file selected." %}</span>
             </div>
             <div class="col-auto">
                 {% trans "Are you sure you want to restore this backup? Current data will be merged/overwritten." as msg_upload %}

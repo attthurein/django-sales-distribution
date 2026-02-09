@@ -10,7 +10,7 @@ from datetime import datetime
 from orders.models import Payment, SalesOrder
 from customers.models import Customer
 from master_data.models import PaymentMethod
-from master_data.constants import ORDER_CANCELLED
+from master_data.constants import PURCHASE_RECEIVED, ORDER_CANCELLED
 from openpyxl import Workbook
 
 

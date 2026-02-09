@@ -1727,17 +1727,134 @@ msgstr "ငွေပေးချေမှု စည်းကမ်းချက�
 msgid "Is active"
 msgstr "အသက်ဝင်သည်"
 
-msgid "Low Stock Threshold"
-msgstr "လက်ကျန်နည်း သတိပေးပမာဏ"
-
-msgid "Expiry Alert Days"
-msgstr "သက်တမ်းကုန်ဆုံးရန် သတိပေးရက်များ"
-
 msgid "Created at"
 msgstr "ဖန်တီးသည့်အချိန်"
 
 msgid "Updated at"
 msgstr "ပြင်ဆင်သည့်အချိန်"
+
+msgid "Database Backups"
+msgstr "Database Backup များ"
+
+msgid "Create Backup"
+msgstr "Backup အသစ်လုပ်မည်"
+
+msgid "Confirm Backup Creation"
+msgstr "Backup လုပ်ရန် အတည်ပြုပါ"
+
+msgid "Are you sure you want to create a new database backup?"
+msgstr "Database backup အသစ်တစ်ခု ပြုလုပ်မှာ သေချာပါသလား?"
+
+msgid "Upload & Restore"
+msgstr "Upload နှင့် Restore လုပ်မည်"
+
+msgid "Backup File"
+msgstr "Backup ဖိုင်"
+
+msgid "Confirm Upload & Restore"
+msgstr "Upload နှင့် Restore လုပ်ရန် အတည်ပြုပါ"
+
+msgid "Are you sure you want to restore this backup? Current data will be merged/overwritten."
+msgstr "ဒီ Backup ကို restore လုပ်မှာ သေချာပါသလား။ လက်ရှိ Data များ ပေါင်းစပ် သို့မဟုတ် အစားထိုးခံရပါမည်။"
+
+msgid "Danger Zone: Data Reset"
+msgstr "သတိထားရန်နယ်ပယ် - Data များကို Reset ချခြင်း"
+
+msgid "Warning: These actions are irreversible. Please ensure you have a backup before proceeding."
+msgstr "သတိပေးချက် - ဤလုပ်ဆောင်ချက်များသည် ပြန်ပြင်မရပါ။ မလုပ်ဆောင်မီ backup ရှိထားကြောင်း သေချာပါစေ။"
+
+msgid "Reset Transactions Only"
+msgstr "အရောင်းအဝယ်စာရင်းများသာ Reset လုပ်မည်"
+
+msgid "Confirm Transaction Reset"
+msgstr "Transaction Reset လုပ်ရန် အတည်ပြုပါ"
+
+msgid "Are you sure you want to delete ALL Transactional Data (Orders, Returns, etc.)? Master Data (Products, Customers) will be KEPT."
+msgstr "Transaction Data အားလုံး (အမှာစာများ၊ ပြန်အမ်းငွေများ စသည်) ကို ဖျက်မှာ သေချာပါသလား။ Master Data (ကုန်ပစ္စည်းများ၊ ဖောက်သည်များ) ကျန်ရှိနေပါမည်။"
+
+msgid "Reset Everything (Master + Transactions)"
+msgstr "အားလုံး Reset လုပ်မည် (Master + Transactions)"
+
+msgid "Confirm Full Reset"
+msgstr "အားလုံး Reset လုပ်ရန် အတည်ပြုပါ"
+
+msgid "Are you sure you want to delete EVERYTHING? This includes Products, Customers, and Settings. Only User Accounts will remain."
+msgstr "အားလုံးကို ဖျက်ပစ်မှာ သေချာပါသလား။ ကုန်ပစ္စည်းများ၊ ဖောက်သည်များနှင့် ဆက်တင်များ ပါဝင်သည်။ အသုံးပြုသူအကောင့်များသာ ကျန်ရှိပါမည်။"
+
+msgid "Filename"
+msgstr "ဖိုင်အမည်"
+
+msgid "Size"
+msgstr "ဖိုင်အရွယ်အစား"
+
+msgid "Created At"
+msgstr "ဖန်တီးခဲ့သည့်အချိန်"
+
+msgid "Download"
+msgstr "ဒေါင်းလုဒ်"
+
+msgid "Restore"
+msgstr "ပြန်လည်ထည့်သွင်းမည် (Restore)"
+
+msgid "Confirm Restore"
+msgstr "Restore လုပ်ရန် အတည်ပြုပါ"
+
+msgid "Are you sure you want to restore this backup? This action cannot be undone."
+msgstr "ဒီ Backup ကို restore လုပ်မှာ သေချာပါသလား။ ဤလုပ်ဆောင်ချက်ကို ပြန်ပြင်၍မရပါ။"
+
+msgid "Confirm Delete"
+msgstr "ဖျက်ရန် အတည်ပြုပါ"
+
+msgid "Are you sure you want to delete this backup?"
+msgstr "ဒီ Backup ကို ဖျက်မှာ သေချာပါသလား။"
+
+msgid "No backups found."
+msgstr "Backup များ မတွေ့ပါ။"
+
+msgid "Invalid file format. Please upload a .json file."
+msgstr "ဖိုင်ဖော်မတ် မှားယွင်းနေပါသည်။ ကျေးဇူးပြု၍ .json ဖိုင်ကို တင်ပါ။"
+
+msgid "Backup uploaded successfully."
+msgstr "Backup ကို အောင်မြင်စွာ တင်ပြီးပါပြီ။"
+
+msgid "Backup created successfully."
+msgstr "Backup အသစ် အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ။"
+
+msgid "Backup file not found."
+msgstr "Backup ဖိုင် မတွေ့ပါ။"
+
+msgid "Database restored successfully."
+msgstr "Database ကို အောင်မြင်စွာ ပြန်လည်ထည့်သွင်းပြီးပါပြီ။"
+
+msgid "Backup deleted successfully."
+msgstr "Backup ကို အောင်မြင်စွာ ဖျက်ပြီးပါပြီ။"
+
+msgid "All data (Master + Transactions) has been reset successfully."
+msgstr "Data အားလုံး (Master + Transactions) ကို အောင်မြင်စွာ Reset လုပ်ပြီးပါပြီ။"
+
+msgid "Transactional data (User Input) has been reset successfully."
+msgstr "Transaction Data များ (User Input) ကို အောင်မြင်စွာ Reset လုပ်ပြီးပါပြီ။"
+
+msgid "Error creating backup: %(error)s"
+msgstr "Backup ဖန်တီးရာတွင် အမှားရှိနေသည် - %(error)s"
+
+msgid "Error restoring database: %(error)s"
+msgstr "Database ပြန်လည်ထည့်သွင်းရာတွင် အမှားရှိနေသည် - %(error)s"
+
+msgid "Error deleting backup: %(error)s"
+msgstr "Backup ဖျက်ရာတွင် အမှားရှိနေသည် - %(error)s"
+
+msgid "Error resetting data: %(error)s"
+msgstr "Data Reset လုပ်ရာတွင် အမှားရှိနေသည် - %(error)s"
+
+msgid "Database Backup"
+msgstr "Database Backup"
+
+msgid "Browse..."
+msgstr "ဖိုင်ရွေးချယ်ပါ..."
+
+msgid "No file selected."
+msgstr "မည်သည့်ဖိုင်မှ ရွေးချယ်ထားခြင်းမရှိပါ။"
 
 
 

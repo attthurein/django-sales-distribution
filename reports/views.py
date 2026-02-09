@@ -17,6 +17,7 @@ from returns.models import ReturnItem, ReturnRequest
 from master_data.models import OrderStatus
 from master_data.constants import PURCHASE_RECEIVED
 from common.models import AuditLog
+from accounting.models import Expense
 from common.constants import (
     LIMIT_EXPORT_ROWS,
     LIMIT_AUDIT_LOG_DISPLAY,
@@ -118,7 +119,6 @@ from .models import DailySalesSummary, DailyInventorySnapshot, DailyPaymentSumma
 def dashboard(request):
     """Executive Dashboard showing daily summaries."""
     from datetime import timedelta
-    from accounting.models import Expense
     
     # Get last 7 days including today
     today = timezone.now().date()

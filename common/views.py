@@ -59,7 +59,7 @@ def create_backup(request):
             call_command('backup_db')
             messages.success(request, _('Backup created successfully.'))
         except Exception as e:
-            messages.error(request, _(f'Error creating backup: {e}'))
+            messages.error(request, _('Error creating backup: %(error)s') % {'error': str(e)})
     return redirect('common:backup_list')
 
 @user_passes_test(is_superuser)
@@ -75,7 +75,7 @@ def restore_backup(request, filename):
                 call_command('loaddata', str(backup_file))
                 messages.success(request, _('Database restored successfully.'))
             except Exception as e:
-                messages.error(request, _(f'Error restoring database: {e}'))
+                messages.error(request, _('Error restoring database: %(error)s') % {'error': str(e)})
     return redirect('common:backup_list')
 
 @user_passes_test(is_superuser)
@@ -87,7 +87,7 @@ def delete_backup(request, filename):
                 backup_file.unlink()
                 messages.success(request, _('Backup deleted successfully.'))
             except Exception as e:
-                messages.error(request, _(f'Error deleting backup: {e}'))
+                messages.error(request, _('Error deleting backup: %(error)s') % {'error': str(e)})
         else:
              messages.error(request, _('Backup file not found.'))
     return redirect('common:backup_list')
@@ -162,6 +162,6 @@ def reset_data(request):
                 reset_model_sequences(deleted_models)
                     
         except Exception as e:
-            messages.error(request, _(f'Error resetting data: {e}'))
+            messages.error(request, _('Error resetting data: %(error)s') % {'error': str(e)})
             
     return redirect('common:backup_list')
