@@ -111,18 +111,26 @@ def reset_data(request):
         transactional_models = [
             'orders.SalesOrder', 'orders.OrderItem', 'orders.Payment', 'orders.Invoice',
             'purchasing.PurchaseOrder', 'purchasing.PurchaseOrderItem', 'purchasing.PurchaseReceipt',
-            'returns.ReturnRequest', 'returns.ReturnItem',
+            'returns.ReturnRequest', 'returns.ReturnItem', 'returns.ReturnProcessing',
             'accounting.Expense',
             'crm.Lead', 'crm.ContactLog', 'crm.SampleDelivery',
             'core.StockMovement', 'core.StockAdjustment', 'core.Batch',
-            'reports.DailySalesSummary', 'reports.DailyPaymentSummary', 'reports.DailyExpenseSummary'
+            'reports.DailySalesSummary', 'reports.DailyPaymentSummary', 'reports.DailyExpenseSummary', 'reports.DailyInventorySnapshot'
         ]
         
         # Master Data
         master_data_models = [
-            'core.Product', 'core.ProductCategory', 'core.ProductPriceTier', 'core.Brand', 'core.UnitOfMeasure',
+            'master_data.CompanySetting',
+            'core.ProductVariant', 'core.ProductPriceTier', 'core.Product',
+            'master_data.ProductCategory', 'master_data.UnitOfMeasure',
             'customers.Customer', 'customers.SalesPerson',
-            'master_data.Region', 'master_data.Township', 'master_data.DeliveryRoute', 'master_data.Promotion'
+            'master_data.Township', 'master_data.Region', 'master_data.Country',
+            'master_data.DeliveryRoute', 'master_data.Promotion',
+            'master_data.CustomerType', 'master_data.Supplier',
+            'master_data.ContactType', 'master_data.TaxRate',
+            'master_data.ReturnReason', 'master_data.ReturnType', 'master_data.PaymentMethod',
+            'master_data.OrderStatus', 'master_data.ReturnRequestStatus',
+            'master_data.Currency'
         ]
 
         try:
