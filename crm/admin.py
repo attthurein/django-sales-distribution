@@ -1,6 +1,11 @@
 from django.contrib import admin
 from django.utils import timezone
-from .models import Lead, ContactLog, SampleDelivery
+from .models import Lead, LeadPhoneNumber, ContactLog, SampleDelivery
+
+
+class LeadPhoneNumberInline(admin.TabularInline):
+    model = LeadPhoneNumber
+    extra = 1
 
 
 @admin.register(Lead)
@@ -8,6 +13,7 @@ class LeadAdmin(admin.ModelAdmin):
     list_display = ['name', 'shop_name', 'contact_person', 'phone', 'township', 'status', 'source', 'assigned_to', 'created_at']
     list_filter = ['status', 'township__region']
     search_fields = ['name', 'shop_name', 'contact_person', 'phone']
+    inlines = [LeadPhoneNumberInline]
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

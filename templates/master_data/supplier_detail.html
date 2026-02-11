@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'master_data:supplier_list' %}">{% trans "Suppliers" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ supplier.name_en }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>{{ supplier.name_en }}</h1>
+    <div class="btn-group">
+        {% if perms.master_data.change_supplier %}
+        <a href="{% url 'master_data:supplier_update' supplier.pk %}" class="btn btn-primary">
+            <i class="bi bi-pencil"></i> {% trans "Edit" %}
+        </a>
+        {% endif %}
+        {% if perms.master_data.delete_supplier %}
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+            <i class="bi bi-trash"></i> {% trans "Delete" %}
+        </button>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">{% trans "Basic Information" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-muted">{% trans "Code" %}</div>
+                    <div class="col-sm-9">{{ supplier.code }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-muted">{% trans "Name (Local)" %}</div>
+                    <div class="col-sm-9">{{ supplier.name_my|default:"-" }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-muted">{% trans "Contact Person" %}</div>
+                    <div class="col-sm-9">{{ supplier.contact_person|default:"-" }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-muted">{% trans "Email" %}</div>
+                    <div class="col-sm-9">{{ supplier.email|default:"-" }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-muted">{% trans "Address" %}</div>
+                    <div class="col-sm-9">{{ supplier.address|linebreaks|default:"-" }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-muted">{% trans "Status" %}</div>
+                    <div class="col-sm-9">
+                        {% if supplier.is_active %}
+                        <span class="badge bg-success">{% trans "Active" %}</span>
+                        {% else %}
+                        <span class="badge bg-danger">{% trans "Inactive" %}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">{% trans "Phone Numbers" %}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% if supplier.phone %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ supplier.phone }}
+                    <span class="badge bg-secondary">{% trans "Main" %}</span>
+                </li>
+                {% endif %}
+                {% for p in supplier.additional_phones.all %}
+                <li class="list-group-item">
+                    {{ p.phone }}
+                    {% if p.notes %}
+                    <br><small class="text-muted">{{ p.notes }}</small>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+{% if perms.master_data.delete_supplier %}
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans "Confirm Delete" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>{% trans "Are you sure you want to delete this supplier?" %}</p>
+                <p class="fw-bold">{{ supplier.name_en }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+                <form method="post" action="{% url 'master_data:supplier_delete' supplier.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% load static i18n %}
+<table style="width: 100%; border: none !important; margin-bottom: 10px; border-collapse: collapse !important;">
+    <tr style="border: none !important;">
+        <td style="width: 20%; vertical-align: top; text-align: left; border: none !important; padding: 0 !important;">
+            {% if company_setting.logo %}
+                <img src="{{ company_setting.logo.url }}" alt="Logo" class="print-logo" style="max-height: 120px; width: auto;">
+            {% else %}
+                <img src="{% static 'img/logo_placeholder.png' %}" alt="Logo" class="print-logo" style="max-height: 120px; width: auto;" onerror="this.style.display='none'">
+            {% endif %}
+        </td>
+        <td style="width: 60%; vertical-align: top; text-align: center; border: none !important; padding: 0 !important;">
+            {% if company_setting.shop_name %}
+                <h3 class="mb-0 fw-bold" style="line-height: 1.6; font-size: 24px;">{{ company_setting.shop_name }}</h3>
+            {% endif %}
+            {% if company_setting.name %}
+                <h4 class="fw-bold mb-0" style="font-size: 18px;">{{ company_setting.name }}</h4>
+            {% endif %}
+            <div class="small mt-1" style="font-size: 12px;">
+                {% if company_setting.address %}{{ company_setting.address }}{% endif %}
+            </div>
+            <div class="small" style="font-size: 12px;">
+                {% if company_setting.phone %}{{ company_setting.phone }}{% endif %}
+            </div>
+        </td>
+        <td style="width: 20%; border: none !important; padding: 0 !important;"></td>
+    </tr>
+</table>
+<hr style="border-top: 2px solid #000; opacity: 1; margin-top: 5px; margin-bottom: 15px;">

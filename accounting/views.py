@@ -6,8 +6,9 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.translation import gettext_lazy as _
 from django.db import transaction
 from django.db.models import Sum
-from django.db.models.functions import TruncMonth
+from django.db.models.functions import TruncMonth, TruncDay
 from django.core.paginator import Paginator
+from django.utils.dates import MONTHS
 from datetime import datetime
 from .models import Expense, ExpenseCategory
 from .forms import ExpenseForm, ExpenseCategoryForm
@@ -73,23 +74,42 @@ def expense_create(request):
 
 @login_required
 def expense_summary(request):
-    """Expense summary by category and month"""
+    """Expense summary by category and month/day"""
     try:
         year = int(request.GET.get('year', datetime.now().year))
     except (ValueError, TypeError):
         year = datetime.now().year
 
-    # By category
-    by_category = Expense.objects.filter(date__year=year).values(
+    try:
+        month = int(request.GET.get('month', 0))
+    except (ValueError, TypeError):
+        month = 0
+
+    # Base filters
+    filters = {'date__year': year}
+    if month:
+        filters['date__month'] = month
+
+    # By category (affected by both year and month)
+    by_category = Expense.objects.filter(**filters).values(
         'category__name'
     ).annotate(total=Sum('amount')).order_by('-total')
     
-    # By month
-    by_month = Expense.objects.filter(date__year=year).annotate(
-        month=TruncMonth('date')
-    ).values('month').annotate(total=Sum('amount')).order_by('month')
+    # Right side breakdown
+    if month:
+        # Daily breakdown if month is selected
+        breakdown = Expense.objects.filter(**filters).annotate(
+            period=TruncDay('date')
+        ).values('period').annotate(total=Sum('amount')).order_by('period')
+        breakdown_type = 'day'
+    else:
+        # Monthly breakdown if only year is selected
+        breakdown = Expense.objects.filter(date__year=year).annotate(
+            period=TruncMonth('date')
+        ).values('period').annotate(total=Sum('amount')).order_by('period')
+        breakdown_type = 'month'
     
-    total_expenses = Expense.objects.filter(date__year=year).aggregate(
+    total_expenses = Expense.objects.filter(**filters).aggregate(
         total=Sum('amount')
     )['total'] or Decimal('0')
     
@@ -98,15 +118,18 @@ def expense_summary(request):
         .distinct().order_by('-date__year')
     )
     if not available_years:
-        available_years = [datetime.now().year]
+        available_years = [year]
 
     context = {
         'title': _('Expense Summary'),
         'year': year,
+        'month': month,
         'available_years': available_years,
         'by_category': by_category,
-        'by_month': by_month,
+        'breakdown': breakdown,
+        'breakdown_type': breakdown_type,
         'total_expenses': total_expenses,
+        'months': MONTHS.items(),
     }
     return render(request, 'accounting/expense_summary.html', context)
 
@@ -114,7 +137,12 @@ def expense_summary(request):
 @login_required
 def expense_category_list(request):
     """List all expense categories."""
-    categories = ExpenseCategory.objects.all().order_by('name')
+    categories_list = ExpenseCategory.objects.all().order_by('name')
+    
+    paginator = Paginator(categories_list, 20)
+    page_number = request.GET.get('page')
+    categories = paginator.get_page(page_number)
+    
     return render(request, 'accounting/expense_category_list.html', {
         'title': _('Expense Categories'),
         'categories': categories

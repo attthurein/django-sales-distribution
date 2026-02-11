@@ -3,7 +3,7 @@ Master Data forms.
 """
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from .models import CompanySetting, Township, Currency, Region, Country
+from .models import CompanySetting, Township, Currency, Region, Country, Supplier, SupplierPhoneNumber
 from .utils import has_transactional_data
 from common.utils import get_regions_with_townships, get_countries_with_regions
 
@@ -29,12 +29,15 @@ class CompanySettingForm(forms.ModelForm):
     class Meta:
         model = CompanySetting
         fields = [
-            'name', 'logo', 'address', 'phone', 'email', 'tax_id',
+            'name', 'shop_name', 'logo', 'address', 'phone', 'email', 'tax_id',
             'footer_text', 'region', 'township', 'base_currency', 'default_country',
         ]
         widgets = {
             'name': forms.TextInput(
                 attrs={'class': 'form-control', 'placeholder': 'Company name'}
+            ),
+            'shop_name': forms.TextInput(
+                attrs={'class': 'form-control', 'placeholder': 'Shop name'}
             ),
             'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
@@ -95,30 +98,22 @@ class CompanySettingForm(forms.ModelForm):
         )
 
         if self.instance and self.instance.pk:
-            if self.instance.region_id:
-                self.fields['region_id'].initial = str(
-                    self.instance.region_id
-                )
-                if self.instance.region.country_id:
-                     self.fields['country_id'].initial = str(self.instance.region.country_id)
-            if self.instance.township_id:
-                self.fields['township'].initial = str(
-                    self.instance.township_id
-                )
+            if self.instance.township:
+                self.fields['township'].initial = str(self.instance.township.id)
+                if self.instance.township.region:
+                    self.fields['region_id'].initial = str(self.instance.township.region.id)
+                    if self.instance.township.region.country:
+                        self.fields['country_id'].initial = str(self.instance.township.region.country.id)
+            elif self.instance.region:
+                self.fields['region_id'].initial = str(self.instance.region.id)
+                if self.instance.region.country:
+                    self.fields['country_id'].initial = str(self.instance.region.country.id)
 
-        self.fields['base_currency'].queryset = Currency.objects.filter(
-            is_active=True
-        ).order_by('sort_order', 'code')
-        self.fields['base_currency'].empty_label = '---'
-        self.fields['base_currency'].required = False
-
-    def clean_base_currency(self):
-        """Reject base_currency change when transactional data exists."""
         if self.base_currency_locked:
-            if self.instance and self.instance.pk:
-                return self.instance.base_currency
-            return None
-        return self.cleaned_data.get('base_currency')
+            self.fields['base_currency'].disabled = True
+            self.fields['base_currency'].help_text = _(
+                "Currency cannot be changed because there are existing transactions."
+            )
 
     def clean_township(self):
         val = self.cleaned_data.get('township')
@@ -129,19 +124,36 @@ class CompanySettingForm(forms.ModelForm):
         except (Township.DoesNotExist, ValueError):
             return None
 
-    def clean_region_id(self):
-        val = self.cleaned_data.get('region_id')
-        if not val:
-            return None
-        try:
-            return int(val)
-        except ValueError:
-            return None
 
-    def save(self, commit=True):
-        obj = super().save(commit=False)
-        obj.region_id = self.cleaned_data.get('region_id')
-        obj.township = self.cleaned_data.get('township')
-        if commit:
-            obj.save()
-        return obj
+class SupplierForm(forms.ModelForm):
+    class Meta:
+        model = Supplier
+        fields = ['code', 'name_en', 'name_my', 'contact_person', 'phone', 'email', 'address', 'is_active']
+        widgets = {
+            'code': forms.TextInput(attrs={'class': 'form-control'}),
+            'name_en': forms.TextInput(attrs={'class': 'form-control'}),
+            'name_my': forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_person': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+
+class SupplierPhoneNumberForm(forms.ModelForm):
+    class Meta:
+        model = SupplierPhoneNumber
+        fields = ['phone', 'notes']
+        widgets = {
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'notes': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Notes')}),
+        }
+
+
+SupplierPhoneNumberFormSet = forms.inlineformset_factory(
+    Supplier, SupplierPhoneNumber,
+    form=SupplierPhoneNumberForm,
+    extra=0,
+    can_delete=True
+)

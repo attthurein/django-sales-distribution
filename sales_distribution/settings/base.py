@@ -95,6 +95,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
                 'master_data.context_processors.company_setting',
+                'common.context_processors.project_version',
             ],
         },
     },
@@ -159,6 +160,11 @@ LOGOUT_REDIRECT_URL = 'login'
 ORDER_NUMBER_PREFIX = env('ORDER_NUMBER_PREFIX', default='ORD')
 RETURN_NUMBER_PREFIX = env('RETURN_NUMBER_PREFIX', default='RET')
 RETURN_DAYS_LIMIT = env.int('RETURN_DAYS_LIMIT', default=7)
+
+# Project Version
+VERSION = '1.0.0'
+DEVELOPER_NAME = 'Thurein'
+DEVELOPER_URL = 'https://github.com/attthurein/django-sales-distribution'
 
 # REST Framework
 REST_FRAMEWORK = {

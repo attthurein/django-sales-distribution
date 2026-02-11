@@ -2,7 +2,8 @@
 CRM forms - ModelForm for Lead, ContactLog, SampleDelivery.
 """
 from django import forms
-from .models import Lead, ContactLog, SampleDelivery
+from django.utils.translation import gettext_lazy as _
+from .models import Lead, LeadPhoneNumber, ContactLog, SampleDelivery
 from master_data.constants import LEAD_STATUS_NEW
 from common.utils import get_countries_with_regions
 
@@ -62,6 +63,25 @@ class LeadForm(forms.ModelForm):
         if not self.instance.pk:
             self.fields['status'].widget = forms.HiddenInput()
             self.initial['status'] = LEAD_STATUS_NEW
+
+
+class LeadPhoneNumberForm(forms.ModelForm):
+    """Form for additional phone numbers."""
+    class Meta:
+        model = LeadPhoneNumber
+        fields = ['phone', 'notes']
+        widgets = {
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'notes': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Notes (e.g. Office)')}),
+        }
+
+
+LeadPhoneNumberFormSet = forms.inlineformset_factory(
+    Lead, LeadPhoneNumber,
+    form=LeadPhoneNumberForm,
+    extra=0,
+    can_delete=True
+)
 
 
 class ContactLogForm(forms.ModelForm):

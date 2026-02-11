@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% load i18n common_extras humanize %}
 
-{% block breadcrumb %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">{% trans "Orders" %}</li>
-    </ol>
-</nav>
-{% endblock %}
+{% block breadcrumb %}{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">{% trans "Orders" %}</h1>
-{% if perms.orders.add_salesorder %}
-<p><a href="{% url 'orders:order_create' %}" class="btn btn-primary mb-3">{% trans "Create Order" %}</a></p>
-{% endif %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">
+        <i class="bi bi-receipt me-2"></i>{% trans "Orders" %}
+    </h1>
+    {% if perms.orders.add_salesorder %}
+    <a href="{% url 'orders:order_create' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i>{% trans "Create Order" %}
+    </a>
+    {% endif %}
+</div>
 
 <div class="card mb-4">
     <div class="card-body">
@@ -175,17 +175,6 @@
     </tbody>
 </table>
 </div>
-{% if orders.paginator.num_pages > 1 %}
-<nav aria-label="Order pagination" class="mt-3">
-    <ul class="pagination justify-content-center">
-        {% if orders.has_previous %}
-        <li class="page-item"><a class="page-link" href="?page={{ orders.previous_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if order_type_filter %}&order_type={{ order_type_filter }}{% endif %}{% if customer_filter %}&customer={{ customer_filter }}{% endif %}{% if date_from %}&date_from={{ date_from }}{% endif %}{% if date_to %}&date_to={{ date_to }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_direction %}&direction={{ current_direction }}{% endif %}">{% trans "Previous" %}</a></li>
-        {% endif %}
-        <li class="page-item disabled"><span class="page-link">{% blocktrans with page=orders.number total=orders.paginator.num_pages %}Page {{ page }} of {{ total }}{% endblocktrans %}</span></li>
-        {% if orders.has_next %}
-        <li class="page-item"><a class="page-link" href="?page={{ orders.next_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if order_type_filter %}&order_type={{ order_type_filter }}{% endif %}{% if customer_filter %}&customer={{ customer_filter }}{% endif %}{% if date_from %}&date_from={{ date_from }}{% endif %}{% if date_to %}&date_to={{ date_to }}{% endif %}{% if region_filter %}&region={{ region_filter }}{% endif %}{% if township_filter %}&township={{ township_filter }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_direction %}&direction={{ current_direction }}{% endif %}">{% trans "Next" %}</a></li>
-        {% endif %}
-    </ul>
-</nav>
-{% endif %}
+
+{% include "includes/pagination.html" with page_obj=orders %}
 {% endblock %}

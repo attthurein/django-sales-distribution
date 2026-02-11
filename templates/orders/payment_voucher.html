@@ -10,6 +10,7 @@
         font-weight: normal;
         font-style: normal;
     }
+
     @font-face {
         font-family: 'Pyidaungsu';
         src: url("{% static 'fonts/Pyidaungsu-Bold.ttf' %}") format('truetype');
@@ -21,7 +22,7 @@
         @page {
             margin: 0;
         }
-        
+
         body {
             margin: 0;
             padding: 0;
@@ -34,7 +35,13 @@
            or browser print settings. We can't fully control user settings but @page margin 0 helps. */
 
         /* Hide navigation and other non-print elements */
-        nav, .navbar, .no-print, header, footer, .btn, .breadcrumb {
+        nav,
+        .navbar,
+        .no-print,
+        header,
+        footer,
+        .btn,
+        .breadcrumb {
             display: none !important;
         }
 
@@ -58,7 +65,7 @@
         background: white;
         padding: 40px;
         border: 1px solid #ddd;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         max-width: 800px;
         margin: 20px auto;
         font-family: 'Pyidaungsu', 'Noto Sans Myanmar', sans-serif;
@@ -204,7 +211,10 @@
         </div>
         {% endif %}
         <div class="company-name">
-            {% if company_setting and company_setting.name %}{{ company_setting.name }}{% else %}Sales Distribution{% endif %}
+            {% if company_setting and company_setting.shop_name %}<div class="h2 mb-1">{{ company_setting.shop_name }}
+            </div>{% endif %}
+            {% if company_setting and company_setting.name %}<div class="h4 text-muted mb-0">{{ company_setting.name }}
+            </div>{% else %}Sales Distribution{% endif %}
         </div>
         <div class="small text-muted">
             {% if company_setting.address %}{{ company_setting.address }}<br>{% endif %}
@@ -216,12 +226,13 @@
     <!-- Meta Info -->
     <div class="voucher-meta">
         <div class="meta-group text-start">
-            <div><span class="label">{% trans "Voucher No" %}:</span> <span class="fw-bold">{{ payment.voucher_number }}</span></div>
+            <div><span class="label">{% trans "Voucher No" %}:</span> <span class="fw-bold">{{ payment.voucher_number
+                    }}</span></div>
             <div><span class="label">{% trans "Date" %}:</span> {{ payment.payment_date|date:"d F Y" }}</div>
         </div>
         <div class="meta-group text-end">
-             <div><span class="label">{% trans "Ref No" %}:</span> {{ payment.reference_number|default:"-" }}</div>
-             <div><span class="label">{% trans "Method" %}:</span> {{ payment.payment_method.name_en }}</div>
+            <div><span class="label">{% trans "Ref No" %}:</span> {{ payment.reference_number|default:"-" }}</div>
+            <div><span class="label">{% trans "Method" %}:</span> {{ payment.payment_method.name_en }}</div>
         </div>
     </div>
 
@@ -254,7 +265,8 @@
     <!-- Amount Box -->
     <div class="amount-box">
         <div class="amount-label">{% trans "Amount Received" %}</div>
-        <div class="amount-value">{{ payment.payment_method.name_en }} - {{ payment.amount|intcomma }} <small style="font-size: 16px;">{% currency_suffix %}</small></div>
+        <div class="amount-value">{{ payment.payment_method.name_en }} - {{ payment.amount|intcomma }} <small
+                style="font-size: 16px;">{% currency_suffix %}</small></div>
         {% if payment.notes %}
         <div class="mt-2 text-muted fst-italic small">"{{ payment.notes }}"</div>
         {% endif %}
@@ -263,7 +275,8 @@
     <!-- Signatures -->
     <div class="signature-section">
         <div class="signature-box">
-            <div class="small text-muted mb-1">{{ payment.created_by.get_full_name|default:payment.created_by.username }}</div>
+            <div class="small text-muted mb-1">{{ payment.created_by.get_full_name|default:payment.created_by.username
+                }}</div>
             <div class="signature-line"></div>
             <div>{% trans "Received By" %}</div>
         </div>
@@ -276,7 +289,8 @@
 
     <!-- Footer -->
     <div class="footer-note">
-        <p>{% if company_setting.footer_text %}{{ company_setting.footer_text|linebreaksbr }}{% else %}{% trans "Thank you for your business!" %}{% endif %}</p>
+        <p>{% if company_setting.footer_text %}{{ company_setting.footer_text|linebreaksbr }}{% else %}{% trans "Thank
+            you for your business!" %}{% endif %}</p>
         <p class="small text-muted">Generated on {{ payment.created_at|date:"d-m-Y H:i" }}</p>
     </div>
 </div>
@@ -285,11 +299,11 @@
     function downloadPDF() {
         const element = document.getElementById('voucher-content');
         const opt = {
-            margin:       5,
-            filename:     'Voucher_{{ payment.voucher_number }}.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'mm', format: 'a5', orientation: 'portrait' }
+            margin: 5,
+            filename: 'Voucher_{{ payment.voucher_number }}.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' }
         };
         // Use html2pdf to save the file
         html2pdf().set(opt).from(element).save();

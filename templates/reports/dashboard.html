@@ -1,127 +1,148 @@
 {% extends "base.html" %}
-{% load humanize static %}
+{% load humanize static i18n %}
 
-{% block title %}Executive Dashboard{% endblock %}
+{% block title %}{% trans "Executive Dashboard" %}{% endblock %}
+
+{% block extra_css %}
+{% include "reports/partials/print_css.html" %}
+{% endblock %}
 
 {% block content %}
-<div class="container-fluid py-4">
-    <div class="row mb-4">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-            <h1 class="h3 mb-0 text-gray-800">Executive Dashboard</h1>
-            <a href="{% url 'reports:report_index' %}" class="btn btn-sm btn-secondary">
-                <i class="fas fa-arrow-left"></i> All Reports
-            </a>
-        </div>
-    </div>
+<table class="print-layout-table">
+    <thead class="print-layout-header">
+        <tr>
+            <td>
+                <div class="print-header">
+                    {% include "reports/partials/print_header.html" %}
+                    <h4 class="text-center fw-bold mb-3">
+                        {% trans "Executive Dashboard" %}
+                    </h4>
+                </div>
+            </td>
+        </tr>
+    </thead>
+    <tbody class="print-layout-body">
+        <tr>
+            <td class="print-layout-cell">
+                <div class="d-flex justify-content-between align-items-center mb-4 d-print-none">
+                    <h1 class="mb-0">
+                        <i class="bi bi-speedometer2 me-2"></i>{% trans "Executive Dashboard" %}
+                    </h1>
+                    <div class="d-flex gap-2">
+                        <button onclick="window.print()" class="btn btn-outline-primary">
+                            <i class="bi bi-printer"></i> {% trans "Print" %}
+                        </button>
+                        <a href="{% url 'reports:report_index' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>{% trans "Back to Reports" %}
+                        </a>
+                    </div>
+                </div>
 
-    <!-- Today's Snapshot -->
-    <div class="row mb-4">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Revenue (Today)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ today_summary.revenue|intcomma }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Payments Collected (Today)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ today_summary.payments|intcomma }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                <div class="row mb-4">
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Revenue (Today)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ today_summary.revenue|intcomma }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="bi bi-calendar fs-2 text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Orders (Today)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ today_summary.orders }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Payments Collected (Today)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ today_summary.payments|intcomma }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="bi bi-currency-dollar fs-2 text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                Expenses (Today)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ today_summary.expenses|intcomma }}</div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            Orders (Today)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ today_summary.orders }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="bi bi-cart fs-2 text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-danger shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                            Expenses (Today)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ today_summary.expenses|intcomma }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="bi bi-clipboard-data fs-2 text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Charts Row -->
-    <div class="row">
-        <div class="col-xl-8 col-lg-7">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Revenue vs Expenses (Last 7 Days)</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="revenueChart"></canvas>
+                <div class="row">
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Revenue vs Expenses (Last 7 Days)</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <canvas id="revenueChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Cash Flow (Last 7 Days)</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="cashFlowChart"></canvas>
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Cash Flow (Last 7 Days)</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <canvas id="cashFlowChart"></canvas>
+                                </div>
+                                <div class="mt-4 text-center small">
+                                    <span class="mr-2">
+                                        <i class="bi bi-circle-fill text-success"></i> In (Payments)
+                                    </span>
+                                    <span class="mr-2">
+                                        <i class="bi bi-circle-fill text-danger"></i> Out (Expenses)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mt-4 text-center small">
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-success"></i> In (Payments)
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-danger"></i> Out (Expenses)
-                        </span>
-                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script src="{% static 'js/chart.js' %}"></script>
 {{ chart_data.labels|json_script:"chart-labels" }}
@@ -130,13 +151,11 @@
 {{ chart_data.payments|json_script:"chart-payments" }}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Data from Django
     const labels = JSON.parse(document.getElementById('chart-labels').textContent);
     const revenueData = JSON.parse(document.getElementById('chart-revenue').textContent);
     const expenseData = JSON.parse(document.getElementById('chart-expenses').textContent);
     const paymentData = JSON.parse(document.getElementById('chart-payments').textContent);
 
-    // Revenue vs Expenses Chart
     var ctx = document.getElementById("revenueChart");
     var myLineChart = new Chart(ctx, {
         type: 'line',
@@ -194,7 +213,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Cash Flow Chart (Bar)
     var ctx2 = document.getElementById("cashFlowChart");
     var myPieChart = new Chart(ctx2, {
         type: 'bar',
@@ -231,8 +249,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function number_format(number, decimals, dec_point, thousands_sep) {
-        // *     example: number_format(1234.56, 2, ',', ' ');
-        // *     return: '1 234,56'
         number = (number + '').replace(',', '').replace(' ', '');
         var n = !isFinite(+number) ? 0 : +number,
             prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
@@ -255,4 +271,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot class="print-layout-footer">
+        <tr>
+            <td>
+                {% include "reports/partials/print_footer.html" %}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}
+
+{% block extra_js %}
+{% include "reports/partials/print_script.html" %}
 {% endblock %}

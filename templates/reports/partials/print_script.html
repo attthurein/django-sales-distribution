@@ -1,0 +1,13 @@
+<script>
+    function updatePrintDate() {
+        const now = new Date();
+        const dateString = now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        const printDateEl = document.getElementById('print-date');
+        if (printDateEl) {
+            printDateEl.textContent = dateString;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', updatePrintDate);
+    window.addEventListener('beforeprint', updatePrintDate);
+</script>

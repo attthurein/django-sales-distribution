@@ -66,6 +66,20 @@ class Customer(SoftDeleteMixin):
         return f"{self.name} ({self.phone})"
 
 
+class CustomerPhoneNumber(models.Model):
+    """Additional phone numbers for a Customer."""
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='additional_phones')
+    phone = models.CharField(max_length=20, verbose_name=_("Phone"))
+    notes = models.CharField(max_length=100, blank=True, verbose_name=_("Notes"))
+
+    class Meta:
+        verbose_name = _("Customer phone number")
+        verbose_name_plural = _("Customer phone numbers")
+
+    def __str__(self):
+        return f"{self.phone} ({self.customer.name})"
+
+
 class Salesperson(SoftDeleteMixin):
     """Sales rep for order assignment."""
     name = models.CharField(max_length=200, verbose_name=_("Name"))
@@ -85,3 +99,17 @@ class Salesperson(SoftDeleteMixin):
 
     def __str__(self):
         return self.name
+
+
+class SalespersonPhoneNumber(models.Model):
+    """Additional phone numbers for a Salesperson."""
+    salesperson = models.ForeignKey(Salesperson, on_delete=models.CASCADE, related_name='additional_phones')
+    phone = models.CharField(max_length=20, verbose_name=_("Phone"))
+    notes = models.CharField(max_length=100, blank=True, verbose_name=_("Notes"))
+
+    class Meta:
+        verbose_name = _("Salesperson phone number")
+        verbose_name_plural = _("Salesperson phone numbers")
+
+    def __str__(self):
+        return f"{self.phone} ({self.salesperson.name})"

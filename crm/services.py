@@ -11,6 +11,9 @@ from core.services import deduct_stock
 from master_data.constants import SAMPLE_STATUS_GIVEN, LEAD_STATUS_CONTACTED, LEAD_STATUS_SAMPLE_GIVEN, LEAD_STATUS_CONVERTED
 
 
+from customers.models import Customer, CustomerPhoneNumber
+
+
 def convert_lead_to_customer(lead, customer_type, user=None):
     """
     Convert lead to customer. Creates or updates customer, links lead.
@@ -53,6 +56,15 @@ def convert_lead_to_customer(lead, customer_type, user=None):
                     customer_type=customer_type,
                     township_id=lead.township_id,
                 )
+        
+        # Copy additional phones
+        for lead_phone in lead.additional_phones.all():
+            CustomerPhoneNumber.objects.get_or_create(
+                customer=customer,
+                phone=lead_phone.phone,
+                defaults={'notes': lead_phone.notes}
+            )
+
         lead.customer = customer
         lead.status = LEAD_STATUS_CONVERTED
         lead.save()

@@ -2,17 +2,29 @@ from django.contrib import admin
 from .models import (
     CustomerType, ReturnReason, ReturnType, PaymentMethod,
     OrderStatus, ReturnRequestStatus, ProductCategory, UnitOfMeasure, TaxRate,
-    ContactType, Region, Township, DeliveryRoute, Supplier, Promotion,
+    ContactType, Region, Township, DeliveryRoute, Supplier, SupplierPhoneNumber, Promotion,
     Currency, CompanySetting, Country
 )
 
 
 @admin.register(CustomerType, ReturnReason, ReturnType, PaymentMethod,
                 OrderStatus, ReturnRequestStatus, ProductCategory, UnitOfMeasure, TaxRate,
-                ContactType, Country, DeliveryRoute, Supplier, Currency)
+                ContactType, Country, DeliveryRoute, Currency)
 class MasterDataAdmin(admin.ModelAdmin):
     list_display = ['code', 'name_en', 'name_my', 'is_active']
     list_filter = ['is_active']
+
+
+class SupplierPhoneNumberInline(admin.TabularInline):
+    model = SupplierPhoneNumber
+    extra = 1
+
+
+@admin.register(Supplier)
+class SupplierAdmin(admin.ModelAdmin):
+    list_display = ['code', 'name_en', 'name_my', 'phone', 'is_active']
+    list_filter = ['is_active']
+    inlines = [SupplierPhoneNumberInline]
 
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):

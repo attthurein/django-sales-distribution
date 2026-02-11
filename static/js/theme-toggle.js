@@ -4,7 +4,7 @@ const ThemeToggle = {
 
     init() {
         this.applyTheme(this.getPreference());
-        this.createToggleButton();
+        this.initToggleButton();
     },
 
     getPreference() {
@@ -17,7 +17,7 @@ const ThemeToggle = {
     },
 
     applyTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-bs-theme', theme);
 
         // Update toggle button icon if it exists
         const icon = document.querySelector('#theme-toggle-icon');
@@ -32,24 +32,14 @@ const ThemeToggle = {
         this.setPreference(newTheme);
     },
 
-    createToggleButton() {
-        const navbarNav = document.querySelector('.navbar-nav:last-of-type');
-        if (!navbarNav) return;
-
-        const li = document.createElement('li');
-        li.className = 'nav-item';
-
-        const button = document.createElement('button');
-        button.className = 'nav-link btn btn-link';
-        button.setAttribute('aria-label', 'Toggle dark mode');
-        button.innerHTML = `<i id="theme-toggle-icon" class="bi bi-moon-fill"></i>`;
-        button.addEventListener('click', () => this.toggle());
-
-        li.appendChild(button);
-        navbarNav.insertBefore(li, navbarNav.firstChild);
-
-        // Update icon based on current theme
-        this.applyTheme(this.getPreference());
+    initToggleButton() {
+        const button = document.querySelector('#theme-toggle-btn');
+        if (button) {
+            // Remove any existing event listeners to prevent duplicates (though init runs once usually)
+            button.replaceWith(button.cloneNode(true));
+            const newButton = document.querySelector('#theme-toggle-btn');
+            newButton.addEventListener('click', () => this.toggle());
+        }
     }
 };
 

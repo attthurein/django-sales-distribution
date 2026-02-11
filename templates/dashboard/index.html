@@ -16,53 +16,92 @@
 
 <div class="row g-3 mb-4">
     <div class="col-md-3">
-        <div class="card text-white bg-gradient-primary h-100 shadow metric-card">
+        <div class="card text-white bg-gradient-primary h-100 shadow-sm metric-card card-hover">
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-start mb-3">
                     <div>
-                        <h6 class="card-subtitle mb-2 opacity-75"><i class="bi bi-currency-dollar"></i> {% trans "Today's Sales" %}
+                        <h6 class="card-subtitle mb-2 opacity-75">
+                            <i class="bi bi-currency-dollar"></i> {% trans "Today's Sales" %}
                         </h6>
-                        <h3 class="card-title mb-0 fw-bold">{{ today_sales|floatformat:0|intcomma }}</h3>
+                        <h3 class="card-title mb-1 fw-bold">{{ today_sales|floatformat:0|intcomma }}</h3>
                         <small class="opacity-75">{% currency_suffix %}</small>
                     </div>
-                    <div class="fs-1 opacity-50">
-                        <i class="bi bi-currency-dollar"></i>
+                    <div class="fs-1 opacity-25">
+                        <i class="bi bi-graph-up-arrow"></i>
                     </div>
+                </div>
+                <div
+                    class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-white border-opacity-25">
+                    <small class="opacity-75">
+                        {% if sales_growth >= 0 %}
+                        <i class="bi bi-arrow-up"></i> {{ sales_growth|floatformat:0 }}% {% trans "vs yesterday" %}
+                        {% else %}
+                        <i class="bi bi-arrow-down"></i> {{ sales_growth|abs|floatformat:0 }}% {% trans "vs yesterday" %}
+                        {% endif %}
+                    </small>
+                    <a href="{% url 'orders:order_list' %}" class="btn btn-sm btn-light btn-sm opacity-75">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card text-white bg-gradient-info h-100 shadow metric-card">
+        <div class="card text-white bg-gradient-info h-100 shadow-sm metric-card card-hover">
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-start mb-3">
                     <div>
-                        <h6 class="card-subtitle mb-2 opacity-75"><i class="bi bi-clock-history"></i> {% trans "Pending Orders" %}
+                        <h6 class="card-subtitle mb-2 opacity-75">
+                            <i class="bi bi-clock-history"></i> {% trans "Pending Orders" %}
                         </h6>
-                        <h3 class="card-title mb-0 fw-bold">{{ pending_orders }}</h3>
+                        <h3 class="card-title mb-1 fw-bold">{{ pending_orders }}</h3>
                         <small class="opacity-75">{% trans "orders" %}</small>
                     </div>
-                    <div class="fs-1 opacity-50">
+                    <div class="fs-1 opacity-25">
                         <i class="bi bi-hourglass-split"></i>
                     </div>
+                </div>
+                <div
+                    class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-white border-opacity-25">
+                    <small class="opacity-75">
+                        <i class="bi bi-clock"></i> {% trans "Needs attention" %}
+                    </small>
+                    <a href="{% url 'orders:order_list' %}?status=pending"
+                        class="btn btn-sm btn-light btn-sm opacity-75">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
         <a href="{% url 'core:low_stock_list' %}" class="text-decoration-none">
-            <div class="card text-white bg-gradient-warning h-100 shadow metric-card">
+            <div class="card text-white bg-gradient-warning h-100 shadow-sm metric-card card-hover">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
-                            <h6 class="card-subtitle mb-2 opacity-75"><i class="bi bi-exclamation-triangle"></i> {% trans "Low Stock" %}
+                            <h6 class="card-subtitle mb-2 opacity-75">
+                                <i class="bi bi-exclamation-triangle"></i> {% trans "Low Stock" %}
                             </h6>
-                            <h3 class="card-title mb-0 fw-bold">{{ low_stock_count }}</h3>
+                            <h3 class="card-title mb-1 fw-bold">{{ low_stock_count }}</h3>
                             <small class="opacity-75">{% trans "products" %}</small>
                         </div>
-                        <div class="fs-1 opacity-50">
+                        <div class="fs-1 opacity-25">
                             <i class="bi bi-box-seam"></i>
                         </div>
+                    </div>
+                    <div
+                        class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-white border-opacity-25">
+                        <small class="opacity-75">
+                            {% if low_stock_count > 0 %}
+                            <i class="bi bi-exclamation-circle"></i> {% trans "Restock needed" %}
+                            {% else %}
+                            <i class="bi bi-check-circle"></i> {% trans "All good" %}
+                            {% endif %}
+                        </small>
+                        <span class="btn btn-sm btn-light btn-sm opacity-75">
+                            <i class="bi bi-arrow-right"></i>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -70,17 +109,32 @@
     </div>
     <div class="col-md-3">
         <a href="{% url 'reports:outstanding_payments' %}" class="text-decoration-none">
-            <div class="card text-white bg-gradient-danger h-100 shadow metric-card">
+            <div class="card text-white bg-gradient-danger h-100 shadow-sm metric-card card-hover">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
-                            <h6 class="card-subtitle mb-2 opacity-75"><i class="bi bi-calendar-x"></i> {% trans "Overdue" %}</h6>
-                            <h3 class="card-title mb-0 fw-bold">{{ overdue_count }}</h3>
-                            <small class="opacity-75">{% trans "orders" %}</small>
+                            <h6 class="card-subtitle mb-2 opacity-75">
+                                <i class="bi bi-calendar-x"></i> {% trans "Overdue" %}
+                            </h6>
+                            <h3 class="card-title mb-1 fw-bold">{{ overdue_count }}</h3>
+                            <small class="opacity-75">{% trans "payments" %}</small>
                         </div>
-                        <div class="fs-1 opacity-50">
+                        <div class="fs-1 opacity-25">
                             <i class="bi bi-exclamation-circle"></i>
                         </div>
+                    </div>
+                    <div
+                        class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-white border-opacity-25">
+                        <small class="opacity-75">
+                            {% if overdue_count > 0 %}
+                            <i class="bi bi-bell"></i> {% trans "Action required" %}
+                            {% else %}
+                            <i class="bi bi-check-circle"></i> {% trans "All clear" %}
+                            {% endif %}
+                        </small>
+                        <span class="btn btn-sm btn-light btn-sm opacity-75">
+                            <i class="bi bi-arrow-right"></i>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -91,7 +145,8 @@
 {% if expiry_alert %}
 <div class="alert alert-info d-flex align-items-start" role="alert">
     <div>
-        <strong>{% trans "Expiry alert" %}</strong>: {% blocktrans count count=expiry_alert %}{{ count }} product expiring soon{% plural %}{{ count }} products expiring soon{% endblocktrans %}
+        <strong>{% trans "Expiry alert" %}</strong>: {% blocktrans count count=expiry_alert %}{{ count }} product
+        expiring soon{% plural %}{{ count }} products expiring soon{% endblocktrans %}
         <a class="btn btn-sm btn-outline-dark mt-2 ms-2" href="{% url 'core:product_list' %}">{% trans "View Products" %}</a>
     </div>
 </div>
@@ -111,6 +166,29 @@
 {% endif %}
 
 <div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card shadow h-100">
+            <div class="card-header bg-white border-bottom">
+                <i class="bi bi-pie-chart me-2"></i>{% trans "Stock by Category" %}
+            </div>
+            <div class="card-body">
+                <canvas id="stockCategoryChart" style="max-height: 300px;"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow h-100">
+            <div class="card-header bg-white border-bottom">
+                <i class="bi bi-graph-up me-2"></i>{% trans "Orders Overview" %}
+            </div>
+            <div class="card-body">
+                <canvas id="ordersChart" style="max-height: 300px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
     <div class="col-lg-8">
         <div class="card shadow h-100">
             <div class="card-header bg-white border-bottom"><i class="bi bi-receipt me-2"></i>{% trans "Recent Orders" %}</div>
@@ -128,25 +206,25 @@
                         </thead>
                         <tbody>
                             {% if recent_orders %}
-                                {% for o in recent_orders %}
-                                <tr>
-                                    <td data-label="{% trans 'Order' %}"><a href="{% url 'orders:order_detail' o.pk %}">{{ o.order_number }}</a></td>
-                                    <td data-label="{% trans 'Customer' %}">{{ o.customer.name }}</td>
-                                    <td data-label="{% trans 'Type' %}">
-                                        {% if o.order_type == 'REPLACEMENT' %}
-                                            <span class="badge bg-warning text-dark"><i class="bi bi-arrow-repeat"></i> {% trans "Replacement" %}</span>
-                                        {% elif o.order_type == 'PRE_ORDER' %}
-                                            <span class="badge bg-info"><i class="bi bi-clock-history"></i> {% trans "Pre-order" %}</span>
-                                        {% else %}
-                                            <span class="badge bg-light text-dark border">{% trans "Normal" %}</span>
-                                        {% endif %}
-                                    </td>
-                                    <td data-label="{% trans 'Status' %}">
-                                        <span class="badge bg-info">{{ o.status|master_name }}</span>
-                                    </td>
-                                    <td data-label="{% trans 'Amount' %}">{{ o.total_amount|floatformat:0|intcomma }} {% currency_suffix %}</td>
-                                </tr>
-                                {% endfor %}
+                            {% for o in recent_orders %}
+                            <tr>
+                                <td data-label="{% trans 'Order' %}"><a href="{% url 'orders:order_detail' o.pk %}">{{ o.order_number }}</a></td>
+                                <td data-label="{% trans 'Customer' %}">{{ o.customer.name }}</td>
+                                <td data-label="{% trans 'Type' %}">
+                                    {% if o.order_type == 'REPLACEMENT' %}
+                                    <span class="badge bg-warning text-dark"><i class="bi bi-arrow-repeat"></i> {% trans "Replacement" %}</span>
+                                    {% elif o.order_type == 'PRE_ORDER' %}
+                                    <span class="badge bg-info"><i class="bi bi-clock-history"></i> {% trans "Pre-order" %}</span>
+                                    {% else %}
+                                    <span class="badge bg-light text-dark border">{% trans "Normal" %}</span>
+                                    {% endif %}
+                                </td>
+                                <td data-label="{% trans 'Status' %}">
+                                    <span class="badge bg-info">{{ o.status|master_name }}</span>
+                                </td>
+                                <td data-label="{% trans 'Amount' %}">{{ o.total_amount|floatformat:0|intcomma }} {% currency_suffix %}</td>
+                            </tr>
+                            {% endfor %}
                             {% else %}
                             <tr>
                                 <td colspan="5" class="text-muted text-center py-4">{% trans "No orders yet." %}</td>
@@ -172,12 +250,13 @@
                         </thead>
                         <tbody>
                             {% if recent_returns %}
-                                {% for r in recent_returns %}
-                                <tr>
-                                    <td data-label="{% trans 'Return' %}"><a href="{% url 'returns:return_detail' r.pk %}">{{ r.return_number }}</a></td>
-                                    <td data-label="{% trans 'Status' %}"><span class="badge bg-secondary">{{ r.status|master_name }}</span></td>
-                                </tr>
-                                {% endfor %}
+                            {% for r in recent_returns %}
+                            <tr>
+                                <td data-label="{% trans 'Return' %}"><a
+                                        href="{% url 'returns:return_detail' r.pk %}">{{ r.return_number }}</a></td>
+                                <td data-label="{% trans 'Status' %}"><span class="badge bg-secondary">{{ r.status|master_name }}</span></td>
+                            </tr>
+                            {% endfor %}
                             {% else %}
                             <tr>
                                 <td colspan="2" class="text-muted text-center py-4">{% trans "No returns" %}</td>
@@ -207,13 +286,15 @@
                         </thead>
                         <tbody>
                             {% if recent_movements %}
-                                {% for m in recent_movements %}
-                                <tr>
-                                    <td data-label="{% trans 'Product' %}"><a href="{% url 'core:product_detail' m.product.pk %}">{{ m.product.name }}</a></td>
-                                    <td data-label="{% trans 'Type' %}">{{ m.get_movement_type_display }}</td>
-                                    <td data-label="{% trans 'Qty' %}">{{ m.quantity }}</td>
-                                </tr>
-                                {% endfor %}
+                            {% for m in recent_movements %}
+                            <tr>
+                                <td data-label="{% trans 'Product' %}"><a
+                                        href="{% url 'core:product_detail' m.product.pk %}">{{ m.product.name }}</a>
+                                </td>
+                                <td data-label="{% trans 'Type' %}">{{ m.get_movement_type_display }}</td>
+                                <td data-label="{% trans 'Qty' %}">{{ m.quantity }}</td>
+                            </tr>
+                            {% endfor %}
                             {% else %}
                             <tr>
                                 <td colspan="3" class="text-muted text-center py-4">{% trans "No movements" %}</td>
@@ -243,13 +324,14 @@
                         </thead>
                         <tbody>
                             {% if products_with_stock %}
-                                {% for p in products_with_stock %}
-                                <tr>
-                                    <td data-label="{% trans 'Product' %}"><a href="{% url 'core:product_detail' p.pk %}">{{ p.name }}</a></td>
-                                    <td data-label="{% trans 'Category' %}">{% if p.category %}{{ p.category|master_name }}{% else %}-{% endif %}</td>
-                                    <td data-label="{% trans 'Stock' %}">{{ p.stock_quantity }}</td>
-                                </tr>
-                                {% endfor %}
+                            {% for p in products_with_stock %}
+                            <tr>
+                                <td data-label="{% trans 'Product' %}"><a href="{% url 'core:product_detail' p.pk %}">{{ p.name }}</a></td>
+                                <td data-label="{% trans 'Category' %}">{% if p.category %}{{ p.category|master_name
+                                    }}{% else %}-{% endif %}</td>
+                                <td data-label="{% trans 'Stock' %}">{{ p.stock_quantity }}</td>
+                            </tr>
+                            {% endfor %}
                             {% else %}
                             <tr>
                                 <td colspan="3" class="text-muted text-center py-4">{% trans "No products" %}</td>
@@ -275,12 +357,12 @@
                         </thead>
                         <tbody>
                             {% if stock_by_category %}
-                                {% for c in stock_by_category %}
-                                <tr>
-                                    <td data-label="{% trans 'Category' %}">{% if request.LANGUAGE_CODE == 'my' and c.category__name_my %}{{ c.category__name_my }}{% else %}{{ c.category__name_en|default:"-" }}{% endif %}</td>
-                                    <td data-label="{% trans 'Total Stock' %}">{{ c.total|floatformat:0|intcomma }}</td>
-                                </tr>
-                                {% endfor %}
+                            {% for c in stock_by_category %}
+                            <tr>
+                                <td data-label="{% trans 'Category' %}">{% if request.LANGUAGE_CODE == 'my' and c.category__name_my %}{{ c.category__name_my }}{% else %}{{ c.category__name_en|default:"-" }}{% endif %}</td>
+                                <td data-label="{% trans 'Total Stock' %}">{{ c.total|floatformat:0|intcomma }}</td>
+                            </tr>
+                            {% endfor %}
                             {% else %}
                             <tr>
                                 <td colspan="2" class="text-muted text-center py-4">{% trans "No stock data" %}</td>
@@ -298,53 +380,118 @@
     <div class="col-12">
         <div class="card shadow">
             <div class="card-header bg-white border-bottom"><i class="bi bi-calendar-event me-2"></i>{% trans "Expiring within 2 days (by shop)" %}</div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <div class="d-flex justify-content-between align-items-center p-2">
-                            <input type="text" class="form-control form-control-sm w-50" id="expShopSearch"
-                                placeholder="{% trans 'Search product or shop' %}">
-                        </div>
-                        <table class="table table-striped table-stack mb-0" data-stack id="expShopTable">
-                            <thead>
-                                <tr>
-                                    <th>{% trans "Product" %}</th>
-                                    <th>{% trans "Expiry Date" %}</th>
-                                    <th>{% trans "Phone" %}</th>
-                                    <th>{% trans "Customer" %}</th>
-                                    <th>{% trans "Remaining" %}</th>
-                                    <th>{% trans "D-day" %}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if expiring_by_shop %}
-                                    {% for x in expiring_by_shop %}
-                                    <tr>
-                                        <td data-label="{% trans 'Product' %}">{{ x.product_name }}</td>
-                                        <td data-label="{% trans 'Expiry Date' %}">{{ x.expiry_date }}</td>
-                                        <td data-label="{% trans 'Phone' %}">{{ x.phone }}</td>
-                                        <td data-label="{% trans 'Customer' %}">{{ x.customer_name }}</td>
-                                        <td data-label="{% trans 'Remaining' %}">{{ x.remaining }}</td>
-                                        <td data-label="{% trans 'D-day' %}"><span
-                                                class="badge {% if x.days_left <= 1 %}bg-danger{% else %}bg-warning{% endif %}"
-                                                data-bs-toggle="tooltip" title="{% trans 'Days until expiry' %}">{{ x.days_left }}
-                                                {% trans "days" %}</span></td>
-                                    </tr>
-                                    {% endfor %}
-                                {% else %}
-                                <tr>
-                                    <td colspan="6" class="text-muted text-center py-4">{% trans "No expiring products" %}</td>
-                                </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <div class="d-flex justify-content-between align-items-center p-2">
+                        <input type="text" class="form-control form-control-sm w-50" id="expShopSearch"
+                            placeholder="{% trans 'Search product or shop' %}">
                     </div>
+                    <table class="table table-striped table-stack mb-0" data-stack id="expShopTable">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Product" %}</th>
+                                <th>{% trans "Expiry Date" %}</th>
+                                <th>{% trans "Phone" %}</th>
+                                <th>{% trans "Customer" %}</th>
+                                <th>{% trans "Remaining" %}</th>
+                                <th>{% trans "D-day" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if expiring_by_shop %}
+                            {% for x in expiring_by_shop %}
+                            <tr>
+                                <td data-label="{% trans 'Product' %}">{{ x.product_name }}</td>
+                                <td data-label="{% trans 'Expiry Date' %}">{{ x.expiry_date }}</td>
+                                <td data-label="{% trans 'Phone' %}">{{ x.phone }}</td>
+                                <td data-label="{% trans 'Customer' %}">{{ x.customer_name }}</td>
+                                <td data-label="{% trans 'Remaining' %}">{{ x.remaining }}</td>
+                                <td data-label="{% trans 'D-day' %}"><span
+                                        class="badge {% if x.days_left <= 1 %}bg-danger{% else %}bg-warning{% endif %}"
+                                        data-bs-toggle="tooltip" title="{% trans 'Days until expiry' %}">{{ x.days_left
+                                        }}
+                                        {% trans "days" %}</span></td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-muted text-center py-4">{% trans "No expiring products" %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script src="{% static 'js/dashboard.js' %}"></script>
+<script src="{% static 'js/chart.js' %}"></script>
+{{ stock_chart_data|json_script:"stock-data" }}
+{{ pending_orders|default:0|json_script:"pending-data" }}
+{{ overdue_count|default:0|json_script:"overdue-data" }}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Stock by Category Chart
+        const stockData = JSON.parse(document.getElementById('stock-data').textContent);
+
+        const ctxStock = document.getElementById('stockCategoryChart').getContext('2d');
+        new Chart(ctxStock, {
+            type: 'doughnut',
+            data: {
+                labels: stockData.map(d => d.label),
+                datasets: [{
+                    data: stockData.map(d => d.value),
+                    backgroundColor: [
+                        '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b',
+                        '#858796', '#5a5c69', '#f8f9fa'
+                    ],
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+
+        // Orders Overview (Simple status distribution based on available data)
+        const pending = JSON.parse(document.getElementById('pending-data').textContent);
+        const overdue = JSON.parse(document.getElementById('overdue-data').textContent);
+
+        const ctxOrders = document.getElementById('ordersChart').getContext('2d');
+    new Chart(ctxOrders, {
+        type: 'bar',
+        data: {
+            labels: ['{% trans "Pending" %}', '{% trans "Overdue" %}'],
+            datasets: [{
+                label: '{% trans "Orders Count" %}',
+                data: [pending, overdue],
+                backgroundColor: ['#36b9cc', '#e74a3b'],
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
+    });
+</script>
 {% endblock %}

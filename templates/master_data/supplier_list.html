@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Suppliers" %}{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">
+        <i class="bi bi-truck me-2"></i>{% trans "Suppliers" %}
+    </h1>
+    {% if perms.master_data.add_supplier %}
+    <a href="{% url 'master_data:supplier_create' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i>{% trans "Add Supplier" %}
+    </a>
+    {% endif %}
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>{% trans "Name" %}</th>
+                        <th>{% trans "Code" %}</th>
+                        <th>{% trans "Contact" %}</th>
+                        <th>{% trans "Phone" %}</th>
+                        <th>{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for supplier in suppliers %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'master_data:supplier_detail' supplier.pk %}" class="text-decoration-none fw-bold">
+                                {{ supplier.name_en }}
+                            </a>
+                            {% if supplier.name_my %}
+                            <br><small class="text-muted">{{ supplier.name_my }}</small>
+                            {% endif %}
+                        </td>
+                        <td>{{ supplier.code }}</td>
+                        <td>{{ supplier.contact_person|default:"-" }}</td>
+                        <td>
+                            {{ supplier.phone }}
+                            {% for p in supplier.additional_phones.all %}
+                            <br><small class="text-muted">{{ p.phone }}</small>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                {% if perms.master_data.change_supplier %}
+                                <a href="{% url 'master_data:supplier_update' supplier.pk %}" class="btn btn-outline-secondary">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">
+                            {% trans "No suppliers found." %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% include "includes/pagination.html" with page_obj=suppliers %}
+{% endblock %}

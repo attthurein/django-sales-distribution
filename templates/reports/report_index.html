@@ -1,16 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block breadcrumb %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">{% trans "Reports" %}</li>
-    </ol>
-</nav>
-{% endblock %}
+{% block breadcrumb %}{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">{% trans "Reports" %}</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0"><i class="bi bi-graph-up-arrow me-2"></i>{% trans "Reports" %}</h1>
+</div>
 <div class="row">
     <div class="col-md-6 col-lg-4">
         <div class="card mb-3">
@@ -92,27 +88,91 @@
 <h3 class="mt-4">{% trans "Data Export" %}</h3>
 <p>{% trans "Export data to CSV or Excel format." %}</p>
 <table class="table">
-    <thead><tr><th>{% trans "Data" %}</th><th>{% trans "CSV" %}</th><th>{% trans "Excel" %}</th></tr></thead>
+    <thead><tr><th>{% trans "Data" %}</th><th>{% trans "CSV" %}</th><th>{% trans "Excel" %}</th><th>{% trans "PDF" %}</th></tr></thead>
     <tbody>
         <tr>
             <td>{% trans "Orders" %}</td>
             <td><a href="{% url 'reports:export_orders' %}?format=csv">{% trans "Download CSV" %}</a></td>
             <td><a href="{% url 'reports:export_orders' %}?format=xlsx">{% trans "Download Excel" %}</a></td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">PDF</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'reports:export_orders' %}?format=pdf&orientation=portrait">{% trans "Portrait" %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'reports:export_orders' %}?format=pdf&orientation=landscape">{% trans "Landscape" %}</a></li>
+                    </ul>
+                </div>
+            </td>
         </tr>
         <tr>
             <td>{% trans "Returns" %}</td>
             <td><a href="{% url 'reports:export_returns' %}?format=csv">{% trans "Download CSV" %}</a></td>
             <td><a href="{% url 'reports:export_returns' %}?format=xlsx">{% trans "Download Excel" %}</a></td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">PDF</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'reports:export_returns' %}?format=pdf&orientation=portrait">{% trans "Portrait" %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'reports:export_returns' %}?format=pdf&orientation=landscape">{% trans "Landscape" %}</a></li>
+                    </ul>
+                </div>
+            </td>
         </tr>
         <tr>
             <td>{% trans "Inventory" %}</td>
             <td><a href="{% url 'reports:export_inventory' %}?format=csv">{% trans "Download CSV" %}</a></td>
             <td><a href="{% url 'reports:export_inventory' %}?format=xlsx">{% trans "Download Excel" %}</a></td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">PDF</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'reports:export_inventory' %}?format=pdf&orientation=portrait">{% trans "Portrait" %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'reports:export_inventory' %}?format=pdf&orientation=landscape">{% trans "Landscape" %}</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>{% trans "Payments" %}</td>
+            <td><a href="{% url 'reports:export_payments' %}?format=csv">{% trans "Download CSV" %}</a></td>
+            <td><a href="{% url 'reports:export_payments' %}?format=xlsx">{% trans "Download Excel" %}</a></td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">PDF</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'reports:export_payments' %}?format=pdf&orientation=portrait">{% trans "Portrait" %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'reports:export_payments' %}?format=pdf&orientation=landscape">{% trans "Landscape" %}</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>{% trans "Outstanding Payments" %}</td>
+            <td><a href="{% url 'reports:export_outstanding' %}?format=csv">{% trans "Download CSV" %}</a></td>
+            <td><a href="{% url 'reports:export_outstanding' %}?format=xlsx">{% trans "Download Excel" %}</a></td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">PDF</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'reports:export_outstanding' %}?format=pdf&orientation=portrait">{% trans "Portrait" %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'reports:export_outstanding' %}?format=pdf&orientation=landscape">{% trans "Landscape" %}</a></li>
+                    </ul>
+                </div>
+            </td>
         </tr>
         <tr>
             <td>{% trans "Audit Log" %}</td>
             <td><a href="{% url 'reports:export_audit_log' %}?format=csv">{% trans "Download CSV" %}</a></td>
             <td><a href="{% url 'reports:export_audit_log' %}?format=xlsx">{% trans "Download Excel" %}</a></td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">PDF</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'reports:export_audit_log' %}?format=pdf&orientation=portrait">{% trans "Portrait" %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'reports:export_audit_log' %}?format=pdf&orientation=landscape">{% trans "Landscape" %}</a></li>
+                    </ul>
+                </div>
+            </td>
         </tr>
     </tbody>
 </table>

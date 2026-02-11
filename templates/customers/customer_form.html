@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load widget_tweaks i18n static %}
+{% load widget_tweaks i18n static crm_tags %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -13,73 +13,366 @@
 {% endblock %}
 
 {% block content %}
-<h1>{{ title }}</h1>
-<form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-    {% if field.name == 'township' %}
-    <div class="mb-3">
-        <label class="form-label" for="id_country">{% trans "Country" %}</label>
-        <select name="country_id" id="id_country" class="form-select">
-            <option value="">{% trans "Select country" %}...</option>
-            {% for country in countries %}
-            <option value="{{ country.id }}" {% if customer and customer.township and customer.township.region.country_id == country.id %}selected{% endif %}>
-                {{ country.name }}
-            </option>
-            {% endfor %}
-        </select>
-    </div>
-    <div class="mb-3">
-        <label class="form-label" for="id_region">{% trans "Region" %}</label>
-        <select name="region_id" id="id_region" class="form-select">
-            <option value="">{% trans "Select region" %}...</option>
-            {% for country in countries %}
-                {% for region in country.regions.all %}
-                <option value="{{ region.id }}" data-country-id="{{ country.id }}" {% if customer and customer.township and customer.township.region_id == region.id %}selected{% endif %}>
-                    {{ region.name }}
-                </option>
-                {% endfor %}
-            {% endfor %}
-        </select>
-    </div>
-    <div class="mb-3">
-        <label class="form-label" for="id_township">{% trans "Township" %}</label>
-        <select name="township" id="id_township" class="form-select">
-            <option value="">{% trans "Select township" %}...</option>
-            {% for country in countries %}
-                {% for region in country.regions.all %}
-                    {% for t in region.townships.all %}
-                    <option value="{{ t.id }}" data-region-id="{{ region.id }}" {% if customer and customer.township_id == t.id %}selected{% endif %}>
-                        {{ t.name }}
-                    </option>
-                    {% endfor %}
-                {% endfor %}
-            {% endfor %}
-        </select>
-        {% if field.errors %}<div class="text-danger">{{ field.errors }}</div>{% endif %}
-    </div>
-    {% else %}
-    <div class="mb-3">
-        {% if field.name == 'is_active' %}
-            <div class="form-check">
-                {{ field|add_class:"form-check-input" }}
-                <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <h1 class="mb-4">{{ title }}</h1>
+        
+        <form method="post" id="customerForm">
+            {% csrf_token %}
+            
+            <!-- Basic Information Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary bg-opacity-10 border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-person-circle me-2"></i>{% trans "Basic Information" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        {% for field in form %}
+                        {% if field.name == 'name' or field.name == 'shop_name' or field.name == 'customer_type' or field.name == 'is_active' %}
+                        <div class="{% if field.name == 'name' or field.name == 'shop_name' %}col-md-6{% else %}col-md-6{% endif %}">
+                            {% if field.name == 'is_active' %}
+                            <div class="form-check form-switch mt-4">
+                                {{ field|add_class:"form-check-input" }}
+                                <label class="form-check-label" for="{{ field.id_for_label }}">
+                                    <i class="bi bi-check-circle me-1"></i>{{ field.label }}
+                                </label>
+                            </div>
+                            {% if field.errors %}<div class="text-danger small mt-1">{{ field.errors }}</div>{% endif %}
+                            {% else %}
+                            <div class="form-floating">
+                                {{ field|add_class:"form-control" }}
+                                <label for="{{ field.id_for_label }}">
+                                    {% if field.name == 'name' %}<i class="bi bi-person me-1"></i>{% endif %}
+                                    {% if field.name == 'shop_name' %}<i class="bi bi-shop me-1"></i>{% endif %}
+                                    {% if field.name == 'customer_type' %}<i class="bi bi-tag me-1"></i>{% endif %}
+                                    {{ field.label }}{% if field.field.required %} *{% endif %}
+                                </label>
+                            </div>
+                            {% if field.errors %}<div class="text-danger small mt-1">{{ field.errors }}</div>{% endif %}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-            {% if field.errors %}<div class="text-danger">{{ field.errors }}</div>{% endif %}
-        {% else %}
-            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field|add_class:"form-control" }}
-            {% if field.errors %}<div class="text-danger">{{ field.errors }}</div>{% endif %}
-        {% endif %}
+
+            <!-- Contact Information Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success bg-opacity-10 border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-telephone me-2"></i>{% trans "Contact Information" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        {% for field in form %}
+                        {% if field.name == 'phone' or field.name == 'email' %}
+                        <div class="col-md-6">
+                            {% if field.name == 'phone' %}
+                            <label class="form-label fw-semibold" for="{{ field.id_for_label }}">
+                                <i class="bi bi-phone me-1"></i>{% trans "Main Phone" %} *
+                            </label>
+                            {% render_field field class="form-control" %}
+                            {% if field.errors %}<div class="text-danger small mt-1">{{ field.errors }}</div>{% endif %}
+                            {% else %}
+                            <div class="form-floating">
+                                {{ field|add_class:"form-control" }}
+                                <label for="{{ field.id_for_label }}">
+                                    <i class="bi bi-envelope me-1"></i>{{ field.label }}
+                                </label>
+                            </div>
+                            {% if field.errors %}<div class="text-danger small mt-1">{{ field.errors }}</div>{% endif %}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <!-- Additional Phone Numbers -->
+                    <div class="mt-4">
+                        <label class="form-label fw-semibold mb-3">
+                            <i class="bi bi-telephone-plus me-1"></i>{% trans "Additional Phone Numbers" %}
+                        </label>
+                        
+                        <div id="phone-formset-container" class="mb-3">
+                            {{ formset.management_form }}
+                            {% for phone_form in formset %}
+                            <div class="phone-form-row mb-2 p-3 bg-light rounded border">
+                                {% for hidden in phone_form.hidden_fields %}
+                                {{ hidden }}
+                                {% endfor %}
+                                <div class="row g-2 align-items-center">
+                                    <div class="col-md-5">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text"><i class="bi bi-phone"></i></span>
+                                            {% render_field phone_form.phone class="form-control" placeholder="Phone Number" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text"><i class="bi bi-chat-left-text"></i></span>
+                                            {% render_field phone_form.notes class="form-control" placeholder="Notes (e.g., Office, Mobile)" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 text-center">
+                                        {% if formset.can_delete %}
+                                        <div class="d-none">{{ phone_form.DELETE }}</div>
+                                        <button type="button" class="btn btn-sm btn-outline-danger remove-phone-btn" title="{% trans 'Remove' %}">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if phone_form.phone.errors %}
+                                <div class="text-danger small mt-1">{{ phone_form.phone.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="add-phone-btn">
+                            <i class="bi bi-plus-circle me-1"></i>{% trans "Add Another Phone" %}
+                        </button>
+
+                        <div id="empty-phone-form" class="d-none">
+                            <div class="phone-form-row mb-2 p-3 bg-light rounded border">
+                                <div class="row g-2 align-items-center">
+                                    <div class="col-md-5">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text"><i class="bi bi-phone"></i></span>
+                                            {% render_field formset.empty_form.phone class="form-control" placeholder="Phone Number" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text"><i class="bi bi-chat-left-text"></i></span>
+                                            {% render_field formset.empty_form.notes class="form-control" placeholder="Notes (e.g., Office, Mobile)" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 text-center">
+                                        <button type="button" class="btn btn-sm btn-outline-danger remove-phone-btn" title="{% trans 'Remove' %}">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Information Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-info bg-opacity-10 border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-geo-alt me-2"></i>{% trans "Location Information" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select name="country_id" id="id_country" class="form-select">
+                                    <option value="">{% trans "Select country" %}...</option>
+                                    {% with ctrc=customer.township.region.country_id %}
+                                    {% for country in countries %}
+                                    <option value="{{ country.id }}" {% if ctrc|is_equal_to:country.id %}selected{% endif %}>
+                                        {{ country.name }}
+                                    </option>
+                                    {% endfor %}
+                                    {% endwith %}
+                                </select>
+                                <label for="id_country"><i class="bi bi-globe me-1"></i>{% trans "Country" %}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select name="region_id" id="id_region" class="form-select">
+                                    <option value="">{% trans "Select region" %}...</option>
+                                    {% with ctr=customer.township.region_id %}
+                                    {% for country in countries %}
+                                    {% for region in country.regions.all %}
+                                    <option value="{{ region.id }}" data-country-id="{{ country.id }}" {% if ctr|is_equal_to:region.id %}selected{% endif %}>
+                                        {{ region.name }}
+                                    </option>
+                                    {% endfor %}
+                                    {% endfor %}
+                                    {% endwith %}
+                                </select>
+                                <label for="id_region"><i class="bi bi-map me-1"></i>{% trans "Region" %}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select name="township" id="id_township" class="form-select">
+                                    <option value="">{% trans "Select township" %}...</option>
+                                    {% with ct=customer.township_id %}
+                                    {% for country in countries %}
+                                    {% for region in country.regions.all %}
+                                    {% for t in region.townships.all %}
+                                    <option value="{{ t.id }}" data-region-id="{{ region.id }}" {% if ct|is_equal_to:t.id %}selected{% endif %}>
+                                        {{ t.name }}
+                                    </option>
+                                    {% endfor %}
+                                    {% endfor %}
+                                    {% endfor %}
+                                    {% endwith %}
+                                </select>
+                                <label for="id_township"><i class="bi bi-pin-map me-1"></i>{% trans "Township" %} *</label>
+                            </div>
+                            {% for field in form %}
+                            {% if field.name == 'township' %}
+                            {% if field.errors %}<div class="text-danger small mt-1">{{ field.errors }}</div>{% endif %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% for field in form %}
+                        {% if field.name == 'address' %}
+                        <div class="col-12">
+                            <div class="form-floating">
+                                {{ field|add_class:"form-control" }}
+                                <label for="{{ field.id_for_label }}">
+                                    <i class="bi bi-house me-1"></i>{{ field.label }}
+                                </label>
+                            </div>
+                            {% if field.errors %}<div class="text-danger small mt-1">{{ field.errors }}</div>{% endif %}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Details Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-warning bg-opacity-10 border-bottom">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-briefcase me-2"></i>{% trans "Business Details" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        {% for field in form %}
+                        {% if field.name == 'credit_limit' or field.name == 'payment_terms' or field.name == 'notes' %}
+                        <div class="{% if field.name == 'notes' %}col-12{% else %}col-md-6{% endif %}">
+                            <div class="form-floating">
+                                {{ field|add_class:"form-control" }}
+                                <label for="{{ field.id_for_label }}">
+                                    {% if field.name == 'credit_limit' %}<i class="bi bi-cash-stack me-1"></i>{% endif %}
+                                    {% if field.name == 'payment_terms' %}<i class="bi bi-calendar-check me-1"></i>{% endif %}
+                                    {% if field.name == 'notes' %}<i class="bi bi-sticky me-1"></i>{% endif %}
+                                    {{ field.label }}
+                                </label>
+                            </div>
+                            {% if field.errors %}<div class="text-danger small mt-1">{{ field.errors }}</div>{% endif %}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                <i class="bi bi-exclamation-triangle me-2"></i>{{ form.non_field_errors }}
+            </div>
+            {% endif %}
+            
+            <div class="d-flex gap-2 justify-content-end mb-4">
+                <a href="{% url 'customers:customer_list' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-x-circle me-1"></i>{% trans "Cancel" %}
+                </a>
+                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                    <i class="bi bi-check-circle me-1"></i>{% trans "Save Customer" %}
+                </button>
+            </div>
+        </form>
     </div>
-    {% endif %}
-    {% endfor %}
-    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
-    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
-    <a href="{% url 'customers:customer_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
-</form>
+</div>
 {% endblock %}
 
 {% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addBtn = document.getElementById('add-phone-btn');
+        const container = document.getElementById('phone-formset-container');
+        const emptyForm = document.getElementById('empty-phone-form').innerHTML;
+        const totalForms = document.getElementById('id_additional_phones-TOTAL_FORMS');
+        const submitBtn = document.getElementById('submitBtn');
+        const form = document.getElementById('customerForm');
+
+        // Hide rows that are already marked for deletion (e.g. after validation error)
+        if (container) {
+            const existingRows = container.querySelectorAll('.phone-form-row');
+            existingRows.forEach(row => {
+                const deleteInput = row.querySelector('input[type="checkbox"][name$="-DELETE"]');
+                if (deleteInput && deleteInput.checked) {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        if (addBtn) {
+            addBtn.addEventListener('click', function () {
+                const formCount = parseInt(totalForms.value);
+                const newForm = emptyForm.replace(/__prefix__/g, formCount);
+
+                const div = document.createElement('div');
+                div.innerHTML = newForm;
+                container.appendChild(div.firstElementChild);
+
+                totalForms.value = formCount + 1;
+                
+                // Add animation
+                const newRow = container.lastElementChild;
+                newRow.style.opacity = '0';
+                setTimeout(() => {
+                    newRow.style.transition = 'opacity 0.3s';
+                    newRow.style.opacity = '1';
+                }, 10);
+            });
+        }
+
+        if (container) {
+            container.addEventListener('click', function (e) {
+                // Handle delete button click
+                const btn = e.target.closest('.remove-phone-btn');
+                if (btn) {
+                    const row = btn.closest('.phone-form-row');
+                    
+                    // Check if it's an existing row (has DELETE checkbox)
+                    const deleteInput = row.querySelector('input[type="checkbox"][name$="-DELETE"]');
+                    
+                    if (deleteInput) {
+                        // Existing row: check the box and hide with animation
+                        row.style.transition = 'opacity 0.3s';
+                        row.style.opacity = '0';
+                        setTimeout(() => {
+                            deleteInput.checked = true;
+                            row.style.display = 'none';
+                        }, 300);
+                    } else {
+                        // New row: remove from DOM with animation
+                        row.style.transition = 'opacity 0.3s';
+                        row.style.opacity = '0';
+                        setTimeout(() => row.remove(), 300);
+                    }
+                }
+            });
+        }
+
+        // Add loading state to submit button
+        if (form && submitBtn) {
+            form.addEventListener('submit', function() {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>{% trans "Saving..." %}';
+            });
+        }
+    });
+</script>
 <script src="{% static 'js/region_township.js' %}"></script>
 {% endblock %}

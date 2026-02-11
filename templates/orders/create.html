@@ -4,103 +4,198 @@
 {% block breadcrumb %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'orders:order_list' %}">{% trans "Orders" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'orders:order_list' %}"><i class="bi bi-receipt me-1"></i>{% trans
+                "Orders" %}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{% trans "Create Order" %}</li>
     </ol>
 </nav>
 {% endblock %}
 
 {% block content %}
-<h1 class="mb-4">{% trans "Create Order" %}</h1>
+<div class="row">
+    <div class="col-lg-8">
+        <h1 class="mb-4"><i class="bi bi-plus-circle me-2"></i>{% trans "Create Order" %}</h1>
 
-<form method="post" id="orderForm">
-    {% csrf_token %}
-    {% if form.non_field_errors %}
-    <div class="alert alert-danger">
-        {% for error in form.non_field_errors %}
-            {{ error }}
-        {% endfor %}
-    </div>
-    {% endif %}
-    <div class="mb-3">
-        <label class="form-label" for="{{ form.customer.id_for_label }}">{% trans "Customer" %} *</label>
-        {{ form.customer }}
-        {{ form.customer.errors }}
-    </div>
-
-    <div class="mb-3">
-        <div class="form-check">
-            {{ form.is_pre_order }}
-            <label class="form-check-label" for="{{ form.is_pre_order.id_for_label }}">{% trans "Pre-order" %} ({% trans "Stock will be deducted on delivery" %})</label>
-        </div>
-        {{ form.is_pre_order.errors }}
-    </div>
-
-    <div class="card mb-4">
-        <div class="card-header bg-light">
-            <h5 class="card-title mb-0">{% trans "Items" %}</h5>
-        </div>
-        <div class="card-body">
-            <div class="mb-2">
-                <span id="priceLoading" class="d-none"><span class="spinner-border spinner-border-sm" role="status"></span> {% trans "Loading prices..." %}</span>
-                <p class="text-muted small mb-0">{% trans "Select customer first to see customer-type prices." %}</p>
+        <form method="post" id="orderForm">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                {% for error in form.non_field_errors %}
+                {{ error }}
+                {% endfor %}
             </div>
+            {% endif %}
 
-            <div class="row mb-2 fw-bold d-none d-md-flex">
-                <div class="col-md-7">{% trans "Product" %}</div>
-                <div class="col-md-3">{% trans "Quantity" %}</div>
-                <div class="col-md-2">{% trans "Action" %}</div>
-            </div>
-
-            <div id="items">
-                <div class="row mb-2 align-items-start item-row">
-                    <div class="col-md-7">
-                        <label class="form-label small d-md-none">{% trans "Product" %}</label>
-                        <select name="product_id" class="form-select product-select" data-item="0">
-                            <option value="">-- {% trans "Select Product" %} --</option>
-                            {% for p in products %}
-                            <option value="{{ p.id }}" data-stock="{{ p.stock_quantity }}" data-base="{{ p.base_price }}">{{ p.name }} ({% trans "Stock" %}: {{ p.stock_quantity }}{% if p.unit %} {{ p.unit.name_en }}{% endif %})</option>
-                            {% endfor %}
-                        </select>
-                        <small class="text-muted stock-hint d-block mt-1"></small>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label small d-md-none">{% trans "Quantity" %}</label>
-                        <input type="number" name="quantity" class="form-control qty-input" min="1" placeholder="{% trans 'Qty' %}" value="">
-                    </div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-outline-danger remove-item d-none" title="{% trans 'Remove' %}" aria-label="{% trans 'Remove' %}"><i class="bi bi-trash"></i></button>
+            <!-- Customer Selection Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary bg-opacity-10">
+                    <h5 class="mb-0"><i class="bi bi-person me-2"></i>{% trans "Customer Information" %}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            <label class="form-label fw-semibold" for="{{ form.customer.id_for_label }}">
+                                <i class="bi bi-person-check me-1"></i>{% trans "Customer" %} *
+                            </label>
+                            {{ form.customer }}
+                            {{ form.customer.errors }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">&nbsp;</label>
+                            <div class="form-check form-switch mt-2">
+                                {{ form.is_pre_order }}
+                                <label class="form-check-label" for="{{ form.is_pre_order.id_for_label }}">
+                                    <i class="bi bi-clock-history me-1"></i>{% trans "Pre-order" %}
+                                    <small class="text-muted d-block">{% trans "Stock deducted on delivery" %}</small>
+                                </label>
+                            </div>
+                            {{ form.is_pre_order.errors }}
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <button type="button" class="btn btn-outline-primary mt-2" id="addItem"><i class="bi bi-plus-lg"></i> {% trans "Add Item" %}</button>
+            <!-- Order Items Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success bg-opacity-10">
+                    <h5 class="mb-0"><i class="bi bi-cart me-2"></i>{% trans "Order Items" %}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <span id="priceLoading" class="d-none">
+                            <span class="spinner-border spinner-border-sm" role="status"></span>
+                            {% trans "Loading prices..." %}
+                        </span>
+                        <p class="text-muted small mb-0">
+                            <i class="bi bi-info-circle me-1"></i>{% trans "Select customer first to see customer-type
+                            prices." %}
+                        </p>
+                    </div>
+
+                    <div class="row mb-2 fw-semibold d-none d-md-flex text-muted small">
+                        <div class="col-md-5">{% trans "Product" %}</div>
+                        <div class="col-md-2">{% trans "Quantity" %}</div>
+                        <div class="col-md-3">{% trans "Total" %}</div>
+                        <div class="col-md-2 text-end">{% trans "Action" %}</div>
+                    </div>
+
+                    <div id="items">
+                        <div class="row mb-3 align-items-start item-row p-3 bg-light rounded border">
+                            <div class="col-md-5">
+                                <label class="form-label small fw-semibold d-md-none">{% trans "Product" %}</label>
+                                <select name="product_id" class="form-select product-select" data-item="0">
+                                    <option value="">-- {% trans "Select Product" %} --</option>
+                                    {% for p in products %}
+                                    <option value="{{ p.id }}" data-stock="{{ p.stock_quantity }}"
+                                        data-base="{{ p.base_price }}">
+                                        {{ p.name }} ({% trans "Stock" %}: {{ p.stock_quantity }}{% if p.unit %} {{
+                                        p.unit.name_en }}{% endif %})
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <small class="text-muted stock-hint d-block mt-1"></small>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small fw-semibold d-md-none">{% trans "Quantity" %}</label>
+                                <input type="number" name="quantity" class="form-control qty-input" min="1"
+                                    placeholder="{% trans 'Qty' %}" value="">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-semibold d-md-none">{% trans "Total" %}</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="bi bi-currency-dollar"></i></span>
+                                    <input type="text" class="form-control row-total bg-white" value="0" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-end">
+                                <button type="button" class="btn btn-outline-danger remove-item d-none"
+                                    title="{% trans 'Remove' %}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-outline-primary mt-2" id="addItem">
+                        <i class="bi bi-plus-circle me-1"></i>{% trans "Add Another Item" %}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Additional Details Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-warning bg-opacity-10">
+                    <h5 class="mb-0"><i class="bi bi-sticky me-2"></i>{% trans "Additional Details" %}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold" for="{{ form.discount_amount.id_for_label }}">
+                                <i class="bi bi-percent me-1"></i>{% trans "Discount Amount" %}
+                            </label>
+                            {{ form.discount_amount }}
+                            {{ form.discount_amount.errors }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold" for="{{ form.notes.id_for_label }}">
+                                <i class="bi bi-chat-left-text me-1"></i>{% trans "Notes" %}
+                            </label>
+                            {{ form.notes }}
+                            {{ form.notes.errors }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if messages %}
+            <div class="mb-3">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="d-flex gap-2 justify-content-end">
+                <a href="{% url 'orders:order_list' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-x-circle me-1"></i>{% trans "Cancel" %}
+                </a>
+                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                    <i class="bi bi-check-circle me-1"></i>{% trans "Create Order" %}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Order Summary Sidebar -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm sticky-top" style="top: 7.5rem;">
+            <div class="card-header bg-info bg-opacity-10">
+                <h5 class="mb-0"><i class="bi bi-calculator me-2"></i>{% trans "Order Summary" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">{% trans "Subtotal" %}:</span>
+                    <span class="fw-semibold" id="orderSubtotal">0</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">{% trans "Discount" %}:</span>
+                    <span class="text-danger" id="orderDiscount">0</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">{% trans "Grand Total" %}:</span>
+                    <span class="fw-bold fs-4 text-primary" id="orderGrandTotal">0</span>
+                </div>
+            </div>
+            <div class="card-footer bg-light">
+                <small class="text-muted">
+                    <i class="bi bi-info-circle me-1"></i>{% trans "Prices update based on customer type" %}
+                </small>
+            </div>
         </div>
     </div>
-
-    <div class="mb-3">
-        <label class="form-label" for="{{ form.discount_amount.id_for_label }}">{% trans "Discount Amount" %}</label>
-        {{ form.discount_amount }}
-        {{ form.discount_amount.errors }}
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label" for="{{ form.notes.id_for_label }}">{% trans "Notes" %}</label>
-        {{ form.notes }}
-        {{ form.notes.errors }}
-    </div>
-
-    {% if messages %}
-    <div class="mb-3">
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    <button type="submit" class="btn btn-primary" id="submitBtn">{% trans "Create Order" %}</button>
-    <a href="{% url 'orders:order_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
-</form>
+</div>
 
 {% endblock %}
 

@@ -46,3 +46,27 @@ def master_name(obj):
     if hasattr(obj, 'name_en'):
         return obj.name_en
     return str(obj)
+
+
+@register.simple_tag(takes_context=True)
+def url_replace(context, **kwargs):
+    """
+    Return encoded URL parameters that are the same as the current
+    request's parameters, only with the specified parameters added or changed.
+    
+    It also removes any empty parameters to keep the URL clean.
+    """
+    query = context['request'].GET.copy()
+    for key, value in kwargs.items():
+        query[key] = value
+    
+    return query.urlencode()
+
+
+@register.filter(name='abs')
+def abs_filter(value):
+    """Return the absolute value."""
+    try:
+        return abs(value)
+    except (ValueError, TypeError):
+        return value

@@ -15,65 +15,94 @@
 
 {% block content %}
 <h1>{{ customer.name }}</h1>
-<p>{% trans "Phone" %}: {{ customer.phone }} | {% trans "Type" %}: {{ customer.customer_type.name }}</p>
+<p>
+    {% trans "Phone" %}: {{ customer.phone }}
+    {% for p in customer.additional_phones.all %}
+    , {{ p.phone }}{% if p.notes %} ({{ p.notes }}){% endif %}
+    {% endfor %}
+    | {% trans "Type" %}: {{ customer.customer_type.name }}
+</p>
 {% if customer.shop_name %}<p>{% trans "Shop/Store name" %}: {{ customer.shop_name }}</p>{% endif %}
 {% if customer.contact_person %}<p>{% trans "Contact person" %}: {{ customer.contact_person }}</p>{% endif %}
-<p>{% trans "Credit Limit" %}: {{ customer.credit_limit|floatformat:0|intcomma }} {% currency_suffix %} | {% trans "Payment Terms" %}: {{ customer.payment_terms_days }} {% trans "days" %}</p>
+<p>{% trans "Credit Limit" %}: {{ customer.credit_limit|floatformat:0|intcomma }} {% currency_suffix %} | {% trans
+    "Payment Terms" %}: {{ customer.payment_terms_days }} {% trans "days" %}</p>
 <p>
     <a href="{% url 'customers:customer_update' customer.pk %}" class="btn btn-primary">{% trans "Edit" %}</a>
     <a href="{% url 'crm:sample_give_for_customer' customer.pk %}" class="btn btn-info">{% trans "Give Sample" %}</a>
-    <a href="{% url 'orders:order_create' %}?customer_id={{ customer.pk }}" class="btn btn-success">{% trans "Create Order" %}</a>
+    <a href="{% url 'orders:order_create' %}?customer_id={{ customer.pk }}" class="btn btn-success">{% trans "Create
+        Order" %}</a>
 </p>
 
 <h3>{% trans "Samples" %}</h3>
 <div class="table-responsive mb-4">
-<table class="table table-striped table-sm">
-    <thead><tr><th>{% trans "Product" %}</th><th>{% trans "Qty" %}</th><th>{% trans "Status" %}</th><th>{% trans "Date" %}</th><th>{% trans "Actions" %}</th></tr></thead>
-    <tbody>
-    {% for s in sample_deliveries %}
-    <tr>
-        <td>{{ s.product.name }}</td>
-        <td>{{ s.quantity }}</td>
-        <td><span class="badge {% if s.status == 'GIVEN' %}bg-warning{% elif s.status == 'RETURNED' %}bg-success{% elif s.status == 'NOT_RETURNED' %}bg-secondary{% else %}bg-info{% endif %}">{{ s.get_status_display }}</span></td>
-        <td>{{ s.given_at|date }}</td>
-        <td>
-            {% if s.status == 'GIVEN' %}
-            <div class="btn-group btn-group-sm">
-                <form method="post" action="{% url 'crm:sample_return' s.pk %}" class="d-inline">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-success">{% trans "Returned" %}</button>
-                </form>
-                <form method="post" action="{% url 'crm:sample_mark_not_returned' s.pk %}" class="d-inline">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-secondary">{% trans "Not Returned" %}</button>
-                </form>
-            </div>
-            {% endif %}
-        </td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="5" class="text-muted">{% trans "No samples given" %}</td></tr>
-    {% endfor %}
-    </tbody>
-</table>
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>{% trans "Product" %}</th>
+                <th>{% trans "Qty" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th>{% trans "Date" %}</th>
+                <th>{% trans "Actions" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in sample_deliveries %}
+            <tr>
+                <td>{{ s.product.name }}</td>
+                <td>{{ s.quantity }}</td>
+                <td><span
+                        class="badge {% if s.status == 'GIVEN' %}bg-warning{% elif s.status == 'RETURNED' %}bg-success{% elif s.status == 'NOT_RETURNED' %}bg-secondary{% else %}bg-info{% endif %}">{{
+                        s.get_status_display }}</span></td>
+                <td>{{ s.given_at|date }}</td>
+                <td>
+                    {% if s.status == 'GIVEN' %}
+                    <div class="btn-group btn-group-sm">
+                        <form method="post" action="{% url 'crm:sample_return' s.pk %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-success">{% trans "Returned" %}</button>
+                        </form>
+                        <form method="post" action="{% url 'crm:sample_mark_not_returned' s.pk %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-secondary">{% trans "Not Returned" %}</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-muted">{% trans "No samples given" %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 <h3>{% trans "Recent Orders" %}</h3>
 <div class="table-responsive">
-<table class="table table-striped">
-    <thead><tr><th>{% trans "Order" %}</th><th>{% trans "Date" %}</th><th>{% trans "Status" %}</th><th>{% trans "Amount" %}</th></tr></thead>
-    <tbody>
-    {% for o in recent_orders %}
-    <tr>
-        <td><a href="{% url 'orders:order_detail' o.pk %}">{{ o.order_number }}</a></td>
-        <td>{{ o.created_at|date }}</td>
-        <td>{{ o.status|master_name|default:"-" }}</td>
-        <td>{{ o.total_amount|floatformat:0|intcomma }}</td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="4">{% trans "No orders" %}</td></tr>
-    {% endfor %}
-    </tbody>
-</table>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{% trans "Order" %}</th>
+                <th>{% trans "Date" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th>{% trans "Amount" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for o in recent_orders %}
+            <tr>
+                <td><a href="{% url 'orders:order_detail' o.pk %}">{{ o.order_number }}</a></td>
+                <td>{{ o.created_at|date }}</td>
+                <td>{{ o.status|master_name|default:"-" }}</td>
+                <td>{{ o.total_amount|floatformat:0|intcomma }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">{% trans "No orders" %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

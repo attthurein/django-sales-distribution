@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n widget_tweaks static %}
+{% load i18n widget_tweaks static crm_tags %}
 
 {% block breadcrumb %}
 <nav aria-label="breadcrumb">
@@ -31,50 +31,112 @@
     <div class="mb-3">
         <label class="form-label" for="{{ form.contact_person.id_for_label }}">{% trans "Contact person" %}</label>
         {% render_field form.contact_person class="form-control" placeholder=placeholder_text %}
-        {% if form.contact_person.errors %}<div class="invalid-feedback d-block">{{ form.contact_person.errors }}</div>{% endif %}
+        {% if form.contact_person.errors %}<div class="invalid-feedback d-block">{{ form.contact_person.errors }}</div>
+        {% endif %}
     </div>
+    <hr>
+    <h5 class="mb-3">{% trans "Phone Numbers" %}</h5>
+
     <div class="mb-3">
-        <label class="form-label" for="{{ form.phone.id_for_label }}">{% trans "Phone" %} *</label>
+        <label class="form-label" for="{{ form.phone.id_for_label }}">{% trans "Main Phone" %} *</label>
         {% render_field form.phone class="form-control" %}
         {% if form.phone.errors %}<div class="invalid-feedback d-block">{{ form.phone.errors }}</div>{% endif %}
+    </div>
+
+    <div id="phone-formset-container">
+        {{ formset.management_form }}
+        {% for phone_form in formset %}
+        <div class="phone-form-row mb-2">
+            {% for hidden in phone_form.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            <div class="row g-2">
+                <div class="col-6">
+                    {% render_field phone_form.phone class="form-control form-control-sm" placeholder="Phone" %}
+                </div>
+                <div class="col-5">
+                    {% render_field phone_form.notes class="form-control form-control-sm" placeholder="Notes" %}
+                </div>
+                <div class="col-1 d-flex align-items-center">
+                    {% if formset.can_delete %}
+                    <div class="d-none">{{ phone_form.DELETE }}</div>
+                    <button type="button" class="btn btn-sm btn-link text-danger remove-phone-btn p-0">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+            {% if phone_form.phone.errors %}
+            <div class="text-danger small">{{ phone_form.phone.errors.0 }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" class="btn btn-sm btn-outline-secondary mb-4" id="add-phone-btn">
+        <i class="bi bi-plus"></i> {% trans "Add Phone" %}
+    </button>
+
+    <div id="empty-phone-form" class="d-none">
+        <div class="phone-form-row mb-2">
+            <div class="row g-2">
+                <div class="col-6">
+                    {% render_field formset.empty_form.phone class="form-control form-control-sm" placeholder="Phone" %}
+                </div>
+                <div class="col-5">
+                    {% render_field formset.empty_form.notes class="form-control form-control-sm" placeholder="Notes" %}
+                </div>
+                <div class="col-1 d-flex align-items-center">
+                    <button type="button" class="btn btn-sm btn-link text-danger remove-phone-btn p-0">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="mb-3">
         <label class="form-label" for="id_country">{% trans "Country" %}</label>
         <select name="country_id" id="id_country" class="form-select">
             <option value="">{% trans "Select country" %}...</option>
+            {% with ltrc=lead.township.region.country_id %}
             {% for country in countries %}
-            <option value="{{ country.id }}" {% if lead and lead.township and lead.township.region.country_id == country.id %}selected{% endif %}>
+            <option value="{{ country.id }}" {% if ltrc|is_equal_to:country.id %}selected{% endif %}>
                 {{ country.name }}
             </option>
             {% endfor %}
+            {% endwith %}
         </select>
     </div>
     <div class="mb-3">
         <label class="form-label" for="id_region">{% trans "Region" %}</label>
         <select name="region_id" id="id_region" class="form-select">
             <option value="">{% trans "Select region" %}...</option>
+            {% with ltr=lead.township.region_id %}
             {% for country in countries %}
-                {% for region in country.regions.all %}
-                <option value="{{ region.id }}" data-country-id="{{ country.id }}" {% if lead and lead.township and lead.township.region_id == region.id %}selected{% endif %}>
-                    {{ region.name }}
-                </option>
-                {% endfor %}
+            {% for region in country.regions.all %}
+            <option value="{{ region.id }}" data-country-id="{{ country.id }}" {% if ltr|is_equal_to:region.id %}selected{% endif %}>
+                {{ region.name }}
+            </option>
             {% endfor %}
+            {% endfor %}
+            {% endwith %}
         </select>
     </div>
     <div class="mb-3">
         <label class="form-label" for="{{ form.township.id_for_label }}">{% trans "Township" %}</label>
         <select name="township" id="{{ form.township.id_for_label }}" class="form-select">
             <option value="">{% trans "Select township" %}...</option>
+            {% with lt=lead.township_id %}
             {% for country in countries %}
-                {% for region in country.regions.all %}
-                    {% for township in region.townships.all %}
-                    <option value="{{ township.id }}" data-region-id="{{ region.id }}" {% if lead and lead.township_id == township.id %}selected{% endif %}>
-                        {{ township.name }}
-                    </option>
-                    {% endfor %}
-                {% endfor %}
+            {% for region in country.regions.all %}
+            {% for township in region.townships.all %}
+            <option value="{{ township.id }}" data-region-id="{{ region.id }}" {% if lt|is_equal_to:township.id %}selected{% endif %}>
+                {{ township.name }}
+            </option>
             {% endfor %}
+            {% endfor %}
+            {% endfor %}
+            {% endwith %}
         </select>
         {% if form.township.errors %}<div class="invalid-feedback d-block">{{ form.township.errors }}</div>{% endif %}
     </div>
@@ -95,7 +157,9 @@
         {% if form.status.errors %}<div class="invalid-feedback d-block">{{ form.status.errors }}</div>{% endif %}
     </div>
     {% else %}
-    {{ form.status }}
+    <div class="d-none">
+        {{ form.status }}
+    </div>
     {% endif %}
     <div class="mb-3">
         <label class="form-label" for="{{ form.notes.id_for_label }}">{% trans "Notes" %}</label>
@@ -108,5 +172,59 @@
 {% endblock %}
 
 {% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addBtn = document.getElementById('add-phone-btn');
+        const container = document.getElementById('phone-formset-container');
+        const emptyForm = document.getElementById('empty-phone-form').innerHTML;
+        const totalForms = document.getElementById('id_additional_phones-TOTAL_FORMS');
+
+        // Hide rows that are already marked for deletion (e.g. after validation error)
+        if (container) {
+            const existingRows = container.querySelectorAll('.phone-form-row');
+            existingRows.forEach(row => {
+                const deleteInput = row.querySelector('input[type="checkbox"][name$="-DELETE"]');
+                if (deleteInput && deleteInput.checked) {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        if (addBtn) {
+            addBtn.addEventListener('click', function () {
+                const formCount = parseInt(totalForms.value);
+                const newForm = emptyForm.replace(/__prefix__/g, formCount);
+
+                const div = document.createElement('div');
+                div.innerHTML = newForm;
+                container.appendChild(div.firstElementChild);
+
+                totalForms.value = formCount + 1;
+            });
+        }
+
+        if (container) {
+            container.addEventListener('click', function (e) {
+                // Handle delete button click
+                const btn = e.target.closest('.remove-phone-btn');
+                if (btn) {
+                    const row = btn.closest('.phone-form-row');
+                    
+                    // Check if it's an existing row (has DELETE checkbox)
+                    const deleteInput = row.querySelector('input[type="checkbox"][name$="-DELETE"]');
+                    
+                    if (deleteInput) {
+                        // Existing row: check the box and hide
+                        deleteInput.checked = true;
+                        row.style.display = 'none';
+                    } else {
+                        // New row: remove from DOM
+                        row.remove();
+                    }
+                }
+            });
+        }
+    });
+</script>
 <script src="{% static 'js/region_township.js' %}"></script>
 {% endblock %}

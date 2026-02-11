@@ -1,134 +1,176 @@
 {% extends "base.html" %}
 {% load humanize i18n common_extras %}
 
-{% block breadcrumb %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'reports:report_index' %}">{% trans "Reports" %}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
-    </ol>
-</nav>
+{% block breadcrumb %}{% endblock %}
+
+{% block extra_css %}
+{% include "reports/partials/print_css.html" %}
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <h2>{{ title }} - {{ year }}</h2>
-    <p><a href="{% url 'reports:report_index' %}" class="btn btn-outline-secondary mb-3"><i class="bi bi-arrow-left"></i> {% trans "Back to Reports" %}</a></p>
+<table class="print-layout-table">
+    <thead class="print-layout-header">
+        <tr>
+            <td>
+                <div class="print-header">
+                    {% include "reports/partials/print_header.html" %}
+                    <h4 class="text-center fw-bold mb-3">
+                        {{ title }} - {{ year }}{% if month %} / {% trans "Month" %} {{ month }}{% endif %}
+                    </h4>
+                </div>
+            </td>
+        </tr>
+    </thead>
+    <tbody class="print-layout-body">
+        <tr>
+            <td class="print-layout-cell">
+                <div class="d-flex justify-content-between align-items-center mb-4 d-print-none">
+                    <h1 class="mb-0">
+                        <i class="bi bi-graph-up me-2"></i>{{ title }} - {{ year }}{% if month %} / {% trans "Month" %} {{ month }}{% endif %}
+                    </h1>
+                    <a href="{% url 'reports:report_index' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>{% trans "Back to Reports" %}
+                    </a>
+                </div>
 
-    <!-- Year Filter -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <form method="get" class="row g-3 align-items-end">
-                <div class="col-md-4">
-                    <label class="form-label">{% trans "Year" %}</label>
-                    <input type="number" name="year" class="form-control" value="{{ year }}" min="2020" max="2030">
+                <div class="card mb-4 d-print-none">
+                    <div class="card-body">
+                        <form method="get" class="row g-3 align-items-end">
+                            <div class="col-md-3">
+                                <label class="form-label">{% trans "Year" %}</label>
+                                <input type="number" name="year" class="form-control" value="{{ year }}" min="2020" max="2030">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">{% trans "Month" %}</label>
+                                <select name="month" class="form-select">
+                                    <option value="">{% trans "All Months" %}</option>
+                                    {% for m in months %}
+                                    <option value="{{ m }}" {% if month == m %}selected{% endif %}>{{ m }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary flex-grow-1">{% trans "Filter" %}</button>
+                                    <button type="button" class="btn btn-outline-primary" onclick="window.print()">
+                                        <i class="bi bi-printer"></i> {% trans "Print" %}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary">{% trans "Filter" %}</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
-    <!-- Summary Cards -->
-    <div class="row g-3 mb-4">
-        <div class="col-md-3">
-            <div class="card text-white bg-primary shadow h-100">
-                <div class="card-body">
-                    <h6 class="card-subtitle mb-2 opacity-75">{% trans "Sales Revenue" %}</h6>
-                    <h4 class="card-title mb-0">{{ sales_revenue|intcomma }} {% currency_suffix %}</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="card text-white bg-primary shadow h-100">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 opacity-75">{% trans "Sales Revenue" %}</h6>
+                                <h4 class="card-title mb-0">{{ sales_revenue|intcomma }} {% currency_suffix %}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-white bg-primary shadow h-100">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 opacity-75">{% trans "Purchase Costs" %}</h6>
+                                <h4 class="card-title mb-0">{{ purchase_costs|intcomma }} {% currency_suffix %}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-white bg-primary shadow h-100">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 opacity-75">{% trans "Operating Expenses" %}</h6>
+                                <h4 class="card-title mb-0">{{ operating_expenses|intcomma }} {% currency_suffix %}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-white {% if net_profit >= 0 %}bg-primary{% else %}bg-danger{% endif %} shadow h-100">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 opacity-75">{% trans "Net Profit" %}</h6>
+                                <h4 class="card-title mb-0">{{ net_profit|intcomma }} {% currency_suffix %}</h4>
+                                <small class="opacity-75">{{ net_margin|floatformat:2 }}%</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-primary shadow h-100">
-                <div class="card-body">
-                    <h6 class="card-subtitle mb-2 opacity-75">{% trans "Purchase Costs" %}</h6>
-                    <h4 class="card-title mb-0">{{ purchase_costs|intcomma }} {% currency_suffix %}</h4>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-primary shadow h-100">
-                <div class="card-body">
-                    <h6 class="card-subtitle mb-2 opacity-75">{% trans "Operating Expenses" %}</h6>
-                    <h4 class="card-title mb-0">{{ operating_expenses|intcomma }} {% currency_suffix %}</h4>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-white {% if net_profit >= 0 %}bg-primary{% else %}bg-danger{% endif %} shadow h-100">
-                <div class="card-body">
-                    <h6 class="card-subtitle mb-2 opacity-75">{% trans "Net Profit" %}</h6>
-                    <h4 class="card-title mb-0">{{ net_profit|intcomma }} {% currency_suffix %}</h4>
-                    <small class="opacity-75">{{ net_margin|floatformat:2 }}%</small>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Profit Breakdown -->
-    <div class="card mb-4">
-        <div class="card-header">{% trans "Profit Breakdown" %}</div>
-        <div class="card-body">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <td><strong>{% trans "Sales Revenue" %}</strong></td>
-                        <td class="text-end">{{ sales_revenue|intcomma }} {% currency_suffix %}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>- {% trans "Purchase Costs" %}</strong></td>
-                        <td class="text-end text-danger">{{ purchase_costs|intcomma }} {% currency_suffix %}</td>
-                    </tr>
-                    <tr class="table-light">
-                        <td><strong>= {% trans "Gross Profit" %}</strong></td>
-                        <td class="text-end"><strong>{{ gross_profit|intcomma }} {% currency_suffix %}</strong></td>
-                    </tr>
-                    <tr>
-                        <td><strong>- {% trans "Operating Expenses" %}</strong></td>
-                        <td class="text-end text-danger">{{ operating_expenses|intcomma }} {% currency_suffix %}</td>
-                    </tr>
-                    <tr class="table-{% if net_profit >= 0 %}success{% else %}danger{% endif %}">
-                        <td><strong>= {% trans "Net Profit" %}</strong></td>
-                        <td class="text-end"><strong>{{ net_profit|intcomma }} {% currency_suffix %}</strong></td>
-                    </tr>
-                    <tr>
-                        <td><strong>{% trans "Net Margin %" %}</strong></td>
-                        <td class="text-end">{{ net_margin|floatformat:2 }}%</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+                <div class="card mb-4">
+                    <div class="card-header">{% trans "Profit Breakdown" %}</div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td><strong>{% trans "Sales Revenue" %}</strong></td>
+                                    <td class="text-end">{{ sales_revenue|intcomma }} {% currency_suffix %}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>- {% trans "Purchase Costs" %}</strong></td>
+                                    <td class="text-end text-danger">{{ purchase_costs|intcomma }} {% currency_suffix %}</td>
+                                </tr>
+                                <tr class="table-light">
+                                    <td><strong>= {% trans "Gross Profit" %}</strong></td>
+                                    <td class="text-end"><strong>{{ gross_profit|intcomma }} {% currency_suffix %}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>- {% trans "Operating Expenses" %}</strong></td>
+                                    <td class="text-end text-danger">{{ operating_expenses|intcomma }} {% currency_suffix %}</td>
+                                </tr>
+                                <tr class="table-{% if net_profit >= 0 %}success{% else %}danger{% endif %}">
+                                    <td><strong>= {% trans "Net Profit" %}</strong></td>
+                                    <td class="text-end"><strong>{{ net_profit|intcomma }} {% currency_suffix %}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>{% trans "Net Margin %" %}</strong></td>
+                                    <td class="text-end">{{ net_margin|floatformat:2 }}%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-    <!-- Monthly Breakdown -->
-    <div class="card">
-        <div class="card-header">{% trans "Monthly Breakdown" %}</div>
-        <div class="card-body">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>{% trans "Month" %}</th>
-                        <th class="text-end">{% trans "Sales" %}</th>
-                        <th class="text-end">{% trans "Expenses" %}</th>
-                        <th class="text-end">{% trans "Profit" %}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for month, data in monthly_data %}
-                    <tr>
-                        <td>{{ month }}</td>
-                        <td class="text-end">{{ data.sales|intcomma }}</td>
-                        <td class="text-end">{{ data.expenses|intcomma }}</td>
-                        <td class="text-end {% if data.profit >= 0 %}text-success{% else %}text-danger{% endif %}">
-                            {{ data.profit|intcomma }}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+                <div class="card">
+                    <div class="card-header">{% trans "Monthly Breakdown" %}</div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Month" %}</th>
+                                    <th class="text-end">{% trans "Sales" %}</th>
+                                    <th class="text-end">{% trans "Expenses" %}</th>
+                                    <th class="text-end">{% trans "Profit" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for month, data in monthly_data %}
+                                <tr>
+                                    <td>{{ month }}</td>
+                                    <td class="text-end">{{ data.sales|intcomma }}</td>
+                                    <td class="text-end">{{ data.expenses|intcomma }}</td>
+                                    <td class="text-end {% if data.profit >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                        {{ data.profit|intcomma }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot class="print-layout-footer">
+        <tr>
+            <td>
+                {% include "reports/partials/print_footer.html" %}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}
+
+{% block extra_js %}
+{% include "reports/partials/print_script.html" %}
 {% endblock %}

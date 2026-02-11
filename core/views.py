@@ -81,9 +81,14 @@ def product_detail(request, pk):
 @permission_required('core.view_stockmovement', raise_exception=True)
 def stock_movement_list(request):
     """Stock movement history."""
-    movements = StockMovement.objects.select_related(
+    movements_list = StockMovement.objects.select_related(
         'product', 'created_by'
-    ).order_by('-created_at')[:100]
+    ).order_by('-created_at')
+    
+    paginator = Paginator(movements_list, 50)
+    page_number = request.GET.get('page')
+    movements = paginator.get_page(page_number)
+    
     return render(request, 'core/stock_movement_list.html', {'movements': movements})
 
 

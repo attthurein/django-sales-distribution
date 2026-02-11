@@ -188,8 +188,21 @@ def index(request):
     
     if not stats:
         # Expensive aggregations
+        today_sales = _get_today_sales(today)
+        yesterday_sales = _get_today_sales(today - timedelta(days=1))
+        
+        # Calculate percentage change
+        sales_growth = 0
+        if yesterday_sales > 0:
+            sales_growth = ((today_sales - yesterday_sales) / yesterday_sales) * 100
+        elif today_sales > 0:
+            sales_growth = 100
+        else:
+            sales_growth = 0
+            
         stats = {
-            'today_sales': _get_today_sales(today),
+            'today_sales': today_sales,
+            'sales_growth': sales_growth,
             'pending_orders': _get_pending_orders(),
             'overdue_count': _get_overdue_count(),
             'expiry_alert': _get_expiry_alert(today),
@@ -199,8 +212,19 @@ def index(request):
 
     qs = _build_dashboard_queries(today)
 
+    # Prepare stock chart data with localized labels
+    stock_chart_data = []
+    lang = request.LANGUAGE_CODE
+    for item in qs['stock_by_category_qs']:
+        label = item['category__name_my'] if lang == 'my' and item.get('category__name_my') else item.get('category__name_en') or '-'
+        stock_chart_data.append({
+            'label': label,
+            'value': float(item['total'] or 0)
+        })
+
     context = {
         'today_sales': stats['today_sales'],
+        'sales_growth': stats['sales_growth'],
         'pending_orders': stats['pending_orders'],
         'low_stock_count': qs['low_stock_qs'].count(),
         'low_stock_products': qs['low_stock_qs'][:LIMIT_LOW_STOCK_DISPLAY],
@@ -211,6 +235,7 @@ def index(request):
         'recent_movements': qs['recent_movements_qs'],
         'products_with_stock': qs['products_with_stock_qs'],
         'stock_by_category': qs['stock_by_category_qs'],
+        'stock_chart_data': stock_chart_data,
         'expiring_by_shop': _get_expiring_by_shop(today),
     }
     return render(request, 'dashboard/index.html', context)

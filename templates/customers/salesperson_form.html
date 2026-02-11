@@ -8,17 +8,129 @@
     {% for field in form %}
     <div class="mb-3">
         {% if field.name == 'is_active' %}
-            <div class="form-check">
-                {{ field|add_class:"form-check-input" }}
-                <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <div class="form-check">
+            {{ field|add_class:"form-check-input" }}
+            <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        </div>
+        {% elif field.name == 'phone' %}
+        <hr>
+        <h5 class="mb-3">{% trans "Phone Numbers" %}</h5>
+
+        <div class="mb-3">
+            <label class="form-label" for="{{ field.id_for_label }}">{% trans "Main Phone" %} *</label>
+            {% render_field field class="form-control" %}
+        </div>
+
+        <div id="phone-formset-container">
+            {{ formset.management_form }}
+            {% for phone_form in formset %}
+            <div class="phone-form-row mb-2">
+                {% for hidden in phone_form.hidden_fields %}
+                {{ hidden }}
+                {% endfor %}
+                <div class="row g-2">
+                    <div class="col-6">
+                        {% render_field phone_form.phone class="form-control form-control-sm" placeholder="Phone" %}
+                    </div>
+                    <div class="col-5">
+                        {% render_field phone_form.notes class="form-control form-control-sm" placeholder="Notes" %}
+                    </div>
+                    <div class="col-1 d-flex align-items-center">
+                        {% if formset.can_delete %}
+                        <div class="d-none">{{ phone_form.DELETE }}</div>
+                        <button type="button" class="btn btn-sm btn-link text-danger remove-phone-btn p-0">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if phone_form.phone.errors %}
+                <div class="text-danger small">{{ phone_form.phone.errors.0 }}</div>
+                {% endif %}
             </div>
+            {% endfor %}
+        </div>
+
+        <button type="button" class="btn btn-sm btn-outline-secondary mb-4" id="add-phone-btn">
+            <i class="bi bi-plus"></i> {% trans "Add Phone" %}
+        </button>
+
+        <div id="empty-phone-form" class="d-none">
+            <div class="phone-form-row mb-2">
+                <div class="row g-2">
+                    <div class="col-6">
+                        {% render_field formset.empty_form.phone class="form-control form-control-sm" placeholder="Phone" %}
+                    </div>
+                    <div class="col-5">
+                        {% render_field formset.empty_form.notes class="form-control form-control-sm" placeholder="Notes" %}
+                    </div>
+                    <div class="col-1 d-flex align-items-center">
+                        <button type="button" class="btn btn-sm btn-link text-danger remove-phone-btn p-0">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% else %}
-            <label class="form-label">{{ field.label }}</label>
-            {{ field|add_class:"form-control" }}
+        <label class="form-label">{{ field.label }}</label>
+        {{ field|add_class:"form-control" }}
         {% endif %}
     </div>
     {% endfor %}
     <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
     <a href="{% url 'customers:salesperson_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
 </form>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addBtn = document.getElementById('add-phone-btn');
+        const container = document.getElementById('phone-formset-container');
+        const emptyForm = document.getElementById('empty-phone-form').innerHTML;
+        const totalForms = document.getElementById('id_additional_phones-TOTAL_FORMS');
+
+        // Hide rows that are already marked for deletion
+        if (container) {
+            const existingRows = container.querySelectorAll('.phone-form-row');
+            existingRows.forEach(row => {
+                const deleteInput = row.querySelector('input[type="checkbox"][name$="-DELETE"]');
+                if (deleteInput && deleteInput.checked) {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        if (addBtn) {
+            addBtn.addEventListener('click', function () {
+                const formCount = parseInt(totalForms.value);
+                const newForm = emptyForm.replace(/__prefix__/g, formCount);
+
+                const div = document.createElement('div');
+                div.innerHTML = newForm;
+                container.appendChild(div.firstElementChild);
+
+                totalForms.value = formCount + 1;
+            });
+        }
+
+        if (container) {
+            container.addEventListener('click', function (e) {
+                const btn = e.target.closest('.remove-phone-btn');
+                if (btn) {
+                    const row = btn.closest('.phone-form-row');
+                    const deleteInput = row.querySelector('input[type="checkbox"][name$="-DELETE"]');
+                    
+                    if (deleteInput) {
+                        deleteInput.checked = true;
+                        row.style.display = 'none';
+                    } else {
+                        row.remove();
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
 {% endblock %}

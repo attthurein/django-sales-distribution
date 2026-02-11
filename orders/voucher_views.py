@@ -18,30 +18,62 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 from orders.models import Payment, SalesOrder
 from master_data.models import CompanySetting
+from reports.converter import convert
 
 def _register_fonts():
     """Register fonts for PDF."""
-    font_dir = os.path.join(settings.STATIC_ROOT, 'fonts') if settings.STATIC_ROOT else os.path.join(settings.BASE_DIR, 'static', 'fonts')
-    # Fallback if static root not set or fonts not there
-    if not os.path.exists(font_dir):
-         font_dir = os.path.join(settings.BASE_DIR, 'static', 'fonts')
-
-    regular_font = 'Pyidaungsu'
-    bold_font = 'Pyidaungsu-Bold'
+    font_dirs = []
+    if getattr(settings, 'STATIC_ROOT', None):
+        font_dirs.append(os.path.join(settings.STATIC_ROOT, 'fonts'))
+    font_dirs.append(os.path.join(settings.BASE_DIR, 'static', 'fonts'))
     
-    try:
-        # Check if font files exist before registering
-        if os.path.exists(os.path.join(font_dir, 'Pyidaungsu-Regular.ttf')):
-            pdfmetrics.registerFont(TTFont(regular_font, os.path.join(font_dir, 'Pyidaungsu-Regular.ttf')))
-            pdfmetrics.registerFont(TTFont(bold_font, os.path.join(font_dir, 'Pyidaungsu-Bold.ttf')))
-        else:
-            regular_font = 'Helvetica'
-            bold_font = 'Helvetica-Bold'
-    except Exception as e:
-        # Fallback to standard fonts if custom fonts fail
-        print(f"Font loading error: {e}")
-        regular_font = 'Helvetica'
-        bold_font = 'Helvetica-Bold'
+    regular_font = 'Helvetica'
+    bold_font = 'Helvetica-Bold'
+    
+    font_found = False
+    
+    for font_dir in font_dirs:
+        if not os.path.exists(font_dir):
+            continue
+            
+        # Try to register Zawgyi (mmrtext) for correct rendering after conversion
+        zg_reg_path = os.path.join(font_dir, 'mmrtext.ttf')
+        zg_bold_path = os.path.join(font_dir, 'mmrtextb.ttf')
+        
+        if os.path.exists(zg_reg_path):
+            try:
+                zg_font = 'Zawgyi-One'
+                zg_font_bold = 'Zawgyi-One-Bold'
+                pdfmetrics.registerFont(TTFont(zg_font, zg_reg_path))
+                if os.path.exists(zg_bold_path):
+                    pdfmetrics.registerFont(TTFont(zg_font_bold, zg_bold_path))
+                else:
+                    zg_font_bold = zg_font
+                
+                regular_font = zg_font
+                bold_font = zg_font_bold
+                font_found = True
+                # Prefer Zawgyi if found because we use converter
+                break 
+            except Exception as e:
+                print(f"Error registering Zawgyi from {font_dir}: {e}")
+
+        # Fallback/Alternative: Pyidaungsu
+        reg_path = os.path.join(font_dir, 'Pyidaungsu-Regular.ttf')
+        bold_path = os.path.join(font_dir, 'Pyidaungsu-Bold.ttf')
+        
+        if os.path.exists(reg_path) and os.path.exists(bold_path) and not font_found:
+            try:
+                pdfmetrics.registerFont(TTFont('Pyidaungsu', reg_path))
+                pdfmetrics.registerFont(TTFont('Pyidaungsu-Bold', bold_path))
+                regular_font = 'Pyidaungsu'
+                bold_font = 'Pyidaungsu-Bold'
+                font_found = True
+            except Exception as e:
+                print(f"Error registering Pyidaungsu from {font_dir}: {e}")
+                
+    if not font_found:
+        print("No Myanmar fonts found, falling back to Helvetica")
         
     return regular_font, bold_font
 
@@ -60,12 +92,28 @@ def _draw_voucher_header(pdf_canvas, width, height, company, font_regular, font_
         except Exception as e:
             print(f"Error drawing logo: {e}")
 
+    shop_name = company.shop_name if company and company.shop_name else ""
+    # Convert text to Zawgyi
+    if shop_name: shop_name = convert(shop_name)
+    
     company_name = company.name if company else "Sales Distribution"
+    if company_name: company_name = convert(company_name)
+    
     address = company.address if company else ""
+    if address: address = convert(address)
+    
     phone = company.phone if company else ""
+    if phone: phone = convert(phone)
 
-    pdf_canvas.setFont(font_bold, 16)
-    pdf_canvas.drawCentredString(width / 2, y, company_name)
+    if shop_name:
+        pdf_canvas.setFont(font_bold, 18)
+        pdf_canvas.drawCentredString(width / 2, y, shop_name)
+        y -= 20
+        pdf_canvas.setFont(font_bold, 12)
+        pdf_canvas.drawCentredString(width / 2, y, company_name)
+    else:
+        pdf_canvas.setFont(font_bold, 16)
+        pdf_canvas.drawCentredString(width / 2, y, company_name)
     y -= 20
 
     pdf_canvas.setFont(font_regular, 10)
@@ -111,6 +159,7 @@ def _draw_invoice_meta(pdf_canvas, order, width, y, font_regular, font_bold):
     
     # Right side
     status_text = order.get_status_display_my() if hasattr(order, 'get_status_display_my') else (order.status.name_en if order.status else '-')
+    status_text = convert(status_text)
     pdf_canvas.drawRightString(width - 50, y, f"Status: {status_text}")
     if order.delivery_date:
         pdf_canvas.drawRightString(width - 50, y - 15, f"Delivery: {order.delivery_date.strftime('%d-%m-%Y')}")
@@ -129,8 +178,13 @@ def _draw_info_boxes(pdf_canvas, payment, width, y, font_regular, font_bold):
     pdf_canvas.line(50, y - 20, 50 + box_width, y - 20)
     
     pdf_canvas.setFont(font_regular, 9)
-    pdf_canvas.drawString(60, y - 35, f"Name: {payment.order.customer.name}")
-    pdf_canvas.drawString(60, y - 50, f"Phone: {payment.order.customer.phone}")
+    customer_name = payment.order.customer.name
+    if customer_name: customer_name = convert(customer_name)
+    pdf_canvas.drawString(60, y - 35, f"Name: {customer_name}")
+    
+    customer_phone = payment.order.customer.phone
+    if customer_phone: customer_phone = convert(customer_phone)
+    pdf_canvas.drawString(60, y - 50, f"Phone: {customer_phone}")
     
     # Order Details Box
     x2 = 50 + box_width + 20
@@ -164,12 +218,15 @@ def _draw_amount_box(pdf_canvas, payment, width, y, font_regular, font_bold):
     
     # Add Payment Method and Amount combined
     payment_method_name = payment.payment_method.name_en if payment.payment_method else '-'
+    # Note: payment_method usually en, but good to be safe if user input myanmar
+    
     pdf_canvas.drawCentredString(width / 2, y - 45, f"{payment_method_name} - {payment.amount:,.2f} Ks")
     
     if payment.notes:
         pdf_canvas.setFont(font_regular, 9)
         pdf_canvas.setFillColor(colors.gray)
-        pdf_canvas.drawCentredString(width / 2, y - 70, f'"{payment.notes}"')
+        notes = convert(payment.notes)
+        pdf_canvas.drawCentredString(width / 2, y - 70, f'"{notes}"')
 
     return y - box_height - 60
 
@@ -194,6 +251,8 @@ def _draw_footer(pdf_canvas, width, text, font_regular, generated_at=None):
 
     if not text:
         text = "Thank you for your business!"
+    else:
+        text = convert(text)
     
     pdf_canvas.setFont(font_regular, 9)
     pdf_canvas.setFillColor(colors.gray)
@@ -209,8 +268,9 @@ def _draw_footer(pdf_canvas, width, text, font_regular, generated_at=None):
 def _draw_invoice_items(pdf_canvas, order, width, y, font_regular, font_bold):
     data = [['Product', 'Qty', 'Price', 'Total']]
     for item in order.orderitem_set.all():
+        product_name = convert(item.product.name) if item.product.name else ""
         data.append([
-            item.product.name,
+            product_name,
             str(item.quantity),
             f"{item.unit_price:,.0f}",
             f"{item.total_price:,.0f}"
@@ -299,11 +359,17 @@ def invoice_pdf(request, pk):
     p.setFont(font_bold, 10)
     p.drawString(50, y, "Bill To:")
     p.setFont(font_regular, 10)
-    p.drawString(50, y - 15, order.customer.name)
+    
+    customer_name = order.customer.name
+    if customer_name: customer_name = convert(customer_name)
+    p.drawString(50, y - 15, customer_name)
+    
     if order.customer.phone:
-        p.drawString(50, y - 30, order.customer.phone)
+        phone = convert(order.customer.phone)
+        p.drawString(50, y - 30, phone)
     if order.customer.street_address:
-        p.drawString(50, y - 45, order.customer.street_address[:50])
+        addr = convert(order.customer.street_address[:50])
+        p.drawString(50, y - 45, addr)
         
     y -= 60
     

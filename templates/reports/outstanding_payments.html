@@ -1,124 +1,153 @@
 {% extends "base.html" %}
 {% load humanize i18n common_extras %}
 
-{% block breadcrumb %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'reports:report_index' %}">{% trans "Reports" %}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
-    </ol>
-</nav>
+{% block breadcrumb %}{% endblock %}
+
+{% block extra_css %}
+{% include "reports/partials/print_css.html" %}
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <h2>{{ title }}</h2>
-    <p><a href="{% url 'reports:report_index' %}" class="btn btn-outline-secondary mb-3"><i class="bi bi-arrow-left"></i> {% trans "Back to Reports" %}</a></p>
-
-    <!-- Filters -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <form method="get" class="row g-3 align-items-end">
-                <div class="col-md-2">
-                    <label class="form-label">{% trans "From Date" %}</label>
-                    <input type="date" name="date_from" class="form-control" value="{{ date_from }}">
+<table class="print-layout-table">
+    <thead class="print-layout-header">
+        <tr>
+            <td>
+                <div class="print-header">
+                    {% include "reports/partials/print_header.html" %}
+                    <h4 class="text-center fw-bold mb-3">
+                        {{ title }}
+                        {% if date_from or date_to %}
+                            ({{ date_from|default:"-" }} {% trans "to" %} {{ date_to|default:"-" }})
+                        {% endif %}
+                    </h4>
                 </div>
-                <div class="col-md-2">
-                    <label class="form-label">{% trans "To Date" %}</label>
-                    <input type="date" name="date_to" class="form-control" value="{{ date_to }}">
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label">{% trans "Customer" %}</label>
-                    <select name="customer_id" class="form-select">
-                        <option value="">{% trans "All Customers" %}</option>
-                        {% for c in customers %}
-                        <option value="{{ c.id }}" {% if customer_id == c.id|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary w-100">{% trans "Filter" %}</button>
-                </div>
-                <div class="col-md-2">
-                    <a href="{% url 'reports:export_outstanding' %}?{{ request.GET.urlencode }}&format=csv" class="btn btn-outline-secondary">{% trans "CSV" %}</a>
-                    <a href="{% url 'reports:export_outstanding' %}?{{ request.GET.urlencode }}&format=xlsx" class="btn btn-success">
-                        <i class="bi bi-file-earmark-excel"></i> {% trans "Excel" %}
+            </td>
+        </tr>
+    </thead>
+    <tbody class="print-layout-body">
+        <tr>
+            <td class="print-layout-cell">
+                <div class="d-flex justify-content-between align-items-center mb-4 d-print-none">
+                    <h1 class="mb-0">
+                        <i class="bi bi-exclamation-circle me-2"></i>{{ title }}
+                    </h1>
+                    <a href="{% url 'reports:report_index' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>{% trans "Back to Reports" %}
                     </a>
                 </div>
-            </form>
-        </div>
-    </div>
 
-    <!-- Summary by Customer -->
-    <div class="card mb-4">
-        <div class="card-header">{% trans "Outstanding by Customer" %}</div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>{% trans "Customer" %}</th>
-                            <th>{% trans "Phone" %}</th>
-                            <th class="text-end">{% trans "Orders" %}</th>
-                            <th class="text-end">{% trans "Total Due" %}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in customer_totals %}
-                        <tr>
-                            <td>{{ row.customer__name }}</td>
-                            <td>{{ row.customer__phone|default:"-" }}</td>
-                            <td class="text-end">{{ row.order_count }}</td>
-                            <td class="text-end fw-bold">{{ row.total_due|floatformat:0|intcomma }} {% currency_suffix %}</td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan="4" class="text-center text-muted">{% trans "No outstanding" %}</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+                <div class="card mb-4 d-print-none">
+                    <div class="card-body">
+                        <form method="get" class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label">{% trans "From Date" %}</label>
+                                <input type="date" name="date_from" class="form-control" value="{{ date_from }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">{% trans "To Date" %}</label>
+                                <input type="date" name="date_to" class="form-control" value="{{ date_to }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">{% trans "Customer" %}</label>
+                                <select name="customer_id" class="form-select">
+                                    <option value="">{% trans "All Customers" %}</option>
+                                    {% for c in customers %}
+                                    <option value="{{ c.id }}" {% if customer_id == c.id|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-end gap-2">
+                                 <button type="submit" class="btn btn-primary"><i class="bi bi-filter"></i> {% trans "Filter" %}</button>
+                                 <a href="{% url 'reports:outstanding_payments' %}" class="btn btn-outline-secondary">{% trans "Reset" %}</a>
+                                 <a href="{% url 'reports:export_outstanding' %}?{{ request.GET.urlencode }}&format=csv" class="btn btn-secondary">{% trans "CSV" %}</a>
+                                 <a href="{% url 'reports:export_outstanding' %}?{{ request.GET.urlencode }}&format=xlsx" class="btn btn-success"><i class="bi bi-file-earmark-excel"></i> Excel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
-    <!-- Order List -->
-    <div class="card">
-        <div class="card-header">{% trans "Orders with Balance Due" %}</div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>{% trans "Order" %}</th>
-                            <th>{% trans "Customer" %}</th>
-                            <th>{% trans "Date" %}</th>
-                            <th class="text-end">{% trans "Total" %}</th>
-                            <th class="text-end">{% trans "Paid" %}</th>
-                            <th class="text-end">{% trans "Balance Due" %}</th>
-                            <th>{% trans "Status" %}</th>
-                            <th>{% trans "Actions" %}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in outstanding_list %}
-                        <tr>
-                            <td><a href="{% url 'orders:order_detail' item.order.pk %}">{{ item.order_number }}</a></td>
-                            <td>{{ item.customer.name }}</td>
-                            <td>{{ item.order_date }}</td>
-                            <td class="text-end">{{ item.total_amount|floatformat:0|intcomma }}</td>
-                            <td class="text-end">{{ item.paid_amount|floatformat:0|intcomma }}</td>
-                            <td class="text-end fw-bold text-danger">{{ item.balance_due|floatformat:0|intcomma }} {% currency_suffix %}</td>
-                            <td><span class="badge bg-warning">{{ item.status|master_name }}</span></td>
-                            <td>
-                                <a href="{% url 'orders:order_payment' item.order.pk %}" class="btn btn-sm btn-primary">{% trans "Add Payment" %}</a>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan="8" class="text-center text-muted">{% trans "No outstanding orders" %}</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+                <div class="card mb-4">
+                    <div class="card-header">{% trans "Outstanding by Customer" %}</div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>{% trans "Customer" %}</th>
+                                        <th>{% trans "Phone" %}</th>
+                                        <th class="text-end">{% trans "Orders" %}</th>
+                                        <th class="text-end">{% trans "Total Due" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in customer_totals %}
+                                    <tr>
+                                        <td>{{ row.customer__name }}</td>
+                                        <td>{{ row.customer__phone|default:"-" }}</td>
+                                        <td class="text-end">{{ row.order_count }}</td>
+                                        <td class="text-end fw-bold">{{ row.total_due|floatformat:0|intcomma }} {% currency_suffix %}</td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr><td colspan="4" class="text-center text-muted">{% trans "No outstanding" %}</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">{% trans "Orders with Balance Due" %}</div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>{% trans "Order" %}</th>
+                                        <th>{% trans "Customer" %}</th>
+                                        <th>{% trans "Date" %}</th>
+                                        <th class="text-end">{% trans "Total" %}</th>
+                                        <th class="text-end">{% trans "Paid" %}</th>
+                                        <th class="text-end">{% trans "Balance Due" %}</th>
+                                        <th>{% trans "Status" %}</th>
+                                        <th>{% trans "Actions" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in outstanding_list %}
+                                    <tr>
+                                        <td><a href="{% url 'orders:order_detail' item.order.pk %}">{{ item.order_number }}</a></td>
+                                        <td>{{ item.customer.name }}</td>
+                                        <td>{{ item.order_date }}</td>
+                                        <td class="text-end">{{ item.total_amount|floatformat:0|intcomma }}</td>
+                                        <td class="text-end">{{ item.paid_amount|floatformat:0|intcomma }}</td>
+                                        <td class="text-end fw-bold text-danger">{{ item.balance_due|floatformat:0|intcomma }} {% currency_suffix %}</td>
+                                        <td><span class="badge bg-warning">{{ item.status|master_name }}</span></td>
+                                        <td>
+                                            <a href="{% url 'orders:order_payment' item.order.pk %}" class="btn btn-sm btn-primary">{% trans "Add Payment" %}</a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr><td colspan="8" class="text-center text-muted">{% trans "No outstanding orders" %}</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot class="print-layout-footer">
+        <tr>
+            <td>
+                {% include "reports/partials/print_footer.html" %}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}
+
+{% block extra_js %}
+{% include "reports/partials/print_script.html" %}
 {% endblock %}

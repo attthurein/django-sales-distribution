@@ -73,6 +73,7 @@ This system is a monolithic Django application optimized for reliability and tra
 ### 🤝 CRM
 - **Lead Pipeline**: Track leads from `New` → `Contacted` → `Converted`.
 - **Activity Logs**: Record visits, calls, and sample deliveries.
+- **Unified Contact Management**: Standardized phone number inputs across Leads, Customers, and Salespeople for consistent data entry.
 
 ### ↩️ Returns Management
 - **Strict Policies**: Single return request per order to prevent duplication.
@@ -86,11 +87,13 @@ This system is a monolithic Django application optimized for reliability and tra
 - **Backend**: Python 3.10+, Django 4.2.7
 - **Database**: SQLite (Dev) / PostgreSQL (Production ready)
 - **Frontend**: Bootstrap 5, Crispy Forms, Django Templates
-- **Server**: GunicoSi
+- **Server**: Gunicorn (Linux/Mac), Waitress (Windows)
 - **Utilities**:
   - `django-environ`: Configuration management
+  - `drf-spectacular`: OpenAPI schema generation
   - `reportlab`: PDF generation
   - `openpyxl`: Excel exports
+  - `whitenoise`: Static file serving
 ### Module Diagram
 
 ```mermaid
@@ -136,10 +139,12 @@ The system uses a **Batch-based Inventory System**:
 ### Security & Audit
 - **SoftDeleteMixin**: Most models (Product, Order, Payment, Customer) inherit from this. `Model.objects.all()` returns only active records. Use `Model.all_objects.all()` to see deleted ones.
 - **AuditMiddleware**: A custom middleware captures the actor (User) for every request. Signals automatically create `AuditLog` entries for creations, updates, and deletions.
-etions.
+
+### System Versioning
+- **Versioning**: The system tracks its version in `settings.SPECTACULAR_SETTINGS['VERSION']`. This version is displayed in the footer and used for API schema generation.
 
 ### API Documentation
-Th sysem provdes a cmpreheive REST API for all major modules, documented using OpenAPI 3.0.
+The system provides a comprehensive REST API for all major modules, documented using OpenAPI 3.0.
 - **Swagger UI**: `/api/docs/` - Interactive API documentation and testing.
 - **ReDoc**: `/api/schema/redoc/` - Alternative API reference documentation.
 - **Schema**: `/api/schema/` - Raw OpenAPI schema (YAML)
@@ -368,7 +373,7 @@ server {
 - `sales_distribution/`: Project settings and main URL routing.
 
 ---
-
+(Split: Base/Dev/Prod) 
 ## Contributing
 
 Contributions are welcome! If you'd like to improve this project, please follow these steps:

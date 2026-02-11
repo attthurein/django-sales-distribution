@@ -14,7 +14,10 @@ from returns.services import create_return_request
 
 User = get_user_model()
 
-@override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
+@override_settings(
+    STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage',
+    LANGUAGE_CODE='en'
+)
 class ReturnRestrictionTests(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -83,10 +86,6 @@ class ReturnRestrictionTests(TestCase):
             'reason_id': self.return_reason.id,
             'condition_notes': 'Defective again'
         }]
-        
-        # We expect this to FAIL after our changes.
-        # But for now, we want to confirm it SUCCEEDS (current behavior) or we can just write the test expecting failure and see it fail.
-        # I will write it expecting failure (ValueError), so the test will FAIL now, and PASS after I fix it.
         
         with self.assertRaises(ValueError) as cm:
             create_return_request(

@@ -1,0 +1,77 @@
+{% load i18n common_extras %}
+
+{% if page_obj.paginator.num_pages > 1 %}
+<nav aria-label="Pagination" class="mt-4">
+    <ul class="pagination justify-content-center">
+        {# First Page #}
+        {% if page_obj.number > 1 %}
+        <li class="page-item">
+            <a class="page-link" href="?{% url_replace page=1 %}" aria-label="First">
+                <span aria-hidden="true">&laquo;&laquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">&laquo;&laquo;</span>
+        </li>
+        {% endif %}
+
+        {# Previous Page #}
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?{% url_replace page=page_obj.previous_page_number %}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">&laquo;</span>
+        </li>
+        {% endif %}
+
+        {# Page Numbers #}
+        {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">{{ i }}</span>
+                </li>
+            {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% url_replace page=i %}">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {# Next Page #}
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?{% url_replace page=page_obj.next_page_number %}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">&raquo;</span>
+        </li>
+        {% endif %}
+
+        {# Last Page #}
+        {% if page_obj.number < page_obj.paginator.num_pages %}
+        <li class="page-item">
+            <a class="page-link" href="?{% url_replace page=page_obj.paginator.num_pages %}" aria-label="Last">
+                <span aria-hidden="true">&raquo;&raquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">&raquo;&raquo;</span>
+        </li>
+        {% endif %}
+    </ul>
+    <div class="text-center text-muted small mt-2">
+        {% blocktrans with number=page_obj.number num_pages=page_obj.paginator.num_pages count=page_obj.paginator.count %}
+        Page {{ number }} of {{ num_pages }} ({{ count }} items total)
+        {% endblocktrans %}
+    </div>
+</nav>
+{% endif %}

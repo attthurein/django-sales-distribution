@@ -1,30 +1,32 @@
 {% extends 'base.html' %}
 {% load humanize i18n common_extras %}
 
-{% block breadcrumb %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'accounting:expense_list' %}">{% trans "Expenses" %}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
-    </ol>
-</nav>
-{% endblock %}
+{% block breadcrumb %}{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-        <h2>{{ title }} - {{ year }}</h2>
-        <div class="d-flex gap-2 align-items-center">
-            <form method="get" class="d-inline">
-                <select name="year" class="form-select form-select-sm d-inline-block w-auto js-submit-on-change">
-                    {% for y in available_years %}
-                    <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
-                    {% endfor %}
-                </select>
-            </form>
-            <a href="{% url 'accounting:expense_list' %}" class="btn btn-secondary">{% trans "Back to Expenses" %}</a>
-        </div>
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <h1 class="mb-0">
+        <i class="bi bi-pie-chart me-2"></i>{% trans "Expense Summary" %} - {{ year }}
+    </h1>
+    <div class="d-flex gap-2 align-items-center">
+        <form method="get" class="d-flex gap-2 align-items-center">
+            <select name="month" class="form-select d-inline-block w-auto js-submit-on-change">
+                <option value="0" {% if month == 0 %}selected{% endif %}>{% trans "All Months" %}</option>
+                {% for m_num, m_name in months %}
+                <option value="{{ m_num }}" {% if m_num == month %}selected{% endif %}>{{ m_name }}</option>
+                {% endfor %}
+            </select>
+            <select name="year" class="form-select d-inline-block w-auto js-submit-on-change">
+                {% for y in available_years %}
+                <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </form>
+        <a href="{% url 'accounting:expense_list' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>{% trans "Back to Expenses" %}
+        </a>
     </div>
+</div>
 
     <div class="row">
         <div class="col-md-6">
@@ -58,19 +60,37 @@
         </div>
         <div class="col-md-6">
             <div class="card mb-3">
-                <div class="card-header">{% trans "Monthly Expenses" %}</div>
+                <div class="card-header">
+                    {% if breakdown_type == 'day' %}
+                        {% trans "Daily Expenses" %}
+                    {% else %}
+                        {% trans "Monthly Expenses" %}
+                    {% endif %}
+                </div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>{% trans "Month" %}</th>
+                                <th>
+                                    {% if breakdown_type == 'day' %}
+                                        {% trans "Date" %}
+                                    {% else %}
+                                        {% trans "Month" %}
+                                    {% endif %}
+                                </th>
                                 <th class="text-end">{% trans "Amount" %}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for item in by_month %}
+                            {% for item in breakdown %}
                             <tr>
-                                <td>{{ item.month|date:"F Y" }}</td>
+                                <td>
+                                    {% if breakdown_type == 'day' %}
+                                        {{ item.period|date:"d M Y" }}
+                                    {% else %}
+                                        {{ item.period|date:"F Y" }}
+                                    {% endif %}
+                                </td>
                                 <td class="text-end">{{ item.total|intcomma }} {% currency_suffix %}</td>
                             </tr>
                             {% endfor %}
@@ -80,5 +100,4 @@
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

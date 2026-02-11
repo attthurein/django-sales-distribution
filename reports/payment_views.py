@@ -12,6 +12,7 @@ from customers.models import Customer
 from master_data.models import PaymentMethod
 from master_data.constants import PURCHASE_RECEIVED, ORDER_CANCELLED
 from openpyxl import Workbook
+from reports.utils import _export_pdf, _export_excel, _export_csv
 
 
 @login_required
@@ -73,9 +74,10 @@ def payment_report(request):
 @login_required
 @permission_required('orders.view_payment', raise_exception=True)
 def export_payments(request):
-    """Export payments to Excel"""
+    """Export payments to Excel, PDF or CSV."""
     date_from = request.GET.get('date_from', '')
     date_to = request.GET.get('date_to', '')
+    payment_method = request.GET.get('payment_method', '')
     
     payments = Payment.objects.select_related(
         'order', 'order__customer', 'payment_method', 'created_by'
@@ -85,39 +87,44 @@ def export_payments(request):
         payments = payments.filter(payment_date__gte=date_from)
     if date_to:
         payments = payments.filter(payment_date__lte=date_to)
+    if payment_method:
+        payments = payments.filter(payment_method_id=payment_method)
     
-    # Create Excel workbook
-    wb = Workbook()
-    ws = wb.active
-    ws.title = 'Payments'
-    
-    # Headers
     headers = [
         'Voucher Number', 'Date', 'Order Number', 'Customer', 
         'Amount', 'Payment Method', 'Reference', 'Recorded By'
     ]
-    ws.append(headers)
-    
-    # Data rows
+    rows = []
     for payment in payments.order_by('-payment_date'):
-        ws.append([
+        rows.append([
             payment.voucher_number or '',
             payment.payment_date.strftime('%Y-%m-%d'),
             payment.order.order_number,
             payment.order.customer.name,
-            payment.amount,
+            str(payment.amount),
             payment.payment_method.name_en if payment.payment_method else '',
             payment.reference_number or '',
             payment.created_by.username if payment.created_by else ''
         ])
     
-    # Prepare response
+    fmt = request.GET.get('format', 'xlsx')
+    if fmt == 'pdf':
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="payments_{datetime.now().strftime("%Y%m%d")}.pdf"'
+        orientation = request.GET.get('orientation', 'landscape')
+        return _export_pdf(response, rows, headers, title='Payments Report', orientation=orientation)
+
+    if fmt == 'csv':
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="payments_{datetime.now().strftime("%Y%m%d")}.csv"'
+        return _export_csv(response, rows, headers)
+
+    # Excel (default)
     response = HttpResponse(
         content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
-    response['Content-Disposition'] = f'attachment; filename=payments_{datetime.now().strftime("%Y%m%d")}.xlsx'
-    wb.save(response)
-    return response
+    response['Content-Disposition'] = f'attachment; filename="payments_{datetime.now().strftime("%Y%m%d")}.xlsx"'
+    return _export_excel(response, rows, headers, 'Payments') or response
 
 
 @login_required
@@ -194,9 +201,10 @@ def outstanding_payments_report(request):
 @login_required
 @permission_required('orders.view_payment', raise_exception=True)
 def export_outstanding(request):
-    """Export outstanding payments to CSV/Excel."""
+    """Export outstanding payments to CSV/Excel/PDF."""
     date_from = request.GET.get('date_from', '')
     date_to = request.GET.get('date_to', '')
+    customer_id = request.GET.get('customer_id', '')
 
     orders_qs = SalesOrder.objects.filter(
         deleted_at__isnull=True,
@@ -209,6 +217,8 @@ def export_outstanding(request):
         orders_qs = orders_qs.filter(order_date__gte=date_from)
     if date_to:
         orders_qs = orders_qs.filter(order_date__lte=date_to)
+    if customer_id:
+        orders_qs = orders_qs.filter(customer_id=customer_id)
 
     headers = ['Order #', 'Customer', 'Order Date', 'Total', 'Paid', 'Balance Due', 'Status']
     rows = []
@@ -225,26 +235,22 @@ def export_outstanding(request):
         ])
 
     fmt = request.GET.get('format', 'csv')
+    if fmt == 'pdf':
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="outstanding_{datetime.now().strftime("%Y%m%d")}.pdf"'
+        orientation = request.GET.get('orientation', 'landscape')
+        return _export_pdf(response, rows, headers, title='Outstanding Payments', orientation=orientation)
+
     if fmt == 'xlsx':
-        wb = Workbook()
-        ws = wb.active
-        ws.title = 'Outstanding'
-        ws.append(headers)
-        for r in rows:
-            ws.append(r)
         response = HttpResponse(
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
-        response['Content-Disposition'] = f'attachment; filename=outstanding_{datetime.now().strftime("%Y%m%d")}.xlsx'
-        wb.save(response)
-        return response
+        response['Content-Disposition'] = f'attachment; filename="outstanding_{datetime.now().strftime("%Y%m%d")}.xlsx"'
+        return _export_excel(response, rows, headers, 'Outstanding') or response
 
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = f'attachment; filename=outstanding_{datetime.now().strftime("%Y%m%d")}.csv'
-    writer = csv.writer(response)
-    writer.writerow(headers)
-    writer.writerows(rows)
-    return response
+    response['Content-Disposition'] = f'attachment; filename="outstanding_{datetime.now().strftime("%Y%m%d")}.csv"'
+    return _export_csv(response, rows, headers)
 
 
 @login_required
@@ -269,6 +275,37 @@ def payment_by_customer_report(request):
         total_paid=Sum('amount'),
         payment_count=Count('id')
     ).order_by('-total_paid')
+
+    fmt = request.GET.get('format')
+    if fmt in ['csv', 'xlsx', 'pdf']:
+        headers = ['Customer', 'Phone', 'Count', 'Total Paid']
+        rows = []
+        for row in by_customer:
+            rows.append([
+                row['order__customer__name'],
+                row['order__customer__phone'] or '-',
+                str(row['payment_count']),
+                str(row['total_paid'])
+            ])
+            
+        if fmt == 'pdf':
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="payment_by_customer_{datetime.now().strftime("%Y%m%d")}.pdf"'
+            orientation = request.GET.get('orientation', 'portrait')
+            return _export_pdf(response, rows, headers, title='Payment by Customer', orientation=orientation)
+            
+        if fmt == 'xlsx':
+            response = HttpResponse(
+                content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            )
+            response['Content-Disposition'] = f'attachment; filename="payment_by_customer_{datetime.now().strftime("%Y%m%d")}.xlsx"'
+            result = _export_excel(response, rows, headers, 'PaymentByCustomer')
+            if result:
+                return result
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="payment_by_customer_{datetime.now().strftime("%Y%m%d")}.csv"'
+        return _export_csv(response, rows, headers)
 
     context = {
         'title': 'Payment by Customer',

@@ -1,0 +1,161 @@
+<style>
+    @media print {
+        /* ==========================================
+           OPTION 1: CUSTOM HEADER/FOOTER (Inactive)
+           - Hides browser defaults (margin: 0)
+           - Uses custom .print-footer with Page # and Date
+           - Adds padding to body to simulate margins
+           ========================================== */
+        /*
+        @page { margin: 0; } 
+        body { 
+            background-color: white !important; 
+            -webkit-print-color-adjust: exact; 
+            padding: 15mm 10mm 15mm 10mm !important; 
+        }
+        .print-footer {
+            display: block !important;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 10px;
+            padding-bottom: 5mm;
+        }
+        */
+
+        /* ==========================================
+           OPTION 2: BROWSER DEFAULT HEADER/FOOTER (Inactive)
+           - Uses browser's default margins/headers/footers
+           - Hides custom .print-footer
+           ========================================== */
+        /*
+        @page { margin: 10mm; }
+        body { 
+            background-color: white !important; 
+            -webkit-print-color-adjust: exact; 
+            padding: 0 !important; 
+        }
+        .print-footer { display: none !important; }
+        */
+
+        /* ==========================================
+           OPTION 4: TABLE LAYOUT FOR REPEATING HEADERS (Active)
+           - Uses standard table header repeating mechanism
+           - Requires wrapping content in .print-layout-table
+           ========================================== */
+        @page { 
+            margin: 10mm;
+        }
+        body { 
+            background-color: white !important; 
+            -webkit-print-color-adjust: exact; 
+            padding: 0 !important; 
+        }
+        .print-footer { display: block; }
+        
+        /* Layout Structure */
+        .print-layout-table {
+            width: 100%;
+            border: none;
+            border-collapse: collapse;
+        }
+        .print-layout-header {
+            display: table-header-group;
+        }
+        .print-layout-footer {
+            display: table-footer-group;
+        }
+        .print-layout-body {
+            display: table-row-group;
+        }
+        .print-layout-row {
+            display: table-row;
+        }
+        .print-layout-cell {
+            display: table-cell;
+            padding: 0;
+            vertical-align: top;
+        }
+        /* Allow layout body row to break across pages so content flows from page 1 (avoids blank first page) */
+        .print-layout-table .print-layout-body tr {
+            page-break-inside: auto;
+            break-inside: auto;
+        }
+
+        /* Header Styles */
+        .print-header { 
+            display: block !important; 
+            position: static !important; /* Changed from fixed to static for table layout */
+            width: 100%;
+            background-color: white; 
+            text-align: center;
+            margin-bottom: 0 !important;
+            height: auto !important;
+            overflow: visible !important;
+        } 
+
+        /* Shared Print Styles */
+        html, body { height: auto !important; overflow: visible !important; }
+        .navbar, .footer, .btn, .card-header i, .bi, form, .breadcrumb, .pagination { display: none !important; }
+        .card { border: none !important; box-shadow: none !important; margin-bottom: 0 !important; display: block !important; break-inside: auto !important; page-break-inside: auto !important; }
+        .card-body { overflow: visible !important; padding: 0 !important; }
+        .table-responsive { overflow: visible !important; display: block !important; } /* Disable scroll for print */
+        .card-header { background-color: transparent !important; border-bottom: 2px solid #000 !important; color: #000 !important; padding-left: 0 !important; display: none !important; }
+        .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+        /* .print-header removed from here as it is defined above */
+        
+        /* Ensure Page Title Block is Hidden */
+        .d-flex.justify-content-between.align-items-center.mb-4 { display: none !important; }
+        
+        /* Table Styling */
+        .table { width: 100% !important; border-collapse: collapse !important; font-size: 10pt; color: #000 !important; border: none !important; margin-bottom: 0 !important; }
+        thead { display: table-header-group !important; }
+        tfoot { display: table-footer-group !important; }
+        .table th { 
+            border-top: none !important; 
+            border-left: none !important;
+            border-right: none !important;
+            border-bottom: 2px solid #000 !important; 
+            background-color: transparent !important;
+            color: #000 !important; 
+            font-weight: bold; 
+            padding: 8px 4px !important;
+            text-align: left;
+        }
+        .table td { 
+            border: none !important; 
+            border-bottom: 1px solid #eee !important;
+            padding: 8px 4px !important; 
+            color: #000 !important; 
+            vertical-align: top;
+        }
+        .table-stack tr { display: table-row !important; page-break-inside: avoid; }
+        .table-stack td { display: table-cell !important; }
+        
+        .badge { border: 1px solid #000; color: #000 !important; background: transparent !important; padding: 2px 5px; }
+        a { text-decoration: none !important; color: #000 !important; }
+        a[href]:after { content: none !important; }
+        .text-white { color: #000 !important; }
+        .bg-primary, .bg-success, .bg-info, .bg-gradient-success { background-color: transparent !important; color: #000 !important; border: 1px solid #ddd; }
+        
+        /* Summary cards specific */
+        .card-subtitle { color: #666 !important; }
+        
+        /* Summary Section Layout for Print - HIDDEN as per user request */
+        .row.g-3.mb-4 { display: none !important; }
+        
+        .table-responsive { overflow: visible !important; display: block !important; }
+        
+        /* Pagination */
+        .pagination, .dataTables_paginate, .dataTables_info, .dataTables_length, .dataTables_filter { display: none !important; }
+        
+        /* Force page break behavior */
+        tr { page-break-inside: avoid; break-inside: avoid; }
+        h1, h2, h3, h4, h5, h6 { page-break-after: avoid; break-after: avoid; }
+    }
+    .print-header { display: none; }
+    .print-footer { display: none; }
+    .print-logo { max-height: 120px; width: auto; }
+</style>

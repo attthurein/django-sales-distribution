@@ -10,6 +10,7 @@
         font-weight: normal;
         font-style: normal;
     }
+
     @font-face {
         font-family: 'Pyidaungsu';
         src: url("{% static 'fonts/Pyidaungsu-Bold.ttf' %}") format('truetype');
@@ -21,7 +22,7 @@
         @page {
             margin: 0;
         }
-        
+
         body {
             margin: 0;
             padding: 0;
@@ -29,7 +30,13 @@
             font-size: 10pt;
         }
 
-        nav, .navbar, .no-print, header, footer, .btn, .breadcrumb {
+        nav,
+        .navbar,
+        .no-print,
+        header,
+        footer,
+        .btn,
+        .breadcrumb {
             display: none !important;
         }
 
@@ -53,7 +60,7 @@
         background: white;
         padding: 40px;
         border: 1px solid #ddd;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         max-width: 800px;
         margin: 20px auto;
         font-family: 'Pyidaungsu', 'Noto Sans Myanmar', sans-serif;
@@ -99,7 +106,8 @@
         margin-bottom: 30px;
     }
 
-    .invoice-table th, .invoice-table td {
+    .invoice-table th,
+    .invoice-table td {
         padding: 10px;
         border-bottom: 1px solid #eee;
     }
@@ -113,7 +121,7 @@
     .invoice-table td.text-end {
         text-align: right;
     }
-    
+
     .invoice-table th.text-end {
         text-align: right;
     }
@@ -171,7 +179,9 @@
         </div>
         {% endif %}
         <div class="company-name">
-            {% if company and company.name %}{{ company.name }}{% else %}Sales Distribution{% endif %}
+            {% if company and company.shop_name %}<div class="h2 mb-1">{{ company.shop_name }}</div>{% endif %}
+            {% if company and company.name %}<div class="h4 text-muted mb-0">{{ company.name }}</div>{% else %}Sales
+            Distribution{% endif %}
         </div>
         <div class="small text-muted">
             {% if company.address %}{{ company.address }}<br>{% endif %}
@@ -183,17 +193,19 @@
     <!-- Meta Info -->
     <div class="voucher-meta">
         <div class="meta-group text-start">
-            <div><span class="label text-muted">{% trans "Invoice No" %}:</span> <span class="fw-bold">{{ order.order_number }}</span></div>
+            <div><span class="label text-muted">{% trans "Invoice No" %}:</span> <span class="fw-bold">{{
+                    order.order_number }}</span></div>
             <div><span class="label text-muted">{% trans "Date" %}:</span> {{ order.order_date|date:"d F Y" }}</div>
         </div>
         <div class="meta-group text-end">
-             <div><span class="label text-muted">{% trans "Status" %}:</span> {{ order.get_status_display }}</div>
-             {% if order.delivery_date %}
-             <div><span class="label text-muted">{% trans "Delivery" %}:</span> {{ order.delivery_date|date:"d F Y" }}</div>
-             {% endif %}
+            <div><span class="label text-muted">{% trans "Status" %}:</span> {{ order.get_status_display }}</div>
+            {% if order.delivery_date %}
+            <div><span class="label text-muted">{% trans "Delivery" %}:</span> {{ order.delivery_date|date:"d F Y" }}
+            </div>
+            {% endif %}
         </div>
     </div>
-    
+
     <!-- Bill To -->
     <div class="mb-4">
         <div class="fw-bold border-bottom pb-1 mb-2">{% trans "Bill To" %}</div>
@@ -226,7 +238,7 @@
                 <td class="text-end">{{ item.total_price|intcomma }}</td>
             </tr>
             {% endfor %}
-            
+
             <!-- Totals -->
             <tr>
                 <td colspan="3" class="text-end border-0 pt-3">{% trans "Subtotal" %}</td>
@@ -254,7 +266,8 @@
     <!-- Signatures -->
     <div class="signature-section">
         <div class="signature-box">
-            <div class="small text-muted mb-1">{{ order.created_by.get_full_name|default:order.created_by.username }}</div>
+            <div class="small text-muted mb-1">{{ order.created_by.get_full_name|default:order.created_by.username }}
+            </div>
             <div class="signature-line"></div>
             <div>{% trans "Received By" %}</div>
         </div>
@@ -275,11 +288,11 @@
     function downloadPDF() {
         const element = document.getElementById('invoice-content');
         const opt = {
-            margin:       5,
-            filename:     'Invoice_{{ order.order_number }}.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'mm', format: 'a5', orientation: 'portrait' }
+            margin: 5,
+            filename: 'Invoice_{{ order.order_number }}.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' }
         };
         html2pdf().set(opt).from(element).save();
     }

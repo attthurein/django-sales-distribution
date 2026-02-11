@@ -1,31 +1,120 @@
 {% extends "base.html" %}
 {% load humanize i18n %}
 
-{% block breadcrumb %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'reports:report_index' %}">{% trans "Reports" %}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{% trans "Return Analysis" %}</li>
-    </ol>
-</nav>
+{% block breadcrumb %}{% endblock %}
+
+{% block extra_css %}
+{% include "reports/partials/print_css.html" %}
 {% endblock %}
 
 {% block content %}
-<h1 class="mb-4">{% trans "Return Analysis" %}</h1>
-<p><a href="{% url 'reports:report_index' %}">{% trans "Back to Reports" %}</a></p>
-<table class="table table-striped">
-    <thead><tr><th>{% trans "Product" %}</th><th>{% trans "Reason" %}</th><th>{% trans "Count" %}</th><th>{% trans "Total Qty" %}</th></tr></thead>
-    <tbody>
-    {% for r in returns %}
-    <tr>
-        <td>{{ r.product__name }}</td>
-        <td>{{ r.reason__name_en }}</td>
-        <td>{{ r.count }}</td>
-        <td>{{ r.total_qty }}</td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="4" class="text-center py-5 text-muted">{% trans "No returns" %}</td></tr>
-    {% endfor %}
+<table class="print-layout-table">
+    <thead class="print-layout-header">
+        <tr>
+            <td>
+                <div class="print-header">
+                    {% include "reports/partials/print_header.html" %}
+                    <h4 class="text-center fw-bold mb-3">
+                        {% trans "Return Analysis" %}
+                        {% if date_from or date_to %}
+                            ({{ date_from|default:"-" }} {% trans "to" %} {{ date_to|default:"-" }})
+                        {% endif %}
+                    </h4>
+                </div>
+            </td>
+        </tr>
+    </thead>
+    <tbody class="print-layout-body">
+        <tr>
+            <td class="print-layout-cell">
+                <div class="d-flex justify-content-between align-items-center mb-4 d-print-none">
+                    <h1 class="mb-0">
+                        <i class="bi bi-arrow-return-left me-2"></i>{% trans "Return Analysis" %}
+                    </h1>
+                    <a href="{% url 'reports:report_index' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>{% trans "Back to Reports" %}
+                    </a>
+                </div>
+
+                <div class="card mb-4 d-print-none">
+                    <div class="card-body">
+                        <form method="get" class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label">{% trans "Start Date" %}</label>
+                                <input type="date" name="start_date" class="form-control" value="{{ date_from }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">{% trans "End Date" %}</label>
+                                <input type="date" name="end_date" class="form-control" value="{{ date_to }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">{% trans "Reason" %}</label>
+                                <select name="reason" class="form-select">
+                                    <option value="">{% trans "All" %}</option>
+                                    {% for r in reasons %}
+                                    <option value="{{ r.id }}" {% if current_reason == r.id %}selected{% endif %}>{{ r.name_en }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">{% trans "Product" %}</label>
+                                <select name="product" class="form-select">
+                                    <option value="">{% trans "All" %}</option>
+                                    {% for p in products %}
+                                    <option value="{{ p.id }}" {% if current_product == p.id %}selected{% endif %}>{{ p.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-end gap-2 mt-3">
+                                 <button type="submit" class="btn btn-primary"><i class="bi bi-filter"></i> {% trans "Filter" %}</button>
+                                 <a href="{% url 'reports:return_report' %}" class="btn btn-outline-secondary">{% trans "Reset" %}</a>
+                                 <button type="button" class="btn btn-outline-primary" onclick="window.print()"><i class="bi bi-printer"></i> {% trans "Print" %}</button>
+                                 <a href="{% url 'reports:export_returns' %}?{{ request.GET.urlencode }}&format=csv" class="btn btn-secondary"><i class="bi bi-file-earmark-text"></i> CSV</a>
+                                 <a href="{% url 'reports:export_returns' %}?{{ request.GET.urlencode }}&format=xlsx" class="btn btn-success"><i class="bi bi-file-earmark-excel"></i> Excel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body p-0">
+                        <table class="table table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Product" %}</th>
+                                    <th>{% trans "Reason" %}</th>
+                                    <th>{% trans "Count" %}</th>
+                                    <th>{% trans "Total Qty" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in returns %}
+                                <tr>
+                                    <td>{{ r.product__name }}</td>
+                                    <td>{{ r.reason__name_en }}</td>
+                                    <td>{{ r.count }}</td>
+                                    <td>{{ r.total_qty }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="4" class="text-center py-5 text-muted">{% trans "No returns" %}</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
     </tbody>
+    <tfoot class="print-layout-footer">
+        <tr>
+            <td>
+                {% include "reports/partials/print_footer.html" %}
+            </td>
+        </tr>
+    </tfoot>
 </table>
+{% endblock %}
+
+{% block extra_js %}
+{% include "reports/partials/print_script.html" %}
 {% endblock %}

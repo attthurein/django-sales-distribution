@@ -24,4 +24,17 @@ document.addEventListener('DOMContentLoaded', function() {
             this.form.submit();
         });
     });
+
+    // Dynamic body padding adjustment for fixed header
+    function adjustBodyPadding() {
+        const header = document.querySelector('.app-header');
+        if (header) {
+            // Add a small buffer (e.g. 10px) to the height
+            document.body.style.paddingTop = (header.offsetHeight + 10) + 'px';
+        }
+    }
+    
+    // Run on load and resize
+    adjustBodyPadding();
+    window.addEventListener('resize', adjustBodyPadding);
 });

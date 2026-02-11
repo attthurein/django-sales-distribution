@@ -12,7 +12,15 @@
 
 {% block content %}
 <h1>{{ lead.name }}</h1>
-<p>{% trans "Phone" %}: {{ lead.phone }} | {% trans "Status" %}: {{ lead.get_status_display }} | {% trans "Source" %}: {{ lead.source|default:"-" }}{% if lead.township %} | {% trans "Township" %}: {{ lead.township.name }}{% if lead.township.region %} ({{ lead.township.region.name }}){% endif %}{% endif %}</p>
+<p>
+    {% trans "Phone" %}: {{ lead.phone }}
+    {% for p in lead.additional_phones.all %}
+    , {{ p.phone }}{% if p.notes %} ({{ p.notes }}){% endif %}
+    {% endfor %}
+    | {% trans "Status" %}: {{ lead.get_status_display }} | {% trans "Source" %}: {{ lead.source|default:"-" }}
+    {% if lead.township %} | {% trans "Township" %}: {{ lead.township.name }}{% if lead.township.region %} ({{
+    lead.township.region.name }}){% endif %}{% endif %}
+</p>
 {% if lead.shop_name %}<p>{% trans "Shop/Store name" %}: {{ lead.shop_name }}</p>{% endif %}
 {% if lead.contact_person %}<p>{% trans "Contact person" %}: {{ lead.contact_person }}</p>{% endif %}
 {% if lead.address %}<p>{% trans "Address" %}: {{ lead.address }}</p>{% endif %}
@@ -40,41 +48,41 @@
     <div class="col-md-6">
         <h4>{% trans "Contact Logs" %}</h4>
         <ul class="list-group">
-        {% for log in lead.contact_logs.all %}
-        <li class="list-group-item">
-            <strong>{{ log.contact_type.name }}</strong> - {{ log.created_at|date }}
-            <p class="mb-0">{{ log.notes }}</p>
-            {% if log.next_follow_up %}<small>{% trans "Follow-up" %}: {{ log.next_follow_up }}</small>{% endif %}
-        </li>
-        {% empty %}
-        <li class="list-group-item text-muted">{% trans "No contact logs." %}</li>
-        {% endfor %}
+            {% for log in lead.contact_logs.all %}
+            <li class="list-group-item">
+                <strong>{{ log.contact_type.name }}</strong> - {{ log.created_at|date }}
+                <p class="mb-0">{{ log.notes }}</p>
+                {% if log.next_follow_up %}<small>{% trans "Follow-up" %}: {{ log.next_follow_up }}</small>{% endif %}
+            </li>
+            {% empty %}
+            <li class="list-group-item text-muted">{% trans "No contact logs." %}</li>
+            {% endfor %}
         </ul>
     </div>
     <div class="col-md-6">
         <h4>{% trans "Samples" %}</h4>
         <ul class="list-group">
-        {% for s in lead.sample_deliveries.all %}
-        <li class="list-group-item d-flex justify-content-between">
-            <span>{{ s.product.name }} x{{ s.quantity }} - {{ s.get_status_display }}</span>
-            {% if s.status == 'GIVEN' %}
-            {% if perms.crm.change_sampledelivery %}
-            <div class="btn-group btn-group-sm">
-                <form method="post" action="{% url 'crm:sample_return' s.pk %}" class="d-inline">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-success">{% trans "Returned" %}</button>
-                </form>
-                <form method="post" action="{% url 'crm:sample_mark_not_returned' s.pk %}" class="d-inline">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-secondary">{% trans "Not Returned" %}</button>
-                </form>
-            </div>
-            {% endif %}
-            {% endif %}
-        </li>
-        {% empty %}
-        <li class="list-group-item text-muted">{% trans "No samples given." %}</li>
-        {% endfor %}
+            {% for s in lead.sample_deliveries.all %}
+            <li class="list-group-item d-flex justify-content-between">
+                <span>{{ s.product.name }} x{{ s.quantity }} - {{ s.get_status_display }}</span>
+                {% if s.status == 'GIVEN' %}
+                {% if perms.crm.change_sampledelivery %}
+                <div class="btn-group btn-group-sm">
+                    <form method="post" action="{% url 'crm:sample_return' s.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-success">{% trans "Returned" %}</button>
+                    </form>
+                    <form method="post" action="{% url 'crm:sample_mark_not_returned' s.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-secondary">{% trans "Not Returned" %}</button>
+                    </form>
+                </div>
+                {% endif %}
+                {% endif %}
+            </li>
+            {% empty %}
+            <li class="list-group-item text-muted">{% trans "No samples given." %}</li>
+            {% endfor %}
         </ul>
     </div>
 </div>

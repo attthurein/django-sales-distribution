@@ -29,7 +29,7 @@ def customer_list(request):
 
     customers = Customer.objects.filter(
         deleted_at__isnull=True, is_active=True
-    ).select_related('customer_type', 'township', 'township__region')
+    ).select_related('customer_type', 'township', 'township__region').prefetch_related('additional_phones')
 
     if search_query:
         customers = customers.filter(
@@ -51,7 +51,7 @@ def customer_list(request):
         'name': 'name',
         'shop_name': 'shop_name',
         'phone': 'phone',
-        'customer_type': 'customer_type__name',
+        'customer_type': 'customer_type__name_en',
         'township': 'township__name_en',
         'credit_limit': 'credit_limit',
         'created_at': 'created_at',
@@ -97,7 +97,7 @@ def customer_list(request):
 def customer_detail(request, pk):
     """View customer details"""
     customer = get_object_or_404(
-        Customer.objects.filter(deleted_at__isnull=True).select_related('customer_type', 'township'),
+        Customer.objects.filter(deleted_at__isnull=True).select_related('customer_type', 'township').prefetch_related('additional_phones'),
         pk=pk
     )
     recent_orders = SalesOrder.objects.filter(
@@ -114,22 +114,32 @@ def customer_detail(request, pk):
     return render(request, 'customers/customer_detail.html', context)
 
 
+from .forms import CustomerForm, SalespersonForm, CustomerPhoneNumberFormSet, SalespersonPhoneNumberFormSet
+
+
 @login_required
 @permission_required('customers.add_customer', raise_exception=True)
 def customer_create(request):
     """Create new customer"""
     if request.method == 'POST':
         form = CustomerForm(request.POST)
-        if form.is_valid():
-            customer = form.save()
+        formset = CustomerPhoneNumberFormSet(request.POST)
+        if form.is_valid() and formset.is_valid():
+            with transaction.atomic():
+                customer = form.save()
+                formset.instance = customer
+                formset.save()
             messages.success(request, _('Customer created successfully.'))
             return redirect('customers:customer_detail', pk=customer.pk)
     else:
         form = CustomerForm()
+        formset = CustomerPhoneNumberFormSet()
+    
     countries = get_countries_with_regions()
     context = {
         'title': _('Add New Customer'),
         'form': form,
+        'formset': formset,
         'countries': countries,
         'customer': None,
     }
@@ -143,16 +153,22 @@ def customer_update(request, pk):
     customer = get_object_or_404(Customer.objects.filter(deleted_at__isnull=True), pk=pk)
     if request.method == 'POST':
         form = CustomerForm(request.POST, instance=customer)
-        if form.is_valid():
-            form.save()
+        formset = CustomerPhoneNumberFormSet(request.POST, instance=customer)
+        if form.is_valid() and formset.is_valid():
+            with transaction.atomic():
+                form.save()
+                formset.save()
             messages.success(request, _('Customer updated successfully.'))
             return redirect('customers:customer_detail', pk=customer.pk)
     else:
         form = CustomerForm(instance=customer)
+        formset = CustomerPhoneNumberFormSet(instance=customer)
+        
     countries = get_countries_with_regions()
     context = {
         'title': _('Edit Customer'),
         'form': form,
+        'formset': formset,
         'customer': customer,
         'countries': countries,
     }
@@ -215,7 +231,7 @@ def customer_search_ajax(request):
 @login_required
 def salesperson_list(request):
     """List salespeople."""
-    salespeople = Salesperson.objects.filter(deleted_at__isnull=True).order_by('name')
+    salespeople = Salesperson.objects.filter(deleted_at__isnull=True).prefetch_related('additional_phones').order_by('name')
     return render(request, 'customers/salesperson_list.html', {
         'salespeople': salespeople,
         'title': _('Salespeople')
@@ -228,14 +244,20 @@ def salesperson_create(request):
     """Create salesperson."""
     if request.method == 'POST':
         form = SalespersonForm(request.POST)
-        if form.is_valid():
-            form.save()
+        formset = SalespersonPhoneNumberFormSet(request.POST)
+        if form.is_valid() and formset.is_valid():
+            with transaction.atomic():
+                salesperson = form.save()
+                formset.instance = salesperson
+                formset.save()
             messages.success(request, _('Salesperson created.'))
             return redirect('customers:salesperson_list')
     else:
         form = SalespersonForm()
+        formset = SalespersonPhoneNumberFormSet()
     return render(request, 'customers/salesperson_form.html', {
         'form': form,
+        'formset': formset,
         'title': _('Add Salesperson')
     })
 
@@ -247,13 +269,18 @@ def salesperson_edit(request, pk):
     salesperson = get_object_or_404(Salesperson.objects.filter(deleted_at__isnull=True), pk=pk)
     if request.method == 'POST':
         form = SalespersonForm(request.POST, instance=salesperson)
-        if form.is_valid():
-            form.save()
+        formset = SalespersonPhoneNumberFormSet(request.POST, instance=salesperson)
+        if form.is_valid() and formset.is_valid():
+            with transaction.atomic():
+                form.save()
+                formset.save()
             messages.success(request, _('Salesperson updated.'))
             return redirect('customers:salesperson_list')
     else:
         form = SalespersonForm(instance=salesperson)
+        formset = SalespersonPhoneNumberFormSet(instance=salesperson)
     return render(request, 'customers/salesperson_form.html', {
         'form': form,
+        'formset': formset,
         'title': _('Edit Salesperson')
     })

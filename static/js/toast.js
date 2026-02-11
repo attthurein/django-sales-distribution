@@ -17,6 +17,7 @@ const Toast = {
         const icons = {
             success: 'check-circle-fill',
             error: 'exclamation-circle-fill',
+            danger: 'exclamation-circle-fill',
             warning: 'exclamation-triangle-fill',
             info: 'info-circle-fill'
         };
@@ -68,7 +69,7 @@ window.Toast = Toast;
 
 // Replace Django messages with toasts on page load
 document.addEventListener('DOMContentLoaded', function() {
-    const djangoAlerts = document.querySelectorAll('.alert');
+    const djangoAlerts = document.querySelectorAll('.django-message');
     djangoAlerts.forEach(alert => {
         const message = alert.textContent.trim();
         let type = 'info';

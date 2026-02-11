@@ -197,6 +197,20 @@ class Supplier(BaseMasterModel):
         ordering = ['name_en']
 
 
+class SupplierPhoneNumber(models.Model):
+    """Additional phone numbers for a Supplier."""
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='additional_phones')
+    phone = models.CharField(max_length=20, verbose_name=_("Phone"))
+    notes = models.CharField(max_length=100, blank=True, verbose_name=_("Notes"))
+
+    class Meta:
+        verbose_name = _("Supplier phone number")
+        verbose_name_plural = _("Supplier phone numbers")
+
+    def __str__(self):
+        return f"{self.phone} ({self.supplier.name_en})"
+
+
 class Promotion(BaseMasterModel):
     """Simple promotion rules"""
     start_date = models.DateField()
@@ -231,6 +245,7 @@ class CompanySetting(models.Model):
         verbose_name_plural = _("Company settings")
 
     name = models.CharField(max_length=200, default='My Company')
+    shop_name = models.CharField(max_length=200, blank=True, verbose_name=_("Shop name"))
     logo = models.ImageField(upload_to='company/', null=True, blank=True)
     address = models.TextField(blank=True)
     phone = models.CharField(max_length=100, blank=True)

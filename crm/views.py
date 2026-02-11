@@ -9,7 +9,7 @@ from django.db import transaction
 from django.db.models import Max
 
 from .models import Lead, ContactLog, SampleDelivery
-from .forms import LeadForm, ContactLogForm, SampleDeliveryForm, LeadConvertForm
+from .forms import LeadForm, ContactLogForm, SampleDeliveryForm, LeadConvertForm, LeadPhoneNumberFormSet
 from customers.models import Customer
 from core.models import Product
 from master_data.models import ContactType, CustomerType, Township, Region
@@ -61,7 +61,7 @@ def lead_list(request):
 
     leads_list = Lead.objects.filter(
         deleted_at__isnull=True
-    ).select_related('township', 'township__region').annotate(
+    ).select_related('township', 'township__region').prefetch_related('additional_phones').annotate(
         next_follow_up_date=Max('contact_logs__next_follow_up')
     ).order_by(order_field, secondary_sort)
 
@@ -108,7 +108,7 @@ def lead_detail(request, pk):
     lead = get_object_or_404(
         Lead.objects.filter(deleted_at__isnull=True)
         .select_related('township', 'township__region')
-        .prefetch_related('contact_logs__contact_type', 'sample_deliveries__product'),
+        .prefetch_related('contact_logs__contact_type', 'sample_deliveries__product', 'additional_phones'),
         pk=pk
     )
     return render(request, 'crm/lead_detail.html', {'lead': lead})
@@ -118,19 +118,33 @@ def lead_detail(request, pk):
 @permission_required('crm.add_lead', raise_exception=True)
 def lead_create(request):
     """Create new lead using ModelForm."""
-    form = LeadForm(data=request.POST if request.method == 'POST' else None)
-    if request.method == 'POST' and form.is_valid():
-        with transaction.atomic():
-            lead = form.save(commit=False)
-            lead.status = LEAD_STATUS_NEW
-            lead.assigned_to = request.user if request.user.is_authenticated else None
-            lead.save()
-        messages.success(request, _('Lead created.'))
-        return redirect('crm:lead_list')
+    if request.method == 'POST':
+        form = LeadForm(data=request.POST)
+        formset = LeadPhoneNumberFormSet(data=request.POST)
+        if form.is_valid() and formset.is_valid():
+            with transaction.atomic():
+                lead = form.save(commit=False)
+                lead.status = LEAD_STATUS_NEW
+                lead.assigned_to = request.user if request.user.is_authenticated else None
+                lead.save()
+                
+                phones = formset.save(commit=False)
+                for phone in phones:
+                    phone.lead = lead
+                    phone.save()
+                formset.save_m2m()
+
+            messages.success(request, _('Lead created.'))
+            return redirect('crm:lead_list')
+    else:
+        form = LeadForm()
+        formset = LeadPhoneNumberFormSet()
+    
     countries = get_countries_with_regions()
     return render(request, 'crm/lead_form.html', {
         'title': _('Create Lead'),
         'form': form,
+        'formset': formset,
         'lead': None,
         'countries': countries,
     })
@@ -141,20 +155,25 @@ def lead_create(request):
 def lead_edit(request, pk):
     """Edit lead using ModelForm."""
     lead = get_object_or_404(Lead.objects.filter(deleted_at__isnull=True), pk=pk)
-    form = LeadForm(
-        data=request.POST if request.method == 'POST' else None,
-        instance=lead,
-    )
-    if request.method == 'POST' and form.is_valid():
-        with transaction.atomic():
-            form.save()
-        messages.success(request, _('Lead updated.'))
-        return redirect('crm:lead_detail', pk=pk)
+    if request.method == 'POST':
+        form = LeadForm(data=request.POST, instance=lead)
+        formset = LeadPhoneNumberFormSet(data=request.POST, instance=lead)
+        if form.is_valid() and formset.is_valid():
+            with transaction.atomic():
+                form.save()
+                formset.save()
+            messages.success(request, _('Lead updated.'))
+            return redirect('crm:lead_detail', pk=pk)
+    else:
+        form = LeadForm(instance=lead)
+        formset = LeadPhoneNumberFormSet(instance=lead)
+        
     countries = get_countries_with_regions()
     return render(request, 'crm/lead_form.html', {
         'lead': lead,
         'title': _('Edit Lead'),
         'form': form,
+        'formset': formset,
         'countries': countries,
     })
 
